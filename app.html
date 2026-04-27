@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Appointment</title>
+        <style>
+            .container { width:300px;
+                  margin:20px;
+                  background-color: cyan; 
+                  text-align:center;
+                  border:3px solid black;
+                  float:left;}
+            .doc_img {border:1px darkgray;
+                       margin-top:20px;
+                       margin-bottom:20px;}
+            .imgcapt {font-family:'Times New Roman';
+                       font-size:20px;}
+        </style>
+    </head>
+    <body>
+        <h1>Doctor Selection</h1>
+        <div id="container"></div>
+            <script>
+                let doctors = [
+                    {name: "Dr. Wazid",
+                     speciality: "Surgeon",
+                     image: "doc1.jpeg"},
+
+                    {name: "Dr. Smith",
+                     speciality: "Cardiologist",
+                     image: "doc2.jpeg"}
+                ];
+
+                for (let i=0;i<doctors.length;i++) 
+                {
+                    document.getElementById("container").innerHTML += `
+                        <div class="container">
+                            <img class="doc_img" src="${doctors[i].image}" alt="${doctors[i].name}" width="200" height="200"><br>
+                            <h3 class="imgcapt">${doctors[i].name}</h3>
+                            <p>${doctors[i].speciality}</p>
+                        </div>
+                    `;
+                 }      
+            </script>
+   
+    </body>
+</html>
