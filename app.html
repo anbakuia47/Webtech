@@ -5,21 +5,45 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Appointment</title>
         <style>
-            .container { width:300px;
-                  margin:20px;
-                  background-color: cyan; 
-                  text-align:center;
-                  border:3px solid black;
-                  float:left;}
-            .doc_img {border:1px darkgray;
-                       margin-top:20px;
-                       margin-bottom:20px;}
-            .imgcapt {font-family:'Times New Roman';
-                       font-size:20px;}
+            .container {width:300px;
+                        margin:20px;
+                        background-color: cyan; 
+                        text-align:center;
+                        border:3px solid black;
+                        float:left;}
+            #container  {display:flex;
+                        gap:20px;}
+            .doc_img    {border:1px darkgray;
+                        margin-top:20px;
+                        margin-bottom:20px;}
+            .imgcapt    {font-family:'Times New Roman';
+                        font-size:20px;}
+            .main       {display:flex;
+                        gap:40px;
+                        align-items:flex-start;}
+            .calendar   {width:500px;
+                        padding:10px;
+                        border-radius:10px;
+                        text-align:center;
+                        background: darkkhaki;}
+            .header     {display:flex;
+                        justify-content:space-between;
+                        align-items:center;}
+            .days,.dates{display:grid;
+                        grid-template-columns:repeat(7,1fr);}
+            .days div   {font-weight:bold;}
+            .dates div  {padding:10px;
+                        margin:2px;
+                        background-color: azure;
+                        border-radius:5px;
+                        cursor:pointer;}
+            .dates div:hover{background-color: aquamarine;}
+            .selected {background-color: orange !important;}
         </style>
     </head>
     <body>
         <h1>Doctor Selection</h1>
+        <div class="main"></div>
         <div id="container"></div>
             <script>
                 let doctors = [
@@ -43,6 +67,68 @@
                     `;
                  }      
             </script>
-   
+        <div 
+            class="calendar">
+            <div 
+                class="header">
+                <button onclick="prevMonth()">Previous Month</button>
+                <h2 id="monthYear"></h2>
+                <button onclick="nextMonth()">Next Month</button>
+            </div>
+            <div class="days">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+            <div id="dates" class="dates"></div>
+        </div>
+        <script>
+            let currentDate= new Date();
+            function renderCalendar()
+            {
+                const dates=document.getElementById("dates");
+                const monthYear=document.getElementById("monthYear");
+                dates.innerHTML="";
+                let year=currentDate.getFullYear();
+                let month=currentDate.getMonth();
+                let firstDay=new Date(year,month,1).getDay();
+                let totalDays=new Date(year,month+1,0).getDate();
+                monthYear.innerText=`${currentDate.toLocaleString("default",
+                {month:"long",year:"numeric"})}`;
+
+                //empty spaces before start
+                for(let i=0;i<firstDay;i++)
+                {dates.innerHTML+=`<div></div>`;}
+
+                //actual dates
+                for (let i=1;i<=totalDays;i++)
+                {
+                    dates.innerHTML+=`<div onclick="selectDate(${i})">${i}</div>`;
+                }
+            }
+                function prevMonth()
+                {
+                    currentDate.setMonth(currentDate.getMonth()-1);
+                    renderCalendar();
+                }
+
+                function nextMonth()
+                {
+                    currentDate.setMonth(currentDate.getMonth()+1);
+                    renderCalendar();
+                }
+
+                function selectDate(day)
+                {
+                    alert("Selected date: " + day + " " + currentDate.toLocaleString("default",{month:"long",year:"numeric"}));
+                }
+                
+                renderCalendar();
+
+        </script>
     </body>
 </html>
