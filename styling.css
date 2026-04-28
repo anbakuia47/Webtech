@@ -21,8 +21,15 @@ ul li a:hover {
 }
 
 #mainhomepage {
-  background-image: url("img/bannerbesar.png");
-  padding-top: 2000px;
-  padding-bottom: 2000px;
+  background-image: url(img/bannerbesar.png);
+  background-size: cover;        
+  background-position: center;   
+  background-repeat: no-repeat;
+  height: 100vh;
   text-align: left;
+}
+
+.texthomepg {
+  color: antiquewhite;
+  font-family: Arial, Helvetica, sans-serif;
 }
