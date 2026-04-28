@@ -5,6 +5,46 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Appointment</title>
         <style>
+
+            *{
+                margin:0;
+                padding:0;
+                box-sizing:border-box;
+            }
+
+            body{
+            margin:0;
+            }
+
+            .navigator{
+             position: sticky;
+              top: 0;
+              z-index: 1000;
+            }
+
+            .navigator ul{
+              margin: 0;
+              padding: 0;
+              list-style-type: none;
+              background-color:rgb(73, 136, 117);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+
+            ul li a {
+                font-size: larger;
+              display: flex;
+              color: white;
+              padding: 14px 16px;
+              text-decoration: none;
+            }
+
+            ul li a:hover {
+              background-color:rgb(59, 109, 94);
+            }
+            /*navi bar styling*/
+
             .container {width:300px;
                         margin:20px;
                         background-color: cyan; 
@@ -77,6 +117,19 @@
         </style>
     </head>
     <body>
+        <div class="navigator"> <!--navigation across website-->
+        
+        <ul>
+        <li class="logo"></li><a href="homepage.html"><img src="img/logo.png" alt="To homepage" style="width:42px;height:42px;"></a></li>
+        <li><a href="homepage.html#about-us">About Us</a></li>
+        <li><a href="location.html">Location</a></li>
+        <li><a href="app.html">Appointment</a></li>
+        <li><a href="#queue">Queue</a></li>
+        <li><a href="#ask-us">Ask Us</a></li>
+        </ul>
+        </div>
+
+
         <h1>Doctor Selection</h1>
         <select id="filter" onchange="filterDoctors()">
         <option class="option" value="all">All</option>
