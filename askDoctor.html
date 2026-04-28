@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ask Doctor</title>
+
+<style>
+body {
+    font-family: Arial;
+    margin: 0;
+    background: #eee;
+}
+
+/* NAVBAR */
+.navbar {
+    background: #2f7f8a;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    background: black;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.lang {
+    margin-left: auto;
+    color: white;
+}
+
+/* CONTENT */
+.content {
+    padding: 30px;
+}
+
+input {
+    padding: 10px;
+    width: 300px;
+}
+
+button {
+    padding: 10px 20px;
+    background: #3e8c9c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.category button {
+    background: black;
+    margin: 5px;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo"></div>
+    <a href="homepage.html">About Us</a>
+    <a href="location.html">Location</a>
+    <a href="app.html">Appointment</a>
+    <a href="queue.html">Queue</a>
+    <a href="askDoctor.html">Ask Us</a>
+    <div class="lang">A | EN | BM</div>
+</div>
+
+<div class="content">
+
+<h2>Ask us anything</h2>
+
+<input type="text" id="question" placeholder="Type your question...">
+<button onclick="submitQuestion()">Ask a Doctor</button>
+
+<h3>Categories:</h3>
+
+<div class="category">
+    <button>Gastric</button>
+    <button>Diabetes</button>
+    <button>Heart Attack</button>
+    <button>Allergy</button>
+    <button>Pregnancy</button>
+    <button>Period</button>
+    <button>Infertility</button>
+</div>
+
+<br>
+
+<textarea id="output" rows="5" cols="50" placeholder="Doctor reply here..."></textarea>
+
+</div>
+
+<script>
+function submitQuestion() {
+    let q = document.getElementById("question").value;
+
+    if(q === "") {
+        alert("Please enter your question!");
+    } else {
+        document.getElementById("output").value = "Doctor will reply soon...";
+    }
+}
+</script>
+
+</body>
+</html>

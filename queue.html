@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Smart Queue System</title>
+
+<style>
+body {
+    font-family: Arial;
+    margin: 0;
+    background: #eee;
+}
+
+/* NAVBAR */
+.navbar {
+    background: #2f7f8a;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    background: black;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.lang {
+    margin-left: auto;
+    color: white;
+}
+
+/* CONTENT */
+.content {
+    padding: 30px;
+}
+
+/* BOX */
+.flex {
+    display: flex;
+    gap: 20px;
+}
+
+.box {
+    background: #3e8c9c;
+    color: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 250px;
+    text-align: center;
+}
+
+/* TYPE COLOR */
+.emergency { background: #c0392b; }
+.specialist { background: #8e44ad; }
+.consultation { background: #f39c12; }
+.checkup { background: #3498db; }
+
+button {
+    margin-top: 20px;
+    padding: 10px 15px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="logo"></div>
+    <a href="#">About Us</a>
+    <a href="#">Location</a>
+    <a href="#">Appointment</a>
+    <a href="#">Queue</a>
+    <a href="ask.html">Ask Us</a>
+    <div class="lang">A | EN | BM</div>
+</div>
+
+<div class="content">
+
+<h2>SMART APPOINTMENT QUEUE</h2>
+
+<div class="flex">
+
+    <!-- YOUR INFO -->
+    <div class="box" id="yourBox">
+        <h3>Your Info</h3>
+        <p>Room: <span id="room"></span></p>
+        <p>Doctor: <span id="doctor"></span></p>
+        <p>Queue No: <span id="yourNum"></span></p>
+        <p>Type: <span id="yourType"></span></p>
+    </div>
+
+    <!-- CURRENT -->
+    <div class="box">
+        <h3>Current Number</h3>
+        <p id="current"></p>
+    </div>
+
+    <!-- LATEST -->
+    <div class="box">
+        <h3>Latest Queue</h3>
+        <p id="latest"></p>
+    </div>
+
+</div>
+
+<br>
+<h3>Estimated Waiting Time: <span id="time"></span></h3>
+
+<button onclick="generateQueue()">Generate New Queue</button>
+
+</div>
+
+<script>
+
+// appointment duration
+function getTime(type) {
+    if(type === "checkup") return 10;
+    if(type === "consultation") return 15;
+    if(type === "specialist") return 30;
+    if(type === "emergency") return 45;
+}
+
+// random type
+function randomType() {
+    let types = ["checkup","consultation","specialist","emergency"];
+    return types[Math.floor(Math.random()*types.length)];
+}
+
+// generate system
+function generateQueue() {
+
+    let current = 12;
+    let yourNumber = Math.floor(Math.random()*10) + 15;
+
+    let queue = [];
+
+    // generate queue sebelum kau
+    for(let i = current+1; i < yourNumber; i++) {
+        queue.push({
+            num: i,
+            type: randomType()
+        });
+    }
+
+    // your type
+    let yourType = randomType();
+
+    // kira masa
+    let totalTime = 0;
+
+    for(let i = 0; i < queue.length; i++) {
+        totalTime += getTime(queue[i].type);
+    }
+
+    // display
+    document.getElementById("room").innerHTML = "101";
+    document.getElementById("doctor").innerHTML = "Dr Ali";
+    document.getElementById("yourNum").innerHTML = yourNumber;
+    document.getElementById("yourType").innerHTML = yourType;
+    document.getElementById("current").innerHTML = current;
+    document.getElementById("latest").innerHTML = yourNumber;
+    document.getElementById("time").innerHTML = totalTime + " minutes";
+
+    // tukar warna ikut type
+    let box = document.getElementById("yourBox");
+    box.className = "box " + yourType;
+}
+
+// auto run
+generateQueue();
+
+</script>
+
+</body>
+</html>
