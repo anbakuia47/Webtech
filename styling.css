@@ -19,3 +19,11 @@ ul li a {
 ul li a:hover {
   background-color: #111111;
 }
+
+#mainhomepage {
+  background-image: url("img/bannerbesar.png");
+  padding-top: 2000px;
+  padding-bottom: 2000px;
+  text-align: left;
+  
+}
