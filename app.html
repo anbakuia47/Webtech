@@ -7,10 +7,13 @@
         <style>
             .container {width:300px;
                         margin:20px;
-                        background-color: cyan; 
+                        background-color: rgb(147, 233, 233); 
                         text-align:center;
-                        border:3px solid black;}
-            #container  {display:flex;
+                        border:3px solid black;
+                        transition:0.2s;}
+            .container:hover {cursor: pointer;
+                            transform: scale(1.03);}
+            #doctorList {display:flex;
                         gap:20px;
                         flex-wrap:wrap;
                         justify-content: center;
@@ -21,7 +24,7 @@
                         align-items: flex-start;
                         justify-content: center;
                         flex-wrap: wrap;}
-            .doc_img    {border:1px darkgray;
+            .doc_img    {border:1px solid darkgray;
                         margin-top:20px;
                         margin-bottom:20px;}
             .imgcapt    {font-family:'Times New Roman';
@@ -36,13 +39,12 @@
                         align-items:center;}
             .days,.dates{display:grid;
                         grid-template-columns:repeat(7,1fr);}
-            .days div   {font-weight:bold;}
             .dates div  {padding:10px;
                         margin:2px;
                         background-color: azure;
                         border-radius:5px;
                         cursor:pointer;}
-            .dates div:hover{background-color: aquamarine;}
+            .dates div:hover{background-color: rgb(62, 201, 154);}
             .selected   {background-color: orange !important;}
             form        {background-color: lightgoldenrodyellow;
                         margin-top: 20px;
@@ -51,33 +53,35 @@
                         border: 2px solid black;
                         border-radius: 10px;
                         width:450px;}
-            input[type="text"], input[type="email"], input[type="date"] 
-                        {           
-                        width: 80%;
+            input[type="text"],input[type="email"],input[type="date"]       
+                        {width: 80%;
                         padding: 8px;
                         margin: 10px 0;
                         border: 1px solid #ccc;
                         border-radius: 4px;}
             input[type="submit"] 
-                        {color: white;
-                        padding: 10px 20px;
-                        border: none;
-                        border-radius: 4px;
+                        {border-radius: 4px;
                         cursor: pointer;}
-            input[type="submit"]:hover
-                        {background-color: cyan;}
-            #docfilter  {margin-bottom:20px;
-                        padding:5px;
-                        border:1px solid #ccc;
-                        border-radius:4px;
-                        width:200px;}
-            .option:hover {background-color: lightskyblue;}
-            #filter {padding: 8px;
-                    margin-bottom: 20px;}
+            .radio-group{display: flex;
+                        justify-content: center;
+                        gap: 20px;
+                        margin: 10px 0;
+                        flex-wrap:nowrap;}
+            .radio-group label {display: flex;
+                        align-items: center;
+                        gap: 5px;
+                        cursor: pointer;
+                        white-space: nowrap;}
+            #filter     {padding: 8px;
+                        margin-bottom: 20px;}
+            .selectedDoctor {background-color:rgb(190, 190, 229);
+                            transform: scale(1.05);
+                            transition: 0.2s;}
         </style>
     </head>
     <body>
-        <h1>Doctor Selection</h1>
+        <h1>Appointment</h1>
+        <h2>Select a Doctor</h2>
         <select id="filter" onchange="filterDoctors()">
         <option class="option" value="all">All</option>
         <option class="option" value="Surgeon">Surgeon</option>
@@ -86,41 +90,48 @@
         <option class="option" value="Dermatologist">Dermatologist</option>
         <option class="option" value="Neurologist">Neurologist</option>
 </select>
-        <div id="container"></div>
+        <div id="doctorList"></div>
             <script>
-                <!-- Doctor data -->
+                //Doctor's data
                 let doctors = [
                     {name: "Dr. Wazid",
                      speciality: "Surgeon",
-                     image: "doc_image/doc1.jpeg"},
+                     image: "doc_image/doc1.jpeg",
+                    caption:"Available from 8:30am to 1:30pm"},
 
                     {name: "Dr. Smith",
                      speciality: "Cardiologist",
-                     image: "doc_image/doc2.jpeg"},
+                     image: "doc_image/doc2.jpeg",
+                    caption:"Available from 11:00am to 4:00pm"},
 
                     {name: "Dr. Lee",
                     speciality: "Pediatrician",
-                    image:"doc_image/doc3.jpeg"},
+                    image:"doc_image/doc3.jpeg",
+                    caption:"Available from 1:00pm to 6:00pm"},
 
                     {name:"Dr. Laura",
                     speciality: "Dermatologist",
-                    image:"doc_image/doc4.jpeg"},
+                    image:"doc_image/doc4.jpeg",
+                    caption:"Available from 3:00pm to 8:00pm"},
 
                     {name:"Dr. Nina",
                     speciality: "Neurologist",
-                    image:"doc_image/doc5.jpeg"},
+                    image:"doc_image/doc5.jpeg",
+                    caption:"Available from 6:00pm to 12:00am"},
+
+                    {name:"Dr. Omar",
+                    speciality: "Surgeon",
+                    image:"doc_image/doc6.jpeg",
+                    caption:"Available from 10:00am to 3:00pm"},
+
+                    {name:"Dr. Anna",
+                    speciality: "Cardiologist",
+                    image:"doc_image/doc7.jpeg",
+                    caption:"Available from 9:00am to 2:00pm"},
+                    
+                    {name:"Dr. Mel",
                 ];
-                // Loop for doctor's data
-                for (let i=0;i<doctors.length;i++) 
-                {
-                    document.getElementById("container").innerHTML += `
-                        <div class="container">
-                            <img class="doc_img" src="${doctors[i].image}" alt="${doctors[i].name}" width="200" height="200"><br>
-                            <h3 class="imgcapt">${doctors[i].name}</h3>
-                            <p>${doctors[i].speciality}</p>
-                        </div>
-                    `;
-                 }
+                displayDoctors(doctors);
                  //Filter for doctor's speciality
                 function filterDoctors() 
                 {
@@ -139,20 +150,31 @@
                 }
                 function displayDoctors(list) 
                 {
-                    let container = document.getElementById("container");
+                    let container = document.getElementById("doctorList");
                     container.innerHTML = "";
 
                     for (let i = 0; i < list.length; i++) 
                     {
                         container.innerHTML += `
-                        <div class="container">
+                        <div class="container" onclick="selectDoctor('${list[i].name}',this)">
                             <img class="doc_img" src="${list[i].image}" width="200" height="200"><br>
                             <h3 class="imgcapt">${list[i].name}</h3>
                             <p>${list[i].speciality}</p>
                         </div>`;
                     }
-            }
-        
+                }
+                function selectDoctor(name,element)
+                {
+                     // remove highlight from all doctors
+                    let all = document.querySelectorAll(".container");
+                    all.forEach(d => d.classList.remove("selectedDoctor"));
+
+                    // highlight the chosen doctor
+                    element.classList.add("selectedDoctor");
+
+                    //insert the doctor's name into the form
+                    document.getElementById("docname").value = name;
+                }
             </script>
             <div class="bottom">
             <div class="calendar">
@@ -173,24 +195,32 @@
             <div id="dates" class="dates"></div>
         </div>
         <!-- Appointment Form -->
-        <form action="">
+        <form method="get" action="appointment_form.php">
             <h2>Appointment Form</h2>
             <label for="Full Name">Full Name</label><br>
             <input type="text" name="fname"><br>
             <label for="IC Number">IC Number</label><br>
             <input type="text" name="icno"><br>
-            <label for="Gender">Gender</label><br>
-            <input type="radio" name="gender" value="male"> Male
-            <input type="radio" name="gender" value="female"> Female<br>  
+            <label>Gender</label><br>
+            <div class="radio-group">
+                <label><input type="radio" name="gender" value="male"> Male</label>
+                <label><input type="radio" name="gender" value="female"> Female</label>
+            </div>  
             <label for="Date of Birth">Date of Birth</label><br>
             <input type="date" name="dob"><br>
             <label for="Telephone No">Telephone No</label><br>
             <input type="text" name="telno"><br>
             <label for="Email">Email</label><br>
             <input type="email" name="email"><br>
-            <label for="Appointment">Appointment</label><br>
-            <input type="radio" name="app" value="Online Session"> Online Session
-            <input type="radio" name="app" value="Physical Session"> Physical Session<br>
+            <label for="Doctor">Doctor's Name</label><br>
+            <input type="text" id="docname"name="docname"><br>
+            <label for="Appointment Date">Appointment Date</label><br>
+            <input type="date" id="appointmentDate" name="app_date"><br>
+            <label>Appointment</label><br>
+            <div class="radio-group">
+                <label><input type="radio" name="app" value="Online Session"> Online Session</label>
+                <label><input type="radio" name="app" value="Physical Session"> Physical Session</label>
+            </div>
             <input type="submit" value="Submit">
         </form>
         </div>
@@ -233,7 +263,10 @@
 
                 function selectDate(day)
                 {
-                    alert("Selected date: " + day + " " + currentDate.toLocaleString("default",{month:"long",year:"numeric"}));
+                    let month = currentDate.getMonth() + 1; // sebab month start dari 0
+                    let year = currentDate.getFullYear();
+                    let formattedDate = year + "-" + String(month).padStart(2, '0') + "-" + String(day).padStart(2, '0');
+                    document.getElementById("appointmentDate").value = formattedDate;
                 }
                 
                 renderCalendar();
