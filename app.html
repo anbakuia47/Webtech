@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Appointment</title>
+        <style>
+
+            *{
+                margin:0;
+                padding:0;
+                box-sizing:border-box;
+            }
+
+            body{
+            margin:0;
+            }
+
+            .navigator{
+             position: sticky;
+              top: 0;
+              z-index: 1000;
+            }
+
+            .navigator ul{
+              margin: 0;
+              padding: 0;
+              list-style-type: none;
+              background-color:rgb(73, 136, 117);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+
+            ul li a {
+                font-size: larger;
+              display: flex;
+              color: white;
+              padding: 14px 16px;
+              text-decoration: none;
+            }
+
+            ul li a:hover {
+              background-color:rgb(59, 109, 94);
+            }
+            /*navi bar styling*/
+
+            .container {width:300px;
+                        margin:20px;
+                        background-color: cyan; 
+                        text-align:center;
+                        border:3px solid black;}
+            #container  {display:flex;
+                        gap:20px;
+                        flex-wrap:wrap;
+                        justify-content: center;
+                        margin-bottom: 40px;}
+            .bottom     {display: flex;
+                        flex-direction: row;
+                        gap: 40px;
+                        align-items: flex-start;
+                        justify-content: center;
+                        flex-wrap: wrap;}
+            .doc_img    {border:1px darkgray;
+                        margin-top:20px;
+                        margin-bottom:20px;}
+            .imgcapt    {font-family:'Times New Roman';
+                        font-size:20px;}
+            .calendar   {width:500px;
+                        padding:10px;
+                        border-radius:10px;
+                        text-align:center;
+                        background: darkkhaki;}
+            .header     {display:flex;
+                        justify-content:space-between;
+                        align-items:center;}
+            .days,.dates{display:grid;
+                        grid-template-columns:repeat(7,1fr);}
+            .days div   {font-weight:bold;}
+            .dates div  {padding:10px;
+                        margin:2px;
+                        background-color: azure;
+                        border-radius:5px;
+                        cursor:pointer;}
+            .dates div:hover{background-color: aquamarine;}
+            .selected   {background-color: orange !important;}
+            form        {background-color: lightgoldenrodyellow;
+                        margin-top: 20px;
+                        padding: 20px;
+                        text-align:center;
+                        border: 2px solid black;
+                        border-radius: 10px;
+                        width:450px;}
+            input[type="text"], input[type="email"], input[type="date"] 
+                        {           
+                        width: 80%;
+                        padding: 8px;
+                        margin: 10px 0;
+                        border: 1px solid #ccc;
+                        border-radius: 4px;}
+            input[type="submit"] 
+                        {color: white;
+                        padding: 10px 20px;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;}
+            input[type="submit"]:hover
+                        {background-color: cyan;}
+            #docfilter  {margin-bottom:20px;
+                        padding:5px;
+                        border:1px solid #ccc;
+                        border-radius:4px;
+                        width:200px;}
+            .option:hover {background-color: lightskyblue;}
+            #filter {padding: 8px;
+                    margin-bottom: 20px;}
+        </style>
+    </head>
+    <body>
+        <div class="navigator"> <!--navigation across website-->
+        
+        <ul>
+        <li class="logo"></li><a href="homepage.html"><img src="img/logo.png" alt="To homepage" style="width:42px;height:42px;"></a></li>
+        <li><a href="homepage.html#about-us">About Us</a></li>
+        <li><a href="location.html">Location</a></li>
+        <li><a href="app.html">Appointment</a></li>
+        <li><a href="#queue">Queue</a></li>
+        <li><a href="#ask-us">Ask Us</a></li>
+        </ul>
+        </div>
+
+
+        <h1>Doctor Selection</h1>
+        <select id="filter" onchange="filterDoctors()">
+        <option class="option" value="all">All</option>
+        <option class="option" value="Surgeon">Surgeon</option>
+        <option class="option" value="Cardiologist">Cardiologist</option>
+        <option class="option" value="Pediatrician">Pediatrician</option>
+        <option class="option" value="Dermatologist">Dermatologist</option>
+        <option class="option" value="Neurologist">Neurologist</option>
+</select>
+        <div id="container"></div>
+            <script>
+                <!-- Doctor data -->
+                let doctors = [
+                    {name: "Dr. Wazid",
+                     speciality: "Surgeon",
+                     image: "doc_image/doc1.jpeg"},
+
+                    {name: "Dr. Smith",
+                     speciality: "Cardiologist",
+                     image: "doc_image/doc2.jpeg"},
+
+                    {name: "Dr. Lee",
+                    speciality: "Pediatrician",
+                    image:"doc_image/doc3.jpeg"},
+
+                    {name:"Dr. Laura",
+                    speciality: "Dermatologist",
+                    image:"doc_image/doc4.jpeg"},
+
+                    {name:"Dr. Nina",
+                    speciality: "Neurologist",
+                    image:"doc_image/doc5.jpeg"},
+                ];
+                // Loop for doctor's data
+                for (let i=0;i<doctors.length;i++) 
+                {
+                    document.getElementById("container").innerHTML += `
+                        <div class="container">
+                            <img class="doc_img" src="${doctors[i].image}" alt="${doctors[i].name}" width="200" height="200"><br>
+                            <h3 class="imgcapt">${doctors[i].name}</h3>
+                            <p>${doctors[i].speciality}</p>
+                        </div>
+                    `;
+                 }
+                 //Filter for doctor's speciality
+                function filterDoctors() 
+                {
+                    let selected = document.getElementById("filter").value;
+
+                    if (selected === "all") 
+                    {
+                        displayDoctors(doctors);
+                    } 
+
+                    else 
+                    {
+                        let filtered = doctors.filter(doc => doc.speciality === selected);
+                        displayDoctors(filtered);
+                    }
+                }
+                function displayDoctors(list) 
+                {
+                    let container = document.getElementById("container");
+                    container.innerHTML = "";
+
+                    for (let i = 0; i < list.length; i++) 
+                    {
+                        container.innerHTML += `
+                        <div class="container">
+                            <img class="doc_img" src="${list[i].image}" width="200" height="200"><br>
+                            <h3 class="imgcapt">${list[i].name}</h3>
+                            <p>${list[i].speciality}</p>
+                        </div>`;
+                    }
+            }
+        
+            </script>
+            <div class="bottom">
+            <div class="calendar">
+                <div class="header">
+                <button onclick="prevMonth()">Previous Month</button>
+                <h2 id="monthYear"></h2>
+                <button onclick="nextMonth()">Next Month</button>
+                </div>
+            <div class="days">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+            <div id="dates" class="dates"></div>
+        </div>
+        <!-- Appointment Form -->
+        <form action="">
+            <h2>Appointment Form</h2>
+            <label for="Full Name">Full Name</label><br>
+            <input type="text" name="fname"><br>
+            <label for="IC Number">IC Number</label><br>
+            <input type="text" name="icno"><br>
+            <label for="Gender">Gender</label><br>
+            <input type="radio" name="gender" value="male"> Male
+            <input type="radio" name="gender" value="female"> Female<br>  
+            <label for="Date of Birth">Date of Birth</label><br>
+            <input type="date" name="dob"><br>
+            <label for="Telephone No">Telephone No</label><br>
+            <input type="text" name="telno"><br>
+            <label for="Email">Email</label><br>
+            <input type="email" name="email"><br>
+            <label for="Appointment">Appointment</label><br>
+            <input type="radio" name="app" value="Online Session"> Online Session
+            <input type="radio" name="app" value="Physical Session"> Physical Session<br>
+            <input type="submit" value="Submit">
+        </form>
+        </div>
+        <script>
+            //Calendar functionality
+            let currentDate= new Date();
+            function renderCalendar()
+            {
+                const dates=document.getElementById("dates");
+                const monthYear=document.getElementById("monthYear");
+                dates.innerHTML="";
+                let year=currentDate.getFullYear();
+                let month=currentDate.getMonth();
+                let firstDay=new Date(year,month,1).getDay();
+                let totalDays=new Date(year,month+1,0).getDate();
+                monthYear.innerText=`${currentDate.toLocaleString("default",
+                {month:"long",year:"numeric"})}`;
+
+                //empty spaces before start
+                for(let i=0;i<firstDay;i++)
+                {dates.innerHTML+=`<div></div>`;}
+
+                //actual dates
+                for (let i=1;i<=totalDays;i++)
+                {
+                    dates.innerHTML+=`<div onclick="selectDate(${i})">${i}</div>`;
+                }
+            }
+                function prevMonth()
+                {
+                    currentDate.setMonth(currentDate.getMonth()-1);
+                    renderCalendar();
+                }
+
+                function nextMonth()
+                {
+                    currentDate.setMonth(currentDate.getMonth()+1);
+                    renderCalendar();
+                }
+
+                function selectDate(day)
+                {
+                    alert("Selected date: " + day + " " + currentDate.toLocaleString("default",{month:"long",year:"numeric"}));
+                }
+                
+                renderCalendar();
+
+        </script>
+        
+    </body>
+</html>
