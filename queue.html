@@ -11,32 +11,43 @@ body {
     background: #eee;
 }
 
-/* NAVBAR */
 .navbar {
     background: #2f7f8a;
     padding: 15px;
     display: flex;
     align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .navbar a {
     color: white;
-    margin: 0 15px;
     text-decoration: none;
+    padding: 10px;
+    margin: 0;
 }
 
 .logo {
     width: 40px;
     height: 40px;
-    background: black;
     border-radius: 50%;
     margin-right: 20px;
+}
+
+.logo:hover{
+  background-color:#245e66;
 }
 
 .lang {
     margin-left: auto;
     color: white;
 }
+
+.list:hover {
+  background-color:#245e66;
+}
+/*navi bar styling*/
 
 /* CONTENT */
 .content {
@@ -75,14 +86,14 @@ button {
 <body>
 
 <div class="navbar">
-    <div class="logo"></div>
-    <a href="#">About Us</a>
-    <a href="#">Location</a>
-    <a href="#">Appointment</a>
-    <a href="#">Queue</a>
-    <a href="ask.html">Ask Us</a>
-    <div class="lang">A | EN | BM</div>
-</div>
+            <div class="logo"><a href="homepage.html"><img src="img/logo.png" alt="To homepage" style="width:42px;height:42px;"></a></div>
+            <a href="homepage.html#about-us" class="list">About Us</a>
+            <a href="location.html" class="list">Location</a>
+            <a href="app.html" class="list">Appointment</a>
+            <a href="queue.html" class="list">Queue</a>
+            <a href="askDoctor.html" class="list">Ask Us</a>
+            <div class="lang">A | EN | BM</div>
+        </div>
 
 <div class="content">
 
