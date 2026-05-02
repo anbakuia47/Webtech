@@ -4,135 +4,86 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Appointment</title>
-        <style>
-            .container {width:300px;
-                        margin:20px;
-                        background-color: rgb(147, 233, 233); 
-                        text-align:center;
-                        border:3px solid black;
-                        transition:0.2s;}
-            .container:hover {cursor: pointer;
-                            transform: scale(1.03);}
-            #doctorList {display:flex;
-                        gap:20px;
-                        flex-wrap:wrap;
-                        justify-content: center;
-                        margin-bottom: 40px;}
-            .bottom     {display: flex;
-                        flex-direction: row;
-                        gap: 40px;
-                        align-items: flex-start;
-                        justify-content: center;
-                        flex-wrap: wrap;}
-            .doc_img    {border:1px solid darkgray;
-                        margin-top:20px;
-                        margin-bottom:20px;}
-            .imgcapt    {font-family:'Times New Roman';
-                        font-size:20px;}
-            .calendar   {width:500px;
-                        padding:10px;
-                        border-radius:10px;
-                        text-align:center;
-                        background: darkkhaki;}
-            .header     {display:flex;
-                        justify-content:space-between;
-                        align-items:center;}
-            .days,.dates{display:grid;
-                        grid-template-columns:repeat(7,1fr);}
-            .dates div  {padding:10px;
-                        margin:2px;
-                        background-color: azure;
-                        border-radius:5px;
-                        cursor:pointer;}
-            .dates div:hover{background-color: rgb(62, 201, 154);}
-            .selected   {background-color: orange !important;}
-            form        {background-color: lightgoldenrodyellow;
-                        margin-top: 20px;
-                        padding: 20px;
-                        text-align:center;
-                        border: 2px solid black;
-                        border-radius: 10px;
-                        width:450px;}
-            input[type="text"],input[type="email"],input[type="date"]       
-                        {width: 80%;
-                        padding: 8px;
-                        margin: 10px 0;
-                        border: 1px solid #ccc;
-                        border-radius: 4px;}
-            input[type="submit"] 
-                        {border-radius: 4px;
-                        cursor: pointer;}
-            .radio-group{display: flex;
-                        justify-content: center;
-                        gap: 20px;
-                        margin: 10px 0;
-                        flex-wrap:nowrap;}
-            .radio-group label {display: flex;
-                        align-items: center;
-                        gap: 5px;
-                        cursor: pointer;
-                        white-space: nowrap;}
-            #filter     {padding: 8px;
-                        margin-bottom: 20px;}
-            .selectedDoctor {background-color:rgb(190, 190, 229);
-                            transform: scale(1.05);
-                            transition: 0.2s;}
-        </style>
+        <link rel="stylesheet" href="app.css">
     </head>
     <body>
+        <!-- Navigation Bar -->
+        <div class="navbar">
+            <div class="logo"></div>
+                <a href="homepage.html">About Us</a>
+                <a href="location.html">Location</a>
+                <a href="app.html">Appointment</a>
+                <a href="queue.html">Queue</a>
+                <a href="askDoctor.html">Ask Us</a>
+                <div class="lang">A | EN | BM</div>
+        </div>
+        <!--Doctor's Filter-->
         <h1>Appointment</h1>
-        <h2>Select a Doctor</h2>
+        <h3>Choose a Doctor:</h3>
         <select id="filter" onchange="filterDoctors()">
-        <option class="option" value="all">All</option>
-        <option class="option" value="Surgeon">Surgeon</option>
-        <option class="option" value="Cardiologist">Cardiologist</option>
-        <option class="option" value="Pediatrician">Pediatrician</option>
-        <option class="option" value="Dermatologist">Dermatologist</option>
-        <option class="option" value="Neurologist">Neurologist</option>
-</select>
+        <option value="all">All</option>
+        <option value="Surgeon">Surgeon</option>
+        <option value="Cardiologist">Cardiologist</option>
+        <option value="Pediatrician">Pediatrician</option>
+        <option value="Dermatologist">Dermatologist</option>
+        <option value="Neurologist">Neurologist</option>
+        <option value="Dentist">Dentist</option>
+        </select>
         <div id="doctorList"></div>
             <script>
                 //Doctor's data
                 let doctors = [
-                    {name: "Dr. Wazid",
+                    {name: "Dr. Luke",
                      speciality: "Surgeon",
                      image: "doc_image/doc1.jpeg",
-                    caption:"Available from 8:30am to 1:30pm"},
+                     caption:"Available from 8:30am to 1:30pm",
+                    availability: { start: "08:30", end: "13:30" }},
 
                     {name: "Dr. Smith",
                      speciality: "Cardiologist",
                      image: "doc_image/doc2.jpeg",
-                    caption:"Available from 11:00am to 4:00pm"},
+                     caption:"Available from 11:00am to 4:00pm",
+                    availability: { start: "11:00", end: "16:00" }},
 
                     {name: "Dr. Lee",
-                    speciality: "Pediatrician",
-                    image:"doc_image/doc3.jpeg",
-                    caption:"Available from 1:00pm to 6:00pm"},
+                     speciality: "Pediatrician",
+                     image:"doc_image/doc3.jpeg",
+                     caption:"Available from 1:00pm to 6:00pm",
+                    availability: { start: "13:00", end: "18:00" }},
 
                     {name:"Dr. Laura",
-                    speciality: "Dermatologist",
-                    image:"doc_image/doc4.jpeg",
-                    caption:"Available from 3:00pm to 8:00pm"},
+                     speciality: "Dermatologist",
+                     image:"doc_image/doc4.jpeg",
+                     caption:"Available from 3:00pm to 8:00pm",
+                    availability: { start: "15:00", end: "20:00" }},
 
                     {name:"Dr. Nina",
                     speciality: "Neurologist",
                     image:"doc_image/doc5.jpeg",
-                    caption:"Available from 6:00pm to 12:00am"},
+                    caption:"Available from 6:00pm to 12:00am",
+                    availability: { start: "18:00", end: "00:00" }},
 
                     {name:"Dr. Omar",
-                    speciality: "Surgeon",
-                    image:"doc_image/doc6.jpeg",
-                    caption:"Available from 10:00am to 3:00pm"},
+                     speciality: "Surgeon",
+                     image:"doc_image/doc6.jpeg",
+                     caption:"Available from 10:00pm to 3:00am",
+                     availability: { start: "22:00", end: "03:00" }},
 
                     {name:"Dr. Anna",
-                    speciality: "Cardiologist",
-                    image:"doc_image/doc7.jpeg",
-                    caption:"Available from 9:00am to 2:00pm"},
-                    
+                     speciality: "Cardiologist",
+                     image:"doc_image/doc7.jpeg",
+                     caption:"Available from 12:00am to 5:00am",
+                     availability: { start: "00:00", end: "05:00" }},
+
                     {name:"Dr. Mel",
+                    speciality:"Dentist",
+                    image:"doc_image/doc8.jpeg",
+                    caption:"Available from 4:00am to 9:00am",
+                    availability: { start: "04:00", end: "09:00" }}
+                    
                 ];
                 displayDoctors(doctors);
-                 //Filter for doctor's speciality
+                //Filter for doctor's speciality
                 function filterDoctors() 
                 {
                     let selected = document.getElementById("filter").value;
@@ -160,9 +111,11 @@
                             <img class="doc_img" src="${list[i].image}" width="200" height="200"><br>
                             <h3 class="imgcapt">${list[i].name}</h3>
                             <p>${list[i].speciality}</p>
+                            <p>${list[i].caption}</p>
                         </div>`;
                     }
                 }
+                let selectedDoctor = null;
                 function selectDoctor(name,element)
                 {
                      // remove highlight from all doctors
@@ -174,6 +127,7 @@
 
                     //insert the doctor's name into the form
                     document.getElementById("docname").value = name;
+                    selectedDoctor = doctors.find(d => d.name === name);
                 }
             </script>
             <div class="bottom">
@@ -195,40 +149,77 @@
             <div id="dates" class="dates"></div>
         </div>
         <!-- Appointment Form -->
-        <form method="get" action="appointment_form.php">
+        <form id="appointmentForm">
             <h2>Appointment Form</h2>
-            <label for="Full Name">Full Name</label><br>
-            <input type="text" name="fname"><br>
-            <label for="IC Number">IC Number</label><br>
-            <input type="text" name="icno"><br>
+            <label>Full Name</label><br>
+            <input type="text" name="fname" required><br>
+            <label>IC Number</label><br>
+            <input type="text" name="icno" required><br>
             <label>Gender</label><br>
             <div class="radio-group">
-                <label><input type="radio" name="gender" value="male"> Male</label>
+                <label><input type="radio" name="gender" value="male" required> Male</label>
                 <label><input type="radio" name="gender" value="female"> Female</label>
             </div>  
-            <label for="Date of Birth">Date of Birth</label><br>
-            <input type="date" name="dob"><br>
-            <label for="Telephone No">Telephone No</label><br>
-            <input type="text" name="telno"><br>
-            <label for="Email">Email</label><br>
-            <input type="email" name="email"><br>
-            <label for="Doctor">Doctor's Name</label><br>
-            <input type="text" id="docname"name="docname"><br>
-            <label for="Appointment Date">Appointment Date</label><br>
-            <input type="date" id="appointmentDate" name="app_date"><br>
+            <label>Date of Birth</label><br>
+            <input type="date" name="dob" required><br>
+            <label>Telephone No</label><br>
+            <input type="text" name="telno" required><br>
+            <label>Email</label><br>
+            <input type="email" name="email" required><br>
+            <label>Doctor's Name</label><br>
+            <input type="text" id="docname" name="docname" readonly><br>
+            <label>Appointment Date</label><br>
+            <input type="date" id="appointmentDate" name="app_date" readonly><br>
+            <label>Time of Appointment</label><br>
+            <input type="time" name="app_time" required><br>
             <label>Appointment</label><br>
             <div class="radio-group">
-                <label><input type="radio" name="app" value="Online Session"> Online Session</label>
+                <label><input type="radio" name="app" value="Online Session" required> Online Session</label>
                 <label><input type="radio" name="app" value="Physical Session"> Physical Session</label>
             </div>
             <input type="submit" value="Submit">
+            <p id="successMsg"></p>
         </form>
         </div>
         <script>
+            document.getElementById("appointmentForm").addEventListener("submit", function(e) 
+            {
+                e.preventDefault(); 
+                let time = document.querySelector("input[name='app_time']").value;
+                if (!selectedDoctor)
+                {
+                    alert("Please select a doctor first!");
+                    return;
+                }
+                let start = selectedDoctor.availability.start;
+                let end = selectedDoctor.availability.end;
+
+                if (start < end) 
+                {
+                    if (time < start || time > end)
+                    {
+                        alert(`Doctor only available between ${start} - ${end}`);
+                        return;
+                    }
+                }
+                else 
+                {
+                    if (!(time >= start || time <= end))
+                    {
+                        alert(`Doctor only available between ${start} - ${end}`);
+                        return;
+                    }
+                }
+
+                // Submitted form message
+                document.getElementById("successMsg").innerText = "Your data has been submitted";
+            });
+
             //Calendar functionality
             let currentDate= new Date();
             function renderCalendar()
             {
+                
                 const dates=document.getElementById("dates");
                 const monthYear=document.getElementById("monthYear");
                 dates.innerHTML="";
@@ -241,12 +232,25 @@
 
                 //empty spaces before start
                 for(let i=0;i<firstDay;i++)
-                {dates.innerHTML+=`<div></div>`;}
+                {
+                    dates.innerHTML+=`<div class="empty"></div>`;
+                }
 
                 //actual dates
+                let today = new Date();
+                today.setHours(0,0,0,0);
                 for (let i=1;i<=totalDays;i++)
                 {
-                    dates.innerHTML+=`<div onclick="selectDate(${i})">${i}</div>`;
+ 
+                    let checkDate = new Date(year, month, i);
+                    if (checkDate < today)  
+                    {
+                        dates.innerHTML += `<div class="empty">${i}</div>`;
+                    }                    
+                    else 
+                    {
+                        dates.innerHTML += `<div onclick="selectDate(${i}, this)">${i}</div>`;
+                    }
                 }
             }
                 function prevMonth()
@@ -261,17 +265,20 @@
                     renderCalendar();
                 }
 
-                function selectDate(day)
+                function selectDate(day, element)
                 {
-                    let month = currentDate.getMonth() + 1; // sebab month start dari 0
+                    let allDates = document.querySelectorAll("#dates div");
+                    allDates.forEach(d => d.classList.remove("selected"));
+                    let month = currentDate.getMonth();
                     let year = currentDate.getFullYear();
-                    let formattedDate = year + "-" + String(month).padStart(2, '0') + "-" + String(day).padStart(2, '0');
+                    element.classList.add("selected");
+                    let formattedDate = year + "-" + 
+                    String(month + 1).padStart(2, '0') + "-" + 
+                    String(day).padStart(2, '0');
                     document.getElementById("appointmentDate").value = formattedDate;
                 }
-                
-                renderCalendar();
 
+                renderCalendar();
         </script>
-        
     </body>
 </html>
