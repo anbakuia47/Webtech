@@ -55,7 +55,6 @@ body.large { font-size: 20px; }
     margin: 0 5px;
     cursor: pointer;
     color: white;
-    transition: 0.2s;
 }
 
 .right span:hover {
@@ -67,26 +66,52 @@ body.large { font-size: 20px; }
     padding: 30px;
 }
 
-/* BOX LAYOUT (cantik & balance) */
+/* FLEX BOX */
 .flex {
     display: flex;
-    gap: 50px;
+    gap: 20px;
     justify-content: center;
     flex-wrap: wrap;
 }
 
+/* BOX */
 .box {
     background: #3e8c9c;
     color: white;
     padding: 25px;
     border-radius: 10px;
     flex: 1;
-    min-width: 220px;
-    max-width: 300px;
-    text-align: center;
+    min-width: 250px;
+    max-width: 320px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    transition: 0.2s;
+    text-align: center;
 }
+
+/* TITLES (BIG & CENTER) */
+.box h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+/* BIG NUMBERS */
+.big-number {
+    font-size: 45px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+/* YOUR QUEUE STYLE */
+.your-number {
+    font-size: 38px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+/* INFO TEXT */
+.info {
+    margin: 5px 0;
+}
+
 </style>
 </head>
 
@@ -109,45 +134,50 @@ body.large { font-size: 20px; }
         <span onclick="setFont('small')">A-</span>
         <span onclick="setFont('medium')">A</span>
         <span onclick="setFont('large')">A+</span>
-        |
-        <span onclick="setLang('en')">EN</span>
-        <span onclick="setLang('bm')">BM</span>
     </div>
 
 </div>
 
 <div class="content">
 
-<h2 id="title">APPOINTMENT QUEUE</h2>
+<h2>APPOINTMENT QUEUE</h2>
 
 <div class="flex">
 
-    <!-- USER INFO -->
+    <!-- YOUR APPOINTMENT -->
     <div class="box">
-        <h3 id="yourText">Your Appointment</h3>
-        <p>Your Queue: <span id="yourNum"></span></p>
-        <p>Room: <span id="room">101</span></p>
-        <p>Doctor: <span id="doctor">Dr Ali</span></p>
-        <p>Your Estimate: <span id="yourEstimate"></span></p>
-        <p>Type: <span id="type"></span></p>
+
+        <h3>Your Appointment</h3>
+
+        <!-- QUEUE NUMBER (TOP BIG) -->
+        <div class="your-number" id="yourNum"></div>
+
+        <div class="info">Room: <span id="room"></span></div>
+        <div class="info">Doctor: Dr Ali</div>
+        <div class="info">Type: <span id="type"></span></div>
+
+        <div class="info"><b>Estimate:</b> <span id="yourEstimate"></span></div>
     </div>
 
     <!-- CURRENT -->
     <div class="box">
-        <h3 id="currentText">Current Number</h3>
-        <p id="current"></p>
+        <h3>Current Number</h3>
+        <div class="big-number" id="current"></div>
     </div>
 
     <!-- LATEST -->
     <div class="box">
-        <h3 id="latestText">Latest Queue</h3>
-        <p id="latest"></p>
+        <h3>Latest Queue</h3>
+        <div class="big-number" id="latest"></div>
     </div>
 
 </div>
 
 <br>
-<h3 id="estimateLabel">Hospital Queue Estimate: <span id="time"></span></h3>
+
+<h3 style="text-align:center;">
+Hospital Queue Estimate: <span id="time"></span>
+</h3>
 
 </div>
 
@@ -156,51 +186,23 @@ body.large { font-size: 20px; }
 // ================= DATA =================
 let yourNumber = 18;
 let current = 12;
-let latest = 25;
-let appointmentType = "Online"; // Online / Walk-in
+let latest = 20;
+
+let appointmentType = "Online"; // Online / Offline
 
 // ================= FONT =================
 function setFont(size) {
     document.body.className = size;
 }
 
-// ================= LANGUAGE =================
-const text = {
-    en: {
-        title: "APPOINTMENT QUEUE",
-        your: "Your Appointment",
-        current: "Current Number",
-        latest: "Latest Queue",
-        estimate: "Hospital Queue Estimate:"
-    },
-    bm: {
-        title: "GILIRAN TEMU JANJI",
-        your: "Temu Janji Anda",
-        current: "Nombor Semasa",
-        latest: "Giliran Terkini",
-        estimate: "Anggaran Masa Hospital:"
-    }
-};
-
-function setLang(lang) {
-    document.getElementById("title").innerHTML = text[lang].title;
-    document.getElementById("yourText").innerHTML = text[lang].your;
-    document.getElementById("currentText").innerHTML = text[lang].current;
-    document.getElementById("latestText").innerHTML = text[lang].latest;
-    document.getElementById("estimateLabel").innerHTML =
-        text[lang].estimate + " <span id='time'></span>";
-    calculateEstimate();
-}
-
 // ================= RANDOM TIME =================
 function getRandomTime() {
-    return Math.floor(Math.random() * 11) + 10; // 10–20 min
+    return Math.floor(Math.random() * 11) + 10;
 }
 
-// ================= CALCULATE =================
+// ================= CALC =================
 function calculateEstimate() {
 
-    // Hospital estimate
     let hospitalWaiting = latest - current;
     let hospitalTime = 0;
 
@@ -208,7 +210,6 @@ function calculateEstimate() {
         hospitalTime += getRandomTime();
     }
 
-    // User estimate
     let userWaiting = yourNumber - current;
     let userTime = 0;
 
@@ -216,20 +217,29 @@ function calculateEstimate() {
         userTime += getRandomTime();
     }
 
-    // display
+
     document.getElementById("time").innerHTML = hospitalTime + " min";
     document.getElementById("yourEstimate").innerHTML = userTime + " min";
 }
 
 // ================= DISPLAY =================
 function updateDisplay() {
+
     document.getElementById("yourNum").innerHTML = yourNumber;
     document.getElementById("current").innerHTML = current;
     document.getElementById("latest").innerHTML = latest;
+
+    // ROOM LOGIC
+    if(appointmentType === "Online") {
+        document.getElementById("room").innerHTML = "-";
+    } else {
+        document.getElementById("room").innerHTML = "101";
+    }
+
     document.getElementById("type").innerHTML = appointmentType;
 }
 
-// ================= AUTO UPDATE =================
+// ================= AUTO =================
 function autoUpdate() {
     if(current < latest) {
         current++;
@@ -239,7 +249,7 @@ function autoUpdate() {
     calculateEstimate();
 }
 
-// ================= INIT =================
+// INIT
 updateDisplay();
 calculateEstimate();
 
