@@ -2,62 +2,77 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Smart Queue System</title>
+<title>Queue System</title>
 
 <style>
 body {
     font-family: Arial;
     margin: 0;
     background: #eee;
+    transition: 0.3s;
 }
 
+/* FONT */
+body.small { font-size: 12px; }
+body.medium { font-size: 16px; }
+body.large { font-size: 20px; }
+
+/* NAVBAR */
 .navbar {
     background: #2f7f8a;
-    padding: 15px;
+    padding: 15px 30px;
     display: flex;
     align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.navbar a {
-    color: white;
-    text-decoration: none;
-    padding: 10px;
-    margin: 0;
+    justify-content: space-between;
 }
 
 .logo {
     width: 40px;
     height: 40px;
+    background: black;
     border-radius: 50%;
-    margin-right: 20px;
 }
 
-.logo:hover{
-  background-color:#245e66;
+/* MENU */
+.menu {
+    display: flex;
+    gap: 40px;
 }
 
-.lang {
-    margin-left: auto;
+.menu a {
     color: white;
+    text-decoration: none;
+    transition: 0.2s;
 }
 
-.list:hover {
-  background-color:#245e66;
+.menu a:hover {
+    color: #ffd700;
+    border-bottom: 2px solid #ffd700;
 }
-/*navi bar styling*/
+
+/* RIGHT */
+.right span {
+    margin: 0 5px;
+    cursor: pointer;
+    color: white;
+    transition: 0.2s;
+}
+
+.right span:hover {
+    color: #ffd700;
+}
 
 /* CONTENT */
 .content {
     padding: 30px;
 }
 
-/* BOX */
+/* BOX LAYOUT (cantik & balance) */
 .flex {
     display: flex;
-    gap: 20px;
+    gap: 50px;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .box {
@@ -65,130 +80,170 @@ body {
     color: white;
     padding: 25px;
     border-radius: 10px;
-    width: 250px;
+    flex: 1;
+    min-width: 220px;
+    max-width: 300px;
     text-align: center;
-}
-
-/* TYPE COLOR */
-.emergency { background: #c0392b; }
-.specialist { background: #8e44ad; }
-.consultation { background: #f39c12; }
-.checkup { background: #3498db; }
-
-button {
-    margin-top: 20px;
-    padding: 10px 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: 0.2s;
 }
 </style>
-
 </head>
 
-<body>
+<body class="medium">
 
+<!-- NAVBAR -->
 <div class="navbar">
-            <div class="logo"><a href="homepage.html"><img src="img/logo.png" alt="To homepage" style="width:42px;height:42px;"></a></div>
-            <a href="homepage.html#about-us" class="list">About Us</a>
-            <a href="location.html" class="list">Location</a>
-            <a href="app.html" class="list">Appointment</a>
-            <a href="queue.html" class="list">Queue</a>
-            <a href="askDoctor.html" class="list">Ask Us</a>
-            <div class="lang">A | EN | BM</div>
-        </div>
+
+    <div class="logo"></div>
+
+    <div class="menu">
+        <a href="homepage.html">About Us</a>
+        <a href="location.html">Location</a>
+        <a href="app.html">Appointment</a>
+        <a href="queue.html">Queue</a>
+        <a href="askDoctor.html">Ask Us</a>
+    </div>
+
+    <div class="right">
+        <span onclick="setFont('small')">A-</span>
+        <span onclick="setFont('medium')">A</span>
+        <span onclick="setFont('large')">A+</span>
+        |
+        <span onclick="setLang('en')">EN</span>
+        <span onclick="setLang('bm')">BM</span>
+    </div>
+
+</div>
 
 <div class="content">
 
-<h2>SMART APPOINTMENT QUEUE</h2>
+<h2 id="title">APPOINTMENT QUEUE</h2>
 
 <div class="flex">
 
-    <!-- YOUR INFO -->
-    <div class="box" id="yourBox">
-        <h3>Your Info</h3>
-        <p>Room: <span id="room"></span></p>
-        <p>Doctor: <span id="doctor"></span></p>
-        <p>Queue No: <span id="yourNum"></span></p>
-        <p>Type: <span id="yourType"></span></p>
+    <!-- USER INFO -->
+    <div class="box">
+        <h3 id="yourText">Your Appointment</h3>
+        <p>Your Queue: <span id="yourNum"></span></p>
+        <p>Room: <span id="room">101</span></p>
+        <p>Doctor: <span id="doctor">Dr Ali</span></p>
+        <p>Your Estimate: <span id="yourEstimate"></span></p>
+        <p>Type: <span id="type"></span></p>
     </div>
 
     <!-- CURRENT -->
     <div class="box">
-        <h3>Current Number</h3>
+        <h3 id="currentText">Current Number</h3>
         <p id="current"></p>
     </div>
 
     <!-- LATEST -->
     <div class="box">
-        <h3>Latest Queue</h3>
+        <h3 id="latestText">Latest Queue</h3>
         <p id="latest"></p>
     </div>
 
 </div>
 
 <br>
-<h3>Estimated Waiting Time: <span id="time"></span></h3>
-
-<button onclick="generateQueue()">Generate New Queue</button>
+<h3 id="estimateLabel">Hospital Queue Estimate: <span id="time"></span></h3>
 
 </div>
 
 <script>
 
-// appointment duration
-function getTime(type) {
-    if(type === "checkup") return 10;
-    if(type === "consultation") return 15;
-    if(type === "specialist") return 30;
-    if(type === "emergency") return 45;
+// ================= DATA =================
+let yourNumber = 18;
+let current = 12;
+let latest = 25;
+let appointmentType = "Online"; // Online / Walk-in
+
+// ================= FONT =================
+function setFont(size) {
+    document.body.className = size;
 }
 
-// random type
-function randomType() {
-    let types = ["checkup","consultation","specialist","emergency"];
-    return types[Math.floor(Math.random()*types.length)];
+// ================= LANGUAGE =================
+const text = {
+    en: {
+        title: "APPOINTMENT QUEUE",
+        your: "Your Appointment",
+        current: "Current Number",
+        latest: "Latest Queue",
+        estimate: "Hospital Queue Estimate:"
+    },
+    bm: {
+        title: "GILIRAN TEMU JANJI",
+        your: "Temu Janji Anda",
+        current: "Nombor Semasa",
+        latest: "Giliran Terkini",
+        estimate: "Anggaran Masa Hospital:"
+    }
+};
+
+function setLang(lang) {
+    document.getElementById("title").innerHTML = text[lang].title;
+    document.getElementById("yourText").innerHTML = text[lang].your;
+    document.getElementById("currentText").innerHTML = text[lang].current;
+    document.getElementById("latestText").innerHTML = text[lang].latest;
+    document.getElementById("estimateLabel").innerHTML =
+        text[lang].estimate + " <span id='time'></span>";
+    calculateEstimate();
 }
 
-// generate system
-function generateQueue() {
+// ================= RANDOM TIME =================
+function getRandomTime() {
+    return Math.floor(Math.random() * 11) + 10; // 10–20 min
+}
 
-    let current = 12;
-    let yourNumber = Math.floor(Math.random()*10) + 15;
+// ================= CALCULATE =================
+function calculateEstimate() {
 
-    let queue = [];
+    // Hospital estimate
+    let hospitalWaiting = latest - current;
+    let hospitalTime = 0;
 
-    // generate queue sebelum kau
-    for(let i = current+1; i < yourNumber; i++) {
-        queue.push({
-            num: i,
-            type: randomType()
-        });
+    for(let i = 0; i < hospitalWaiting; i++) {
+        hospitalTime += getRandomTime();
     }
 
-    // your type
-    let yourType = randomType();
+    // User estimate
+    let userWaiting = yourNumber - current;
+    let userTime = 0;
 
-    // kira masa
-    let totalTime = 0;
-
-    for(let i = 0; i < queue.length; i++) {
-        totalTime += getTime(queue[i].type);
+    for(let i = 0; i < userWaiting; i++) {
+        userTime += getRandomTime();
     }
 
     // display
-    document.getElementById("room").innerHTML = "101";
-    document.getElementById("doctor").innerHTML = "Dr Ali";
-    document.getElementById("yourNum").innerHTML = yourNumber;
-    document.getElementById("yourType").innerHTML = yourType;
-    document.getElementById("current").innerHTML = current;
-    document.getElementById("latest").innerHTML = yourNumber;
-    document.getElementById("time").innerHTML = totalTime + " minutes";
-
-    // tukar warna ikut type
-    let box = document.getElementById("yourBox");
-    box.className = "box " + yourType;
+    document.getElementById("time").innerHTML = hospitalTime + " min";
+    document.getElementById("yourEstimate").innerHTML = userTime + " min";
 }
 
-// auto run
-generateQueue();
+// ================= DISPLAY =================
+function updateDisplay() {
+    document.getElementById("yourNum").innerHTML = yourNumber;
+    document.getElementById("current").innerHTML = current;
+    document.getElementById("latest").innerHTML = latest;
+    document.getElementById("type").innerHTML = appointmentType;
+}
+
+// ================= AUTO UPDATE =================
+function autoUpdate() {
+    if(current < latest) {
+        current++;
+    }
+
+    updateDisplay();
+    calculateEstimate();
+}
+
+// ================= INIT =================
+updateDisplay();
+calculateEstimate();
+
+setInterval(autoUpdate, 5000);
 
 </script>
 
