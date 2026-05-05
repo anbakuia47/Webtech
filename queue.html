@@ -12,7 +12,7 @@ body {
     transition: 0.3s;
 }
 
-/* FONT */
+/* FONT SIZE */
 body.small { font-size: 12px; }
 body.medium { font-size: 16px; }
 body.large { font-size: 20px; }
@@ -22,8 +22,8 @@ body.large { font-size: 20px; }
     background: #2f7f8a;
     padding: 15px 30px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
 }
 
 .logo {
@@ -33,7 +33,6 @@ body.large { font-size: 20px; }
     border-radius: 50%;
 }
 
-/* MENU */
 .menu {
     display: flex;
     gap: 40px;
@@ -42,7 +41,6 @@ body.large { font-size: 20px; }
 .menu a {
     color: white;
     text-decoration: none;
-    transition: 0.2s;
 }
 
 .menu a:hover {
@@ -50,11 +48,10 @@ body.large { font-size: 20px; }
     border-bottom: 2px solid #ffd700;
 }
 
-/* RIGHT */
 .right span {
+    color: white;
     margin: 0 5px;
     cursor: pointer;
-    color: white;
 }
 
 .right span:hover {
@@ -66,7 +63,7 @@ body.large { font-size: 20px; }
     padding: 30px;
 }
 
-/* FLEX BOX */
+/* FLEX */
 .flex {
     display: flex;
     gap: 20px;
@@ -83,35 +80,27 @@ body.large { font-size: 20px; }
     flex: 1;
     min-width: 250px;
     max-width: 320px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     text-align: center;
 }
 
-/* TITLES (BIG & CENTER) */
+/* TEXT SIZE (USE em so ikut font) */
 .box h3 {
-    font-size: 22px;
-    margin-bottom: 10px;
+    font-size: 1.4em;
 }
 
-/* BIG NUMBERS */
 .big-number {
-    font-size: 45px;
+    font-size: 3em;
     font-weight: bold;
-    margin: 10px 0;
 }
 
-/* YOUR QUEUE STYLE */
 .your-number {
-    font-size: 38px;
+    font-size: 2.5em;
     font-weight: bold;
-    margin: 10px 0;
 }
 
-/* INFO TEXT */
 .info {
     margin: 5px 0;
 }
-
 </style>
 </head>
 
@@ -119,63 +108,63 @@ body.large { font-size: 20px; }
 
 <!-- NAVBAR -->
 <div class="navbar">
-
     <div class="logo"></div>
 
     <div class="menu">
-        <a href="homepage.html">About Us</a>
-        <a href="location.html">Location</a>
-        <a href="app.html">Appointment</a>
-        <a href="queue.html">Queue</a>
-        <a href="askDoctor.html">Ask Us</a>
+        <a href="homepage.html" id="navAbout">About Us</a>
+        <a href="location.html" id="navLocation">Location</a>
+        <a href="app.html" id="navApp">Appointment</a>
+        <a href="queue.html" id="navQueue">Queue</a>
+        <a href="askDoctor.html" id="navAsk">Ask Us</a>
     </div>
 
     <div class="right">
         <span onclick="setFont('small')">A-</span>
         <span onclick="setFont('medium')">A</span>
         <span onclick="setFont('large')">A+</span>
+        |
+        <span onclick="setLang('en')">EN</span>
+        <span onclick="setLang('bm')">BM</span>
     </div>
-
 </div>
 
 <div class="content">
 
-<h2>APPOINTMENT QUEUE</h2>
+<h2 id="title">APPOINTMENT QUEUE</h2>
 
 <div class="flex">
 
     <!-- YOUR APPOINTMENT -->
     <div class="box">
 
-        <h3>Your Appointment</h3>
+        <h3 id="yourTitle">Your Appointment</h3>
 
-        <!-- QUEUE NUMBER (TOP BIG) -->
-        <div class="your-number" id="yourNum"></div>
+        <div id="yourNum" class="your-number"></div>
 
-        <div class="info">Room: <span id="room"></span></div>
-        <div class="info">Doctor: Dr Ali</div>
-        <div class="info">Type: <span id="type"></span></div>
+        <div class="info"><span id="roomLabel">Room</span>: <span id="room"></span></div>
+        <div class="info"><span id="doctorLabel">Doctor</span>: Dr Ali</div>
+        <div class="info"><span id="typeLabel">Type</span>: <span id="type"></span></div>
 
-        <div class="info"><b>Estimate:</b> <span id="yourEstimate"></span></div>
+        <div class="info"><b id="estimateText">Estimate</b>: <span id="yourEstimate"></span></div>
     </div>
 
     <!-- CURRENT -->
     <div class="box">
-        <h3>Current Number</h3>
-        <div class="big-number" id="current"></div>
+        <h3 id="currentTitle">Current Number</h3>
+        <div id="current" class="big-number"></div>
     </div>
 
     <!-- LATEST -->
     <div class="box">
-        <h3>Latest Queue</h3>
-        <div class="big-number" id="latest"></div>
+        <h3 id="latestTitle">Latest Queue</h3>
+        <div id="latest" class="big-number"></div>
     </div>
 
 </div>
 
 <br>
 
-<h3 style="text-align:center;">
+<h3 style="text-align:center;" id="hospitalEstimate">
 Hospital Queue Estimate: <span id="time"></span>
 </h3>
 
@@ -186,13 +175,85 @@ Hospital Queue Estimate: <span id="time"></span>
 // ================= DATA =================
 let yourNumber = 18;
 let current = 12;
-let latest = 20;
-
+let latest = 25;
 let appointmentType = "Online"; // Online / Offline
+
+// SAVE TIME (IMPORTANT FIX)
+let hospitalTime = 0;
+let userTime = 0;
 
 // ================= FONT =================
 function setFont(size) {
     document.body.className = size;
+}
+
+// ================= LANGUAGE =================
+const text = {
+    en: {
+        title: "APPOINTMENT QUEUE",
+        your: "Your Appointment",
+        current: "Current Number",
+        latest: "Latest Queue",
+        estimate: "Estimate",
+        hospital: "Hospital Queue Estimate",
+        room: "Room",
+        doctor: "Doctor",
+        type: "Type",
+        online: "Online",
+        offline: "Offline",
+        navAbout: "About Us",
+        navLocation: "Location",
+        navApp: "Appointment",
+        navQueue: "Queue",
+        navAsk: "Ask Us"
+    },
+    bm: {
+        title: "GILIRAN TEMU JANJI",
+        your: "Temu Janji Anda",
+        current: "Nombor Semasa",
+        latest: "Giliran Terkini",
+        estimate: "Anggaran",
+        hospital: "Anggaran Masa Hospital",
+        room: "Bilik",
+        doctor: "Doktor",
+        type: "Jenis",
+        online: "Dalam Talian",
+        offline: "Bersemuka",
+        navAbout: "Tentang Kami",
+        navLocation: "Lokasi",
+        navApp: "Temu Janji",
+        navQueue: "Giliran",
+        navAsk: "Tanya Kami"
+    }
+};
+
+let currentLang = "en";
+
+// ================= SET LANGUAGE =================
+function setLang(lang) {
+    currentLang = lang;
+
+    document.getElementById("title").innerHTML = text[lang].title;
+    document.getElementById("yourTitle").innerHTML = text[lang].your;
+    document.getElementById("currentTitle").innerHTML = text[lang].current;
+    document.getElementById("latestTitle").innerHTML = text[lang].latest;
+
+    document.getElementById("estimateText").innerHTML = text[lang].estimate;
+    document.getElementById("hospitalEstimate").innerHTML =
+        text[lang].hospital + ": <span id='time'></span>";
+
+    document.getElementById("roomLabel").innerHTML = text[lang].room;
+    document.getElementById("doctorLabel").innerHTML = text[lang].doctor;
+    document.getElementById("typeLabel").innerHTML = text[lang].type;
+
+    document.getElementById("navAbout").innerHTML = text[lang].navAbout;
+    document.getElementById("navLocation").innerHTML = text[lang].navLocation;
+    document.getElementById("navApp").innerHTML = text[lang].navApp;
+    document.getElementById("navQueue").innerHTML = text[lang].navQueue;
+    document.getElementById("navAsk").innerHTML = text[lang].navAsk;
+
+    updateDisplay();
+    updateTimeDisplay(); // IMPORTANT FIX
 }
 
 // ================= RANDOM TIME =================
@@ -200,24 +261,32 @@ function getRandomTime() {
     return Math.floor(Math.random() * 11) + 10;
 }
 
-// ================= CALC =================
+// ================= CALCULATE =================
 function calculateEstimate() {
 
     let hospitalWaiting = latest - current;
-    let hospitalTime = 0;
+    hospitalTime = 0;
 
     for(let i = 0; i < hospitalWaiting; i++) {
         hospitalTime += getRandomTime();
     }
 
     let userWaiting = yourNumber - current;
-    let userTime = 0;
+    userTime = 0;
 
     for(let i = 0; i < userWaiting; i++) {
         userTime += getRandomTime();
     }
 
+    if(appointmentType === "Online") {
+        userTime -= 5;
+    }
 
+    updateTimeDisplay();
+}
+
+// ================= DISPLAY TIME =================
+function updateTimeDisplay() {
     document.getElementById("time").innerHTML = hospitalTime + " min";
     document.getElementById("yourEstimate").innerHTML = userTime + " min";
 }
@@ -229,21 +298,25 @@ function updateDisplay() {
     document.getElementById("current").innerHTML = current;
     document.getElementById("latest").innerHTML = latest;
 
-    // ROOM LOGIC
+    // ROOM
     if(appointmentType === "Online") {
         document.getElementById("room").innerHTML = "-";
     } else {
         document.getElementById("room").innerHTML = "101";
     }
 
-    document.getElementById("type").innerHTML = appointmentType;
+    // TYPE TRANSLATE
+    if(currentLang === "bm") {
+        document.getElementById("type").innerHTML =
+            appointmentType === "Online" ? text.bm.online : text.bm.offline;
+    } else {
+        document.getElementById("type").innerHTML = appointmentType;
+    }
 }
 
 // ================= AUTO =================
 function autoUpdate() {
-    if(current < latest) {
-        current++;
-    }
+    if(current < latest) current++;
 
     updateDisplay();
     calculateEstimate();
@@ -252,7 +325,6 @@ function autoUpdate() {
 // INIT
 updateDisplay();
 calculateEstimate();
-
 setInterval(autoUpdate, 5000);
 
 </script>
