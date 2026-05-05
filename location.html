@@ -24,12 +24,13 @@
     <!--filter-->
     <div class="top-section">
       <div class="filter">
-        <label>State:</label>
-        <select>
-          <option>Pahang</option>
-          <option>Selangor</option>
-          <option>Kuala Lumpur</option>
-          <option>Johor</option>
+        <h2>Filter state by:</h2>
+        <select id="stateFilter" onchange="filterHospital()">
+        <option value="all">All</option>
+        <option value="pahang">Pahang</option>
+        <option value="selangor">Selangor</option>
+        <option value="kl">Kuala Lumpur</option>
+        <option value="johor">Johor</option>
         </select>
       </div>
 
@@ -43,7 +44,7 @@
     <!-- hospital -->
     <div class="hospital-container">
 
-      <div class="hospital-card">
+      <div class="hospital-card" id="pahang">
         <img src="hospi_img/hospital(1).png" alt="Hospital image">
         <div class="hospital-info">
           <h2>Hospital Makmur Pahang</h2>
@@ -52,7 +53,7 @@
         </div>
       </div>
 
-      <div class="hospital-card">
+      <div class="hospital-card" id="pahang">
         <img src="hospi_img/hospital(2).png" alt="Hospital image">
         <div class="hospital-info">
           <h2>Hospital Bahagia</h2>
@@ -61,7 +62,7 @@
         </div>
       </div>
 
-      <div class="hospital-card">
+      <div class="hospital-card" id="selangor">
         <img src="hospi_img/hospital(3).png" alt="Hospital image">
         <div class="hospital-info">
           <h2>Hospital Mesra</h2>
@@ -70,7 +71,7 @@
         </div>
       </div>
 
-      <div class="hospital-card">
+      <div class="hospital-card" id="selangor">
         <img src="hospi_img/hospital(4).png" alt="Hospital image">
         <div class="hospital-info">
           <h2>Hospital Penuh Rasa</h2>
@@ -79,7 +80,7 @@
         </div>
       </div>
 
-      <div class="hospital-card">
+      <div class="hospital-card" id="johor">
         <img src="hospi_img/hospital(5).png" alt="Hospital image">
         <div class="hospital-info">
           <h2>Hospital Besar Johor</h2>
@@ -88,7 +89,7 @@
         </div>
       </div>
 
-      <div class="hospital-card">
+      <div class="hospital-card" id="kl">
         <img src="hospi_img/hospital(5).png" alt="Hospital image">
         <div class="hospital-info">
           <h2>Hospital Kecil Perlis</h2>
@@ -97,7 +98,7 @@
         </div>
       </div>
 
-      <div class="hospital-card">
+      <div class="hospital-card" id="selangor">
         <img src="hospi_img/hospital(5).png" alt="Hospital image">
         <div class="hospital-info">
           <h2>Hospital Gembira</h2>
@@ -106,7 +107,7 @@
         </div>
       </div>
 
-      <div class="hospital-card">
+      <div class="hospital-card" id="johor">
         <img src="hospi_img/hospital(6).png" alt="Hospital image">
         <div class="hospital-info">
           <h2>Hospital Maran</h2>
@@ -115,7 +116,7 @@
         </div>
       </div>
 
-      <div class="hospital-card">
+      <div class="hospital-card" id="kl">
         <img src="hospi_img/hospital(7).png" alt="Hospital image">
         <div class="hospital-info">
           <h2>IIUM Hospital</h2>
@@ -128,5 +129,54 @@
     </div>
 
   </div>
+  <script>
+function filterHospital() {
+  let selectedState = document.getElementById("stateFilter").value;
+  let hospitals = document.getElementsByClassName("hospital-card");
+
+  for (let i = 0; i < hospitals.length; i++) {
+    if (selectedState === "all" || hospitals[i].id === selectedState) {
+      hospitals[i].style.display = "flex";
+    } else {
+      hospitals[i].style.display = "none";
+    }
+  }
+}
+
+
+// FONT SIZE FUNCTION
+function setFont(size){
+    document.body.className = size;
+}
+
+// LANGUAGE DATA
+const text = {
+    en: {
+        navAbout: "About Us",
+        navLocation: "Location",
+        navApp: "Appointment",
+        navQueue: "Queue",
+        navAsk: "Ask Us"
+    },
+    bm: {
+        navAbout: "Tentang Kami",
+        navLocation: "Lokasi",
+        navApp: "Temu Janji",
+        navQueue: "Giliran",
+        navAsk: "Tanya Kami"
+    }
+};
+
+// CHANGE LANGUAGE
+function setLang(lang){
+    document.getElementById("navAbout").innerHTML = text[lang].navAbout;
+    document.getElementById("navLocation").innerHTML = text[lang].navLocation;
+    document.getElementById("navApp").innerHTML = text[lang].navApp;
+    document.getElementById("navQueue").innerHTML = text[lang].navQueue;
+    document.getElementById("navAsk").innerHTML = text[lang].navAsk;
+
+}
+
+</script>
     </body>
 </html>
