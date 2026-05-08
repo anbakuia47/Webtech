@@ -15,39 +15,43 @@ transition: font-size 0.3s ease;
 
 .navbar {
     background: #2f7f8a;
-    padding: 15px;
+    padding: 15px 30px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.navbar a {
-    color: white;
-    text-decoration: none;
-    padding: 10px;
-    margin: 0;
 }
 
 .logo {
     width: 40px;
     height: 40px;
+    background: black;
     border-radius: 50%;
-    margin-right: 20px;
 }
 
-.logo:hover{
-  background-color:#245e66;
+.menu {
+    display: flex;
+    gap: 40px;
 }
 
-.lang {
-    margin-left: auto;
+.menu a {
     color: white;
+    text-decoration: none;
 }
 
-.list:hover {
-  background-color:#245e66;
+.menu a:hover {
+    color: #ffd700;
+    border-bottom: 2px solid #ffd700;
+}
+
+.right span {
+    color: white;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.right span:hover {
+    color: #ffd700;
 }
 /*navi bar styling*/
 

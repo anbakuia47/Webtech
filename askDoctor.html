@@ -5,9 +5,12 @@
 <title>Ask Doctor</title>
 
 <style>
+    *{
+        margin: 0px;
+    }
 body {
     font-family: Arial;
-    margin: 0;
+    margin: 0px;
     background: #eee;
     transition: 0.3s;
 }
@@ -19,18 +22,51 @@ body.large { font-size: 20px; }
 
 /* NAVBAR */
 .navbar {
-    background: #2f7f8a;
-    padding: 15px 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
+               position: sticky;
+               top: 0;
+               z-index: 1000;
 
-.logo {
-    width: 40px;
-    height: 40px;
-    background: black;
-    border-radius: 50%;
+               background: #2f7f8a;
+               padding: 15px 30px;
+
+               display: flex;
+              justify-content: space-between;
+                 align-items: center;
+
+                 width: 100%;
+
+                 box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            }
+
+            .logo {
+                width: 42px;
+                height: 42px;
+               margin-right: 20px;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .logo img{
+                width: 50px;
+                height: 50px;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+
+            .logo img:hover{
+                transform: scale(1.05);
+                transition: 0.2s;
+            }
+
+.content{
+    background-image: url(img/askdocbg.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat:no-repeat;
+    height: 120vh;
+    padding: 30px;
 }
 
 /* MENU */
@@ -58,11 +94,6 @@ body.large { font-size: 20px; }
 
 .right span:hover {
     color: #ffd700;
-}
-
-/* CONTENT */
-.content {
-    padding: 30px;
 }
 
 input {
@@ -100,6 +131,13 @@ button {
     color: gray;
     font-style: italic;
 }
+
+.card {
+    background: white;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 8px;
+}
 </style>
 </head>
 
@@ -107,10 +145,14 @@ button {
 
 <!-- NAVBAR -->
 <div class="navbar">
-    <div class="logo"></div>
+    <div class="logo">
+    <a href="homepage.html">
+        <img src="img/logo.png" alt="To homepage">
+    </a>
+</div>
 
     <div class="menu">
-        <a href="homepage.html" id="navAbout">About Us</a>
+        <a href="homepage.html#about-us" id="navAbout">About Us</a>
         <a href="location.html" id="navLocation">Location</a>
         <a href="app.html" id="navApp">Appointment</a>
         <a href="queue.html" id="navQueue">Queue</a>
@@ -126,136 +168,98 @@ button {
         <span onclick="setLang('bm')">BM</span>
     </div>
 </div>
+</div>
 
 <div class="content">
 
-<h2 id="title">Ask us anything</h2>
+<h2>Ask us anything</h2>
 
 <input type="text" id="question">
-<button onclick="submitQuestion()" id="askBtn">Ask a Doctor</button>
+<button onclick="submitQuestion()">Ask a Doctor</button>
 
-<h3 id="categoryTitle">Categories (Check before asking):</h3>
+<h3>Categories</h3>
 
 <div class="category">
-    <button onclick="showFAQ('Gastric')" id="cat1">Gastric</button>
-    <button onclick="showFAQ('Diabetes')" id="cat2">Diabetes</button>
-    <button onclick="showFAQ('Heart')" id="cat3">Heart Attack</button>
-    <button onclick="showFAQ('Allergy')" id="cat4">Allergy</button>
-    <button onclick="showFAQ('Pregnancy')" id="cat5">Pregnancy</button>
+    <button onclick="showFAQ('Gastric')">Gastric</button>
+    <button onclick="showFAQ('Diabetes')">Diabetes</button>
+    <button onclick="showFAQ('Heart')">Heart Attack</button>
+    <button onclick="showFAQ('Allergy')">Allergy</button>
+    <button onclick="showFAQ('Pregnancy')">Pregnancy</button>
 </div>
 
 <div id="faqBox" class="faq">
-    <p id="placeholderText">Your question will appear here...</p>
+    <p id="placeholderText">Your questions will appear here...</p>
 </div>
 
 </div>
 
 <script>
 
-// FONT
+/* FONT */
 function setFont(size) {
     document.body.className = size;
 }
 
-// ================= LANGUAGE =================
-let currentLang = "en";
-
-const text = {
-    en: {
-        title: "Ask us anything",
-        askBtn: "Ask a Doctor",
-        placeholder: "Type your question...",
-        category: "Categories (Check before asking):",
-        empty: "Enter your question!",
-        typing: "Doctor: Typing...",
-        reply: "Doctor: Doctor will reply very soon.",
-        you: "You",
-
-        navAbout: "About Us",
-        navLocation: "Location",
-        navApp: "Appointment",
-        navQueue: "Queue",
-        navAsk: "Ask Us"
-    },
-    bm: {
-        title: "Tanya apa sahaja",
-        askBtn: "Tanya Doktor",
-        placeholder: "Taip soalan anda...",
-        category: "Kategori (Semak dahulu):",
-        empty: "Sila masukkan soalan!",
-        typing: "Doktor sedang menaip...",
-        reply: "Doktor akan membalas tidak lama lagi.",
-        you: "Anda",
-
-        navAbout: "Tentang Kami",
-        navLocation: "Lokasi",
-        navApp: "Temu Janji",
-        navQueue: "Giliran",
-        navAsk: "Tanya Kami"
-    }
-};
-
-// ================= FAQ DATA =================
+/* FAQ DATA */
 const faqData = {
-    en: {
-        Gastric: [
-            {q: "Why stomach pain?", a: "Irregular eating habit."}
-        ],
-        Diabetes: [
-            {q: "What food avoid?", a: "Avoid sugar."}
-        ],
-        Heart: [
-            {q: "How prevent?", a: "Exercise regularly."}
-        ],
-        Allergy: [
-            {q: "Why rash?", a: "Allergic reaction."}
-        ],
-        Pregnancy: [
-            {q: "What food good?", a: "Nutritious food."}
-        ]
-    },
-    bm: {
-        Gastric: [
-            {q: "Kenapa sakit perut?", a: "Makan tidak teratur."}
-        ],
-        Diabetes: [
-            {q: "Makanan apa perlu elak?", a: "Elakkan makanan manis."}
-        ],
-        Heart: [
-            {q: "Cara cegah?", a: "Bersenam dan makan sihat."}
-        ],
-        Allergy: [
-            {q: "Kenapa naik ruam?", a: "Reaksi alahan."}
-        ],
-        Pregnancy: [
-            {q: "Makanan yang baik?", a: "Makanan berkhasiat."}
-        ]
-    }
+    Gastric: [{q: "Why stomach pain?", a: "Irregular eating habit."}],
+    Diabetes: [{q: "What food avoid?", a: "Avoid sugar."}],
+    Heart: [{q: "How prevent?", a: "Exercise regularly."}],
+    Allergy: [{q: "Why rash?", a: "Allergic reaction."}],
+    Pregnancy: [{q: "What food good?", a: "Nutritious food."}]
 };
 
-// ================= SET LANGUAGE =================
-function setLang(lang) {
-    currentLang = lang;
+/* LOCAL STORAGE INIT */
+let questionFeed = JSON.parse(localStorage.getItem("questions")) || [];
 
-    document.getElementById("title").innerHTML = text[lang].title;
-    document.getElementById("askBtn").innerHTML = text[lang].askBtn;
-    document.getElementById("question").placeholder = text[lang].placeholder;
-    document.getElementById("categoryTitle").innerHTML = text[lang].category;
+/* SUBMIT QUESTION */
+function submitQuestion() {
+    let q = document.getElementById("question").value;
 
-    document.getElementById("navAbout").innerHTML = text[lang].navAbout;
-    document.getElementById("navLocation").innerHTML = text[lang].navLocation;
-    document.getElementById("navApp").innerHTML = text[lang].navApp;
-    document.getElementById("navQueue").innerHTML = text[lang].navQueue;
-    document.getElementById("navAsk").innerHTML = text[lang].navAsk;
+    if(q === "") {
+        alert("Enter your question!");
+        return;
+    }
 
-    // reset placeholder
-    document.getElementById("faqBox").innerHTML =
-        "<p id='placeholderText'>" + text[lang].placeholder + "</p>";
+    questionFeed.push({
+        question: q,
+        time: new Date().toLocaleString()
+    });
+
+    localStorage.setItem("questions", JSON.stringify(questionFeed));
+
+    renderQuestions();
+
+    document.getElementById("question").value = "";
 }
 
-// ================= SHOW FAQ =================
+/* RENDER FEED */
+function renderQuestions() {
+    const box = document.getElementById("faqBox");
+    box.innerHTML = "";
+
+    if(questionFeed.length === 0) {
+        box.innerHTML = "<p id='placeholderText'>Your questions will appear here...</p>";
+        return;
+    }
+
+    // loop from last to first
+    for (let i = questionFeed.length - 1; i >= 0; i--) {
+        let item = questionFeed[i];
+
+        box.innerHTML += `
+            <div class="card">
+                <p><b>You:</b> ${item.question}</p>
+                <small>${item.time}</small>
+                <p><b>Doctor:</b> Reply coming soon...</p>
+            </div>
+        `;
+    }
+}
+
+/* SHOW FAQ */
 function showFAQ(cat) {
-    let data = faqData[currentLang][cat];
+    let data = faqData[cat];
     let output = "<h4>" + cat + "</h4>";
 
     for(let i = 0; i < data.length; i++) {
@@ -266,29 +270,10 @@ function showFAQ(cat) {
     document.getElementById("faqBox").innerHTML = output;
 }
 
-// ================= SUBMIT =================
-function submitQuestion() {
-    let q = document.getElementById("question").value;
-
-    if(q === "") {
-        alert(text[currentLang].empty);
-        return;
-    }
-
-    let box = document.getElementById("faqBox");
-
-    let userMsg = "<p><b>" + text[currentLang].you + ":</b> " + q + "</p>";
-    let docMsg = "<p><b>" + text[currentLang].typing + "</b></p>";
-
-    box.innerHTML = userMsg + docMsg;
-
-    setTimeout(() => {
-        box.innerHTML = userMsg +
-        "<p><b>" + text[currentLang].reply + "</b></p>";
-    }, 1500);
-
-    document.getElementById("question").value = "";
-}
+/* LOAD ON START */
+window.onload = function () {
+    renderQuestions();
+};
 
 </script>
 

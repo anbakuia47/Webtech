@@ -7,23 +7,27 @@
     <link rel="stylesheet" href="homepage.css">
     </head>
     
-    <body>
-        <div class="navbar">
-            <div class="logo"><a href="homepage.html"><img src="img/logo.png" alt="To homepage" style="width:42px;height:42px;"></a></div>
-            <a href="homepage.html#about-us" class="list" id="navAbout">About Us</a>
-            <a href="location.html" class="list" id="navLocation">Location</a>
-            <a href="app.html" class="list" id="navApp">Appointment</a>
-            <a href="queue.html" class="list" id="navQueue">Queue</a>
-            <a href="askDoctor.html" class="list" id="navAsk">Ask Us</a>
-            <div class="lang">
-                <span onclick="setFont('small')">A- </span>
-                <span onclick="setFont('medium')">A </span>
-                <span onclick="setFont('large')">A+ </span>
-                |
-                <span onclick="setLang('en')">EN</span>
-                <span onclick="setLang('bm')">BM</span>
+    <body class="medium">
+<div class="navbar">
+    <div class="logo"></div>
+
+    <div class="menu">
+        <a href="homepage.html#about-us" id="navAbout">About Us</a>
+        <a href="location.html" id="navLocation">Location</a>
+        <a href="app.html" id="navApp">Appointment</a>
+        <a href="queue.html" id="navQueue">Queue</a>
+        <a href="askDoctor.html" id="navAsk">Ask Us</a>
+    </div>
+
+    <div class="right">
+        <span onclick="setFont('small')">A-</span>
+        <span onclick="setFont('medium')">A</span>
+        <span onclick="setFont('large')">A+</span>
+        |
+        <span onclick="setLang('en')">EN</span>
+        <span onclick="setLang('bm')">BM</span>
+    </div>
 </div>
-        </div>
             <div id="mainhomepage">
                 <div class="texthomepg">
                     <h1>MyCura Hospital</h1>

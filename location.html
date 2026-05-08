@@ -6,16 +6,27 @@
     <title>Homepage</title>
     <link rel="stylesheet" href="location.css">
     </head>
-    <body>
-        <div class="navbar">
-            <div class="logo"><a href="homepage.html"><img src="img/logo.png" alt="To homepage" style="width:42px;height:42px;"></a></div>
-            <a href="homepage.html#about-us" class="list">About Us</a>
-            <a href="location.html" class="list">Location</a>
-            <a href="app.html" class="list">Appointment</a>
-            <a href="queue.html" class="list">Queue</a>
-            <a href="askDoctor.html" class="list">Ask Us</a>
-            <div class="lang">A | EN | BM</div>
-        </div>
+    <body class="medium">
+<div class="navbar">
+    <div class="logo"></div>
+
+    <div class="menu">
+        <a href="homepage.html#about-us" id="navAbout">About Us</a>
+        <a href="location.html" id="navLocation">Location</a>
+        <a href="app.html" id="navApp">Appointment</a>
+        <a href="queue.html" id="navQueue">Queue</a>
+        <a href="askDoctor.html" id="navAsk">Ask Us</a>
+    </div>
+
+    <div class="right">
+        <span onclick="setFont('small')">A-</span>
+        <span onclick="setFont('medium')">A</span>
+        <span onclick="setFont('large')">A+</span>
+        |
+        <span onclick="setLang('en')">EN</span>
+        <span onclick="setLang('bm')">BM</span>
+    </div>
+</div>
 
 
   

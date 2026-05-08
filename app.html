@@ -13,45 +13,92 @@
             }
 
             body{
-            margin:0;
-            font-family: Arial;
+                margin:0;
+                font-family: Arial;
+               min-height:200vh;
             }
 
-            .navbar {
-               background: #2f7f8a;
-                padding: 15px;
-               display: flex;
-               align-items: center;
+            .small-text{
+               font-size: 12px;
+            }
+
+            .medium-text{
+               font-size: 16px;
+            }
+
+            .large-text{
+                font-size: 20px;
+            }
+            .resizable {
+              transition: font-size 0.3s ease;
+            }
+
+            #content{
+                transition: font-size 0.3s ease;
+            }
+
+           .navbar {
                position: sticky;
                top: 0;
-                  z-index: 1000;
-            }
+               z-index: 1000;
 
-            .navbar a {
-               color: white;
-               text-decoration: none;
-              padding: 10px;
-             margin: 0;
+               background: #2f7f8a;
+               padding: 15px 30px;
+
+               display: flex;
+              justify-content: space-between;
+                 align-items: center;
+
+                 width: 100%;
+
+                 box-shadow: 0 2px 10px rgba(0,0,0,0.2);
             }
 
             .logo {
-               width: 40px;
-               height: 40px;
-              border-radius: 50%;
-              margin-right: 20px;
+                width: 42px;
+                height: 42px;
+               margin-right: 20px;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
-            .logo:hover{
-             background-color:#245e66;
+            .logo img{
+                width: 50px;
+                height: 50px;
+                object-fit: cover;
+                border-radius: 50%;
             }
 
-            .lang {
-               margin-left: auto;
-              color: white;
+            .logo img:hover{
+                transform: scale(1.05);
+                transition: 0.2s;
             }
 
-            .list:hover {
-              background-color:#245e66;
+            .menu {
+                display: flex;
+               gap: 40px;
+            }
+
+            .menu a {
+                color: white;
+                text-decoration: none;
+            }
+
+            .menu a:hover {
+                color: #ffd700;
+               border-bottom: 2px solid #ffd700;
+            }
+
+            .right span {
+               color: white;
+               margin: 0 5px;
+               cursor: pointer;
+            }
+
+            .right span:hover {
+               color: #ffd700;
             }
             /*navi bar styling*/
 
@@ -127,17 +174,34 @@
         </style>
     </head>
     <body>
-        <div class="navbar">
-            <div class="logo"><a href="homepage.html"><img src="img/logo.png" alt="To homepage" style="width:42px;height:42px;"></a></div>
-            <a href="homepage.html#about-us" class="list">About Us</a>
-            <a href="location.html" class="list">Location</a>
-            <a href="app.html" class="list">Appointment</a>
-            <a href="queue.html" class="list">Queue</a>
-            <a href="askDoctor.html" class="list">Ask Us</a>
-            <div class="lang">A | EN | BM</div>
-        </div>
+    <div class="navbar">
+    <div class="logo">
+    <a href="homepage.html">
+        <img src="img/logo.png" alt="To homepage">
+    </a>
+</div>
 
+    <div class="menu resizable medium-text">
+        <a href="homepage.html#about-us" id="navAbout">About Us</a>
+        <a href="location.html" id="navLocation">Location</a>
+        <a href="app.html" id="navApp">Appointment</a>
+        <a href="queue.html" id="navQueue">Queue</a>
+        <a href="askDoctor.html" id="navAsk">Ask Us</a>
+    </div>
 
+    <div class="right resizable medium-text">
+        <span onclick="setFont('small')">A-</span>
+        <span onclick="setFont('medium')">A</span>
+        <span onclick="setFont('large')">A+</span>
+        |
+        <span onclick="setLang('en')">EN</span>
+        <span onclick="setLang('bm')">BM</span>
+    </div>
+</div>
+
+</div>
+
+<div id="content" class="resizable medium-text">
         <h1>Doctor Selection</h1>
         <select id="filter" onchange="filterDoctors()">
         <option class="option" value="all">All</option>
@@ -300,6 +364,70 @@
                 renderCalendar();
 
         </script>
-        
+        <script>
+function setFont(size){
+
+    let elements = document.getElementsByClassName("resizable");
+
+    for(let i = 0; i < elements.length; i++){
+
+        elements[i].classList.remove("small-text");
+        elements[i].classList.remove("medium-text");
+        elements[i].classList.remove("large-text");
+
+        if(size == "small"){
+            elements[i].classList.add("small-text");
+        }
+
+        else if(size == "medium"){
+            elements[i].classList.add("medium-text");
+        }
+
+        else{
+            elements[i].classList.add("large-text");
+        }
+    }
+}
+</script>
+      </div>  
+
+      <script>
+
+// LANGUAGE DATA
+const text = {
+
+    en: {
+        navAbout: "About Us",
+        navLocation: "Location",
+        navApp: "Appointment",
+        navQueue: "Queue",
+        navAsk: "Ask Us"
+    },
+
+    bm: {
+        navAbout: "Tentang Kami",
+        navLocation: "Lokasi",
+        navApp: "Temu Janji",
+        navQueue: "Giliran",
+        navAsk: "Tanya Kami"
+    }
+
+};
+
+// CHANGE LANGUAGE
+function setLang(lang){
+
+    document.getElementById("navAbout").innerHTML = text[lang].navAbout;
+
+    document.getElementById("navLocation").innerHTML = text[lang].navLocation;
+
+    document.getElementById("navApp").innerHTML = text[lang].navApp;
+
+    document.getElementById("navQueue").innerHTML = text[lang].navQueue;
+
+    document.getElementById("navAsk").innerHTML = text[lang].navAsk;
+}
+
+</script>
     </body>
 </html>
