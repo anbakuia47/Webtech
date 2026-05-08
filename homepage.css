@@ -14,21 +14,43 @@ transition: font-size 0.3s ease;
 }
 
 .navbar {
-    background: #2f7f8a;
-    padding: 15px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-}
+               position: sticky;
+               top: 0;
+               z-index: 1000;
+
+               background: #2f7f8a;
+               padding: 15px 30px;
+
+               display: flex;
+              justify-content: space-between;
+                 align-items: center;
+
+                 width: 100%;
+
+                 box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            }
 
 .logo {
-    width: 40px;
-    height: 40px;
-    background: black;
-    border-radius: 50%;
-}
+                width: 42px;
+                height: 42px;
+               margin-right: 20px;
 
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .logo img{
+                width: 50px;
+                height: 50px;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+
+            .logo img:hover{
+                transform: scale(1.05);
+                transition: 0.2s;
+            }
 .menu {
     display: flex;
     gap: 40px;
@@ -76,10 +98,23 @@ transition: font-size 0.3s ease;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 3em;
 }
+.buttonreq {
+  border: none;
+  background-color: #fff2e8;
+  padding: 7px 12px;
+  cursor: pointer;
+}
+
+.buttonreq:hover {
+  background-color: #ffd7bd;
+}
 
 #about-us {
-  background-color: rgb(73, 136, 117);
-  min-height: 70vh;
+  background-image: url(img/aboutusbg.png);
+  background-position: center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  min-height: 120vh;
   padding: 60px;
 }
 

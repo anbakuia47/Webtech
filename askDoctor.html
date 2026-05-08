@@ -5,9 +5,11 @@
 <title>Ask Doctor</title>
 
 <style>
-    *{
-        margin: 0px;
-    }
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 body {
     font-family: Arial;
     margin: 0px;
@@ -190,6 +192,7 @@ button {
 <div id="faqBox" class="faq">
     <p id="placeholderText">Your questions will appear here...</p>
 </div>
+<button onclick="clearAllQuestions()">Clear All</button>
 
 </div>
 
@@ -275,6 +278,13 @@ window.onload = function () {
     renderQuestions();
 };
 
+</script>
+<script>
+    function clearAllQuestions() {
+    localStorage.removeItem("questions");
+    questionFeed = [];
+    renderQuestions();
+}
 </script>
 
 </body>
