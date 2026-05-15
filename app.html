@@ -104,31 +104,61 @@
                border-bottom: 2px solid #ffd700;
             }
 
-            .right span {
-               color: white;
-               margin: 0 5px;
-               cursor: pointer;
-            }
+            .right {
+  display: flex;
+  align-items: center;
+  gap: 10px;          /* space between buttons */
+  flex-wrap: nowrap;  /* prevent wrapping */
+}
 
-            .right span:hover {
-               color: #ffd700;
-            }
+.right span {
+  white-space: nowrap; /* keep text on one line */
+}
             /*navi bar styling*/
 
             /*--query on media type shi --*/
             @media screen and (max-width: 768px) {
 
     .navbar {
-        padding: 15px;
-        flex-wrap: wrap;
-        gap: 15px;
-    }
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  background: #2f7f8a;
+  padding: 15px 30px;   /* match AskDoctor bar */
+
+  display: flex;
+  justify-content: space-between; /* align like AskDoctor */
+  align-items: center;
+
+  width: 100%;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
 
     .menu {
-        gap: 20px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
+  display: flex;
+  gap: 40px;            /* match AskDoctor spacing */
+}
+.menu a {
+  color: white;
+  text-decoration: none;
+}
+
+.menu a:hover {
+  color: #ffd700;
+  border-bottom: 2px solid #ffd700;
+}
+
+/* RIGHT SECTION */
+.right span {
+  margin: 0 5px;
+  cursor: pointer;
+  color: white;
+}
+
+.right span:hover {
+  color: #ffd700;
+}
 
     .bottom {
         flex-direction: column;
