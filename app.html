@@ -5,7 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Appointment</title>
         <style>
-
+            html {
+            overflow-x: hidden;
+            }
             *{
                 margin:0;
                 padding:0;
@@ -38,21 +40,23 @@
             }
 
            .navbar {
-               position: sticky;
-               top: 0;
-               z-index: 1000;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 
-               background: #2f7f8a;
-               padding: 15px 30px;
+    background: #2f7f8a;
+    padding: 15px 20px;
 
-               display: flex;
-              justify-content: space-between;
-                 align-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-                 width: 100%;
+    width: 100%;
 
-                 box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            }
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+
+    flex-wrap: nowrap;
+}
 
             .logo {
                 width: 42px;
@@ -77,13 +81,22 @@
             }
 
             .menu {
-                display: flex;
-               gap: 40px;
-            }
+    display: flex;
+    gap: 20px;
+
+    flex: 1;
+    justify-content: center;
+
+    flex-wrap: nowrap;
+}
 
             .menu a {
                 color: white;
                 text-decoration: none;
+            }
+            .menu a,
+            .right span {
+                font-size: 14px;
             }
 
             .menu a:hover {
@@ -91,26 +104,88 @@
                border-bottom: 2px solid #ffd700;
             }
 
-            .right span {
-               color: white;
-               margin: 0 5px;
-               cursor: pointer;
-            }
+            .right {
+  display: flex;
+  align-items: center;
+  gap: 10px;          /* space between buttons */
+  flex-wrap: nowrap;  /* prevent wrapping */
+}
 
-            .right span:hover {
-               color: #ffd700;
-            }
+.right span {
+  white-space: nowrap; /* keep text on one line */
+}
             /*navi bar styling*/
 
-            .container {width:300px;
+            /*--query on media type shi --*/
+            @media screen and (max-width: 768px) {
+
+    .navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  background: #2f7f8a;
+  padding: 15px 30px;   /* match AskDoctor bar */
+
+  display: flex;
+  justify-content: space-between; /* align like AskDoctor */
+  align-items: center;
+
+  width: 100%;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+    .menu {
+  display: flex;
+  gap: 40px;            /* match AskDoctor spacing */
+}
+.menu a {
+  color: white;
+  text-decoration: none;
+}
+
+.menu a:hover {
+  color: #ffd700;
+  border-bottom: 2px solid #ffd700;
+}
+
+/* RIGHT SECTION */
+.right span {
+  margin: 0 5px;
+  cursor: pointer;
+  color: white;
+}
+
+.right span:hover {
+  color: #ffd700;
+}
+
+    .bottom {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .calendar,
+    form {
+        width: 100%;
+    }
+
+    #filter {
+        width: 100%;
+        max-width: 250px;
+    }
+}
+
+            .container {width: 100%;
+                        max-width: 300px;
                         margin:20px;
                         background-color: cyan; 
                         text-align:center;
                         border:3px solid black;}
-            #container  {display:flex;
-                        gap:20px;
-                        flex-wrap:wrap;
-                        justify-content: center;
+            #container  {display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                        gap: 20px;
+                        justify-items: center;
                         margin-bottom: 40px;}
             .bottom     {display: flex;
                         flex-direction: row;
@@ -118,12 +193,15 @@
                         align-items: flex-start;
                         justify-content: center;
                         flex-wrap: wrap;}
-            .doc_img    {border:1px darkgray;
-                        margin-top:20px;
-                        margin-bottom:20px;}
+            .doc_img    {width: 100%;
+                        max-width: 200px;
+                        height: auto;
+
+                        border: 1px solid darkgray;}
             .imgcapt    {font-family:'Times New Roman';
                         font-size:20px;}
-            .calendar   {width:500px;
+            .calendar   {width: 100%;
+                        max-width: 500px;
                         padding:10px;
                         border-radius:10px;
                         text-align:center;
@@ -142,12 +220,14 @@
             .dates div:hover{background-color: aquamarine;}
             .selected   {background-color: orange !important;}
             form        {background-color: lightgoldenrodyellow;
+                
                         margin-top: 20px;
                         padding: 20px;
                         text-align:center;
                         border: 2px solid black;
                         border-radius: 10px;
-                        width:450px;}
+                        width: 100%;
+                        max-width: 450px;}
             input[type="text"], input[type="email"], input[type="date"] 
                         {           
                         width: 80%;
