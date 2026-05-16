@@ -175,7 +175,7 @@ body.large { font-size: 20px; }
         <div id="yourNum" class="your-number"></div>
 
         <div class="info"><span id="roomLabel">Room</span>: <span id="room"></span></div>
-        <div class="info"><span id="doctorLabel">Doctor</span>: Dr Ali</div>
+        <div class="info"><span id="doctorLabel">Doctor</span>: Dr Smith</div>
         <div class="info"><span id="typeLabel">Type</span>: <span id="type"></span></div>
 
         <div class="info"><b id="estimateText">Estimate</b>: <span id="yourEstimate"></span></div>
@@ -309,10 +309,6 @@ function calculateEstimate() {
 
     for(let i = 0; i < userWaiting; i++) {
         userTime += getRandomTime();
-    }
-
-    if(appointmentType === "Online") {
-        userTime -= 5;
     }
 
     updateTimeDisplay();

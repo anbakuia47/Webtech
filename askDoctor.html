@@ -178,6 +178,7 @@ button {
 
 <input type="text" id="question">
 <button onclick="submitQuestion()">Ask a Doctor</button>
+<br><br>
 
 <h3>Categories</h3>
 
@@ -192,6 +193,7 @@ button {
 <div id="faqBox" class="faq">
     <p id="placeholderText">Your questions will appear here...</p>
 </div>
+<br>
 <button onclick="clearAllQuestions()">Clear All</button>
 
 </div>
@@ -203,14 +205,21 @@ function setFont(size) {
     document.body.className = size;
 }
 
+
 /* FAQ DATA */
-const faqData = {
-    Gastric: [{q: "Why stomach pain?", a: "Irregular eating habit."}],
-    Diabetes: [{q: "What food avoid?", a: "Avoid sugar."}],
-    Heart: [{q: "How prevent?", a: "Exercise regularly."}],
-    Allergy: [{q: "Why rash?", a: "Allergic reaction."}],
-    Pregnancy: [{q: "What food good?", a: "Nutritious food."}]
-};
+let faqData = {};
+
+/* AJAX LOAD JSON */
+fetch("faq.json")
+.then(function(response) {
+    return response.json();
+})
+.then(function(data) {
+    faqData = data;
+})
+.catch(function(error) {
+    console.log("Error loading JSON:", error);
+});
 
 /* LOCAL STORAGE INIT */
 let questionFeed = JSON.parse(localStorage.getItem("questions")) || [];

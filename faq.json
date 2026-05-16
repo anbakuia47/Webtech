@@ -1,0 +1,36 @@
+{
+  "Gastric": [
+    {
+      "q": "Why stomach pain?",
+      "a": "Irregular eating habit."
+    }
+  ],
+
+  "Diabetes": [
+    {
+      "q": "What food avoid?",
+      "a": "Avoid sugar."
+    }
+  ],
+
+  "Heart": [
+    {
+      "q": "How prevent?",
+      "a": "Exercise regularly."
+    }
+  ],
+
+  "Allergy": [
+    {
+      "q": "Why rash?",
+      "a": "Allergic reaction."
+    }
+  ],
+
+  "Pregnancy": [
+    {
+      "q": "What food good?",
+      "a": "Nutritious food."
+    }
+  ]
+}
