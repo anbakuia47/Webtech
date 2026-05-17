@@ -4,79 +4,46 @@ padding:0;
 box-sizing:border-box;
 }
 
-body {
-    margin:0;
-    font-family: Arial;
-    font-size: 16px;
-    transition: font-size 0.3s ease-in-out;
+body{
+margin:0;
+font-family: Arial;
 }
-
-body.small { font-size: 12px; }
-body.medium { font-size: 16px; }
-body.large { font-size: 20px; }
 
 .navbar {
-               position: sticky;
-               top: 0;
-               z-index: 1000;
-
-               background: #2f7f8a;
-               padding: 15px 30px;
-
-               display: flex;
-              justify-content: space-between;
-                 align-items: center;
-
-                 width: 100%;
-
-                 box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            }
-
-            .logo {
-                width: 42px;
-                height: 42px;
-               margin-right: 20px;
-
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .logo img{
-                width: 50px;
-                height: 50px;
-                object-fit: cover;
-                border-radius: 50%;
-            }
-
-            .logo img:hover{
-                transform: scale(1.05);
-                transition: 0.2s;
-            }
-
-.menu {
+    background: #2f7f8a;
+    padding: 15px;
     display: flex;
-    gap: 40px;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.menu a {
+.navbar a {
     color: white;
     text-decoration: none;
+    padding: 10px;
+    margin: 0;
 }
 
-.menu a:hover {
-    color: #ffd700;
-    border-bottom: 2px solid #ffd700;
+.logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 20px;
 }
 
-.right span {
+.logo:hover{
+  background-color:#245e66;
+}
+
+.lang {
+    margin-left: auto;
     color: white;
-    margin: 0 5px;
-    cursor: pointer;
 }
 
-.right span:hover {
-    color: #ffd700;
+.list:hover {
+  background-color:#245e66;
 }
 /*navi bar styling*/
 

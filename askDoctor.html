@@ -5,97 +5,53 @@
 <title>Ask Doctor</title>
 
 <style>
-    * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 body {
     font-family: Arial;
-    margin: 0px;
+    margin: 0;
     background: #eee;
-    transition: 0.3s;
 }
 
-/* FONT */
-body.small { font-size: 12px; }
-body.medium { font-size: 16px; }
-body.large { font-size: 20px; }
-
-/* NAVBAR */
 .navbar {
-               position: sticky;
-               top: 0;
-               z-index: 1000;
-
-               background: #2f7f8a;
-               padding: 15px 30px;
-
-               display: flex;
-              justify-content: space-between;
-                 align-items: center;
-
-                 width: 100%;
-
-                 box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            }
-
-            .logo {
-                width: 42px;
-                height: 42px;
-               margin-right: 20px;
-
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .logo img{
-                width: 50px;
-                height: 50px;
-                object-fit: cover;
-                border-radius: 50%;
-            }
-
-            .logo img:hover{
-                transform: scale(1.05);
-                transition: 0.2s;
-            }
-
-.content{
-    background-image: url(img/askdocbg.png);
-    background-size: cover;
-    background-position: center;
-    background-repeat:no-repeat;
-    height: 120vh;
-    padding: 30px;
-}
-
-/* MENU */
-.menu {
+    background: #2f7f8a;
+    padding: 15px;
     display: flex;
-    gap: 40px;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.menu a {
+.navbar a {
     color: white;
     text-decoration: none;
+    padding: 10px;
+    margin: 0;
 }
 
-.menu a:hover {
-    color: #ffd700;
-    border-bottom: 2px solid #ffd700;
+.logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 20px;
 }
 
-/* RIGHT */
-.right span {
-    margin: 0 5px;
-    cursor: pointer;
+.logo:hover{
+  background-color:#245e66;
+}
+
+.lang {
+    margin-left: auto;
     color: white;
 }
 
-.right span:hover {
-    color: #ffd700;
+.list:hover {
+  background-color:#245e66;
+}
+/*navi bar styling*/
+
+/* CONTENT */
+.content {
+    padding: 30px;
 }
 
 input {
@@ -109,181 +65,63 @@ button {
     color: white;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
 }
 
 .category button {
     background: black;
     margin: 5px;
 }
-
-.category button:hover {
-    background: #555;
-}
-
-.faq {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 20px;
-    max-width: 500px;
-}
-
-#placeholderText {
-    color: gray;
-    font-style: italic;
-}
-
-.card {
-    background: white;
-    padding: 12px;
-    margin-top: 10px;
-    border-radius: 8px;
-}
 </style>
+
 </head>
 
-<body class="medium">
+<body>
 
 <!-- NAVBAR -->
 <div class="navbar">
-    <div class="logo">
-    <a href="homepage.html">
-        <img src="img/logo.png" alt="To homepage">
-    </a>
-</div>
-
-    <div class="menu">
-        <a href="homepage.html#about-us" id="navAbout">About Us</a>
-        <a href="location.html" id="navLocation">Location</a>
-        <a href="app.html" id="navApp">Appointment</a>
-        <a href="queue.html" id="navQueue">Queue</a>
-        <a href="askDoctor.html" id="navAsk">Ask Us</a>
-    </div>
-
-    <div class="right">
-        <span onclick="setFont('small')">A-</span>
-        <span onclick="setFont('medium')">A</span>
-        <span onclick="setFont('large')">A+</span>
-        |
-        <span onclick="setLang('en')">EN</span>
-        <span onclick="setLang('bm')">BM</span>
-    </div>
-</div>
-</div>
+            <div class="logo"><a href="homepage.html"><img src="img/logo.png" alt="To homepage" style="width:42px;height:42px;"></a></div>
+            <a href="homepage.html#about-us" class="list">About Us</a>
+            <a href="location.html" class="list">Location</a>
+            <a href="app.html" class="list">Appointment</a>
+            <a href="queue.html" class="list">Queue</a>
+            <a href="askDoctor.html" class="list">Ask Us</a>
+            <div class="lang">A | EN | BM</div>
+        </div>
 
 <div class="content">
 
 <h2>Ask us anything</h2>
 
-<input type="text" id="question">
+<input type="text" id="question" placeholder="Type your question...">
 <button onclick="submitQuestion()">Ask a Doctor</button>
 
-<h3>Categories</h3>
+<h3>Categories:</h3>
 
 <div class="category">
-    <button onclick="showFAQ('Gastric')">Gastric</button>
-    <button onclick="showFAQ('Diabetes')">Diabetes</button>
-    <button onclick="showFAQ('Heart')">Heart Attack</button>
-    <button onclick="showFAQ('Allergy')">Allergy</button>
-    <button onclick="showFAQ('Pregnancy')">Pregnancy</button>
+    <button>Gastric</button>
+    <button>Diabetes</button>
+    <button>Heart Attack</button>
+    <button>Allergy</button>
+    <button>Pregnancy</button>
+    <button>Period</button>
+    <button>Infertility</button>
 </div>
 
-<div id="faqBox" class="faq">
-    <p id="placeholderText">Your questions will appear here...</p>
-</div>
-<button onclick="clearAllQuestions()">Clear All</button>
+<br>
+
+<textarea id="output" rows="5" cols="50" placeholder="Doctor reply here..."></textarea>
 
 </div>
 
 <script>
-
-/* FONT */
-function setFont(size) {
-    document.body.className = size;
-}
-
-/* FAQ DATA */
-const faqData = {
-    Gastric: [{q: "Why stomach pain?", a: "Irregular eating habit."}],
-    Diabetes: [{q: "What food avoid?", a: "Avoid sugar."}],
-    Heart: [{q: "How prevent?", a: "Exercise regularly."}],
-    Allergy: [{q: "Why rash?", a: "Allergic reaction."}],
-    Pregnancy: [{q: "What food good?", a: "Nutritious food."}]
-};
-
-/* LOCAL STORAGE INIT */
-let questionFeed = JSON.parse(localStorage.getItem("questions")) || [];
-
-/* SUBMIT QUESTION */
 function submitQuestion() {
     let q = document.getElementById("question").value;
 
     if(q === "") {
-        alert("Enter your question!");
-        return;
+        alert("Please enter your question!");
+    } else {
+        document.getElementById("output").value = "Doctor will reply soon...";
     }
-
-    questionFeed.push({
-        question: q,
-        time: new Date().toLocaleString()
-    });
-
-    localStorage.setItem("questions", JSON.stringify(questionFeed));
-
-    renderQuestions();
-
-    document.getElementById("question").value = "";
-}
-
-/* RENDER FEED */
-function renderQuestions() {
-    const box = document.getElementById("faqBox");
-    box.innerHTML = "";
-
-    if(questionFeed.length === 0) {
-        box.innerHTML = "<p id='placeholderText'>Your questions will appear here...</p>";
-        return;
-    }
-
-    // loop from last to first
-    for (let i = questionFeed.length - 1; i >= 0; i--) {
-        let item = questionFeed[i];
-
-        box.innerHTML += `
-            <div class="card">
-                <p><b>You:</b> ${item.question}</p>
-                <small>${item.time}</small>
-                <p><b>Doctor:</b> Reply coming soon...</p>
-            </div>
-        `;
-    }
-}
-
-/* SHOW FAQ */
-function showFAQ(cat) {
-    let data = faqData[cat];
-    let output = "<h4>" + cat + "</h4>";
-
-    for(let i = 0; i < data.length; i++) {
-        output += "<p><b>Q:</b> " + data[i].q + "</p>";
-        output += "<p><b>A:</b> " + data[i].a + "</p><hr>";
-    }
-
-    document.getElementById("faqBox").innerHTML = output;
-}
-
-/* LOAD ON START */
-window.onload = function () {
-    renderQuestions();
-};
-
-</script>
-<script>
-    function clearAllQuestions() {
-    localStorage.removeItem("questions");
-    questionFeed = [];
-    renderQuestions();
 }
 </script>
 

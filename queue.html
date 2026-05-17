@@ -164,10 +164,7 @@ body.large { font-size: 20px; }
 <div class="content">
 
 <h2 id="title">APPOINTMENT QUEUE</h2>
-<<<<<<< Updated upstream
 <br><br>
-=======
->>>>>>> Stashed changes
 
 <div class="flex">
 
@@ -179,11 +176,7 @@ body.large { font-size: 20px; }
         <div id="yourNum" class="your-number"></div>
 
         <div class="info"><span id="roomLabel">Room</span>: <span id="room"></span></div>
-<<<<<<< Updated upstream
         <div class="info"><span id="doctorLabel">Doctor</span>: Dr Smith</div>
-=======
-        <div class="info"><span id="doctorLabel">Doctor</span>: Dr Ali</div>
->>>>>>> Stashed changes
         <div class="info"><span id="typeLabel">Type</span>: <span id="type"></span></div>
 
         <div class="info"><b id="estimateText">Estimate</b>: <span id="yourEstimate"></span></div>
@@ -215,7 +208,6 @@ Hospital Queue Estimate: <span id="time"></span>
 
 // ================= DATA =================
 let yourNumber = 18;
-<<<<<<< Updated upstream
 let latest = 25;
 let appointmentType = "Online"; // Online / Offline
 
@@ -357,109 +349,12 @@ function calculateEstimate()
 
     for(let i = 0; i < hospitalWaiting; i++)
     {
-=======
-let current = 12;
-let latest = 25;
-let appointmentType = "Online"; // Online / Offline
-
-// SAVE TIME (IMPORTANT FIX)
-let hospitalTime = 0;
-let userTime = 0;
-
-// ================= FONT =================
-function setFont(size) {
-    document.body.className = size;
-}
-
-// ================= LANGUAGE =================
-const text = {
-    en: {
-        title: "APPOINTMENT QUEUE",
-        your: "Your Appointment",
-        current: "Current Number",
-        latest: "Latest Queue",
-        estimate: "Estimate",
-        hospital: "Hospital Queue Estimate",
-        room: "Room",
-        doctor: "Doctor",
-        type: "Type",
-        online: "Online",
-        offline: "Offline",
-        navAbout: "About Us",
-        navLocation: "Location",
-        navApp: "Appointment",
-        navQueue: "Queue",
-        navAsk: "Ask Us"
-    },
-    bm: {
-        title: "GILIRAN TEMU JANJI",
-        your: "Temu Janji Anda",
-        current: "Nombor Semasa",
-        latest: "Giliran Terkini",
-        estimate: "Anggaran",
-        hospital: "Anggaran Masa Hospital",
-        room: "Bilik",
-        doctor: "Doktor",
-        type: "Jenis",
-        online: "Dalam Talian",
-        offline: "Bersemuka",
-        navAbout: "Tentang Kami",
-        navLocation: "Lokasi",
-        navApp: "Temu Janji",
-        navQueue: "Giliran",
-        navAsk: "Tanya Kami"
-    }
-};
-
-let currentLang = "en";
-
-// ================= SET LANGUAGE =================
-function setLang(lang) {
-    currentLang = lang;
-
-    document.getElementById("title").innerHTML = text[lang].title;
-    document.getElementById("yourTitle").innerHTML = text[lang].your;
-    document.getElementById("currentTitle").innerHTML = text[lang].current;
-    document.getElementById("latestTitle").innerHTML = text[lang].latest;
-
-    document.getElementById("estimateText").innerHTML = text[lang].estimate;
-    document.getElementById("hospitalEstimate").innerHTML =
-        text[lang].hospital + ": <span id='time'></span>";
-
-    document.getElementById("roomLabel").innerHTML = text[lang].room;
-    document.getElementById("doctorLabel").innerHTML = text[lang].doctor;
-    document.getElementById("typeLabel").innerHTML = text[lang].type;
-
-    document.getElementById("navAbout").innerHTML = text[lang].navAbout;
-    document.getElementById("navLocation").innerHTML = text[lang].navLocation;
-    document.getElementById("navApp").innerHTML = text[lang].navApp;
-    document.getElementById("navQueue").innerHTML = text[lang].navQueue;
-    document.getElementById("navAsk").innerHTML = text[lang].navAsk;
-
-    updateDisplay();
-    updateTimeDisplay(); // IMPORTANT FIX
-}
-
-// ================= RANDOM TIME =================
-function getRandomTime() {
-    return Math.floor(Math.random() * 11) + 10;
-}
-
-// ================= CALCULATE =================
-function calculateEstimate() {
-
-    let hospitalWaiting = latest - current;
-    hospitalTime = 0;
-
-    for(let i = 0; i < hospitalWaiting; i++) {
->>>>>>> Stashed changes
         hospitalTime += getRandomTime();
     }
 
     let userWaiting = yourNumber - current;
     userTime = 0;
 
-<<<<<<< Updated upstream
     for(let i = 0; i < userWaiting; i++)
     {
         userTime += getRandomTime();
@@ -530,51 +425,6 @@ function autoUpdate()
     {
         current = latest;
     }
-=======
-    for(let i = 0; i < userWaiting; i++) {
-        userTime += getRandomTime();
-    }
-
-    if(appointmentType === "Online") {
-        userTime -= 5;
-    }
-
-    updateTimeDisplay();
-}
-
-// ================= DISPLAY TIME =================
-function updateTimeDisplay() {
-    document.getElementById("time").innerHTML = hospitalTime + " min";
-    document.getElementById("yourEstimate").innerHTML = userTime + " min";
-}
-
-// ================= DISPLAY =================
-function updateDisplay() {
-
-    document.getElementById("yourNum").innerHTML = yourNumber;
-    document.getElementById("current").innerHTML = current;
-    document.getElementById("latest").innerHTML = latest;
-
-    // ROOM
-    if(appointmentType === "Online") {
-        document.getElementById("room").innerHTML = "-";
-    } else {
-        document.getElementById("room").innerHTML = "101";
-    }
-
-    // TYPE TRANSLATE
-    if(currentLang === "bm") {
-        document.getElementById("type").innerHTML =
-            appointmentType === "Online" ? text.bm.online : text.bm.offline;
-    } else {
-        document.getElementById("type").innerHTML = appointmentType;
-    }
-}
-
-// ================= AUTO =================
-function autoUpdate() {
-    if(current < latest) current++;
->>>>>>> Stashed changes
 
     updateDisplay();
     calculateEstimate();
@@ -583,12 +433,8 @@ function autoUpdate() {
 // INIT
 updateDisplay();
 calculateEstimate();
-<<<<<<< Updated upstream
 
 setInterval(autoUpdate, 1000);
-=======
-setInterval(autoUpdate, 5000);
->>>>>>> Stashed changes
 
 </script>
 
