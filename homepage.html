@@ -2,28 +2,102 @@
 <html>
     <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial scale =1.0">
+    <meta name="viewport" content="width=device-width, initial-scale =1.0">
     <title>Homepage</title>
     <link rel="stylesheet" href="homepage.css">
     </head>
-    <body>
-        <div class="navbar">
-            <div class="logo"><a href="homepage.html"><img src="img/logo.png" alt="To homepage" style="width:42px;height:42px;"></a></div>
-            <a href="homepage.html#about-us" class="list">About Us</a>
-            <a href="location.html" class="list">Location</a>
-            <a href="app.html" class="list">Appointment</a>
-            <a href="queue.html" class="list">Queue</a>
-            <a href="askDoctor.html" class="list">Ask Us</a>
-            <div class="lang">A | EN | BM</div>
-        </div>
+    
+    <body class="medium">
+<div class="navbar">
+    <div class="logo">
+    <a href="homepage.html">
+        <img src="img/logo.png" alt="To homepage">
+    </a>
+</div>
+
+    <div class="menu">
+        <a href="homepage.html#about-us" id="navAbout">About Us</a>
+        <a href="location.html" id="navLocation">Location</a>
+        <a href="app.html" id="navApp">Appointment</a>
+        <a href="queue.html" id="navQueue">Queue</a>
+        <a href="askDoctor.html" id="navAsk">Ask Us</a>
+    </div>
+
+    <div class="right">
+        <span onclick="setFont('small')">A-</span>
+        <span onclick="setFont('medium')">A</span>
+        <span onclick="setFont('large')">A+</span>
+        |
+        <span onclick="setLang('en')">EN</span>
+        <span onclick="setLang('bm')">BM</span>
+    </div>
+</div>
             <div id="mainhomepage">
                 <div class="texthomepg">
                     <h1>MyCura Hospital</h1>
-                    <p>Insert simple description</p>
+                    <p style="font-size: 120%;" id="navDesc">The best hospital for the best of us.</p>
                 </div>
             </div>
             <div id="about-us">
                 <h1>About us</h1>
+                    <div class="team">
+                       <div class="box">
+                            <img src="img/ain.jpg">
+                           <p>Nurul Ain Batrisyia Binti Mohd Fouzi</p>
+                           <p>257583</p>
+                        </div>
+
+                      <div class="box">
+                         <img src="img/husna.jpg">
+                         <p>Umairatul Husna Binti Mohamad Asmuri</p>
+                         <p>258613</p>
+                         </div>
+
+                    <div class="box">
+                          <img src="img/haz.jpg">
+                         <p>Nur Hazirah Binti Ali Hasymi</p>
+                         <p>255724</p>
+                  </div>
+                </div>
             </div>
+
+<script>
+
+// FONT SIZE FUNCTION
+function setFont(size){
+    document.body.className = size;
+}
+
+// LANGUAGE DATA
+const text = {
+    en: {
+        navAbout: "About Us",
+        navLocation: "Location",
+        navApp: "Appointment",
+        navQueue: "Queue",
+        navAsk: "Ask Us",
+        navDesc: "The best hospital for the best of us."
+    },
+    bm: {
+        navAbout: "Tentang Kami",
+        navLocation: "Lokasi",
+        navApp: "Temu Janji",
+        navQueue: "Giliran",
+        navAsk: "Tanya Kami",
+        navDesc: "Hospital terbaik untuk yang terbaik."
+    }
+};
+
+// CHANGE LANGUAGE
+function setLang(lang){
+    document.getElementById("navAbout").innerHTML = text[lang].navAbout;
+    document.getElementById("navLocation").innerHTML = text[lang].navLocation;
+    document.getElementById("navApp").innerHTML = text[lang].navApp;
+    document.getElementById("navQueue").innerHTML = text[lang].navQueue;
+    document.getElementById("navAsk").innerHTML = text[lang].navAsk;
+    document.getElementById("navDesc").innerHTML = text[lang].navDesc;
+}
+
+</script>
     </body>
 </html>
