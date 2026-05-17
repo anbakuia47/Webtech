@@ -210,39 +210,129 @@
   </div>
 
   <script>
-    // Filter hospitals by state
-    function filterHospital() {
-      let selectedState = document.getElementById("stateFilter").value;
-      let hospitals = document.getElementsByClassName("hospital-card");
-      for (let i = 0; i < hospitals.length; i++) {
-        hospitals[i].style.display = (selectedState === "all" || hospitals[i].id === selectedState) ? "flex" : "none";
-      }
+
+  // Filter hospitals by state
+  function filterHospital() {
+    let selectedState = document.getElementById("stateFilter").value;
+    let hospitals = document.getElementsByClassName("hospital-card");
+
+    for (let i = 0; i < hospitals.length; i++) {
+      hospitals[i].style.display =
+        (selectedState === "all" || hospitals[i].id === selectedState)
+        ? "flex"
+        : "none";
+    }
+  }
+
+  // Font size toggle
+  function setFont(size){
+    document.body.classList.remove("small","medium","large");
+    document.body.classList.add(size);
+  }
+
+  // Language toggle
+  const text = {
+    en: {
+      navAbout:"About Us",
+      navLocation:"Location",
+      navApp:"Appointment",
+      navQueue:"Queue",
+      navAsk:"Ask Us",
+
+      filter:"Filter state by:",
+      all:"All",
+
+      crowded:"Crowded",
+      moderate:"Moderate",
+      minimal:"Minimal",
+
+      condition:"Condition:",
+      request:"Request Appointment",
+      direction:"Get Directions"
+    },
+
+    bm: {
+      navAbout:"Tentang Kami",
+      navLocation:"Lokasi",
+      navApp:"Temu Janji",
+      navQueue:"Giliran",
+      navAsk:"Tanya Kami",
+
+      filter:"Tapis negeri:",
+      all:"Semua",
+
+      crowded:"Sesak",
+      moderate:"Sederhana",
+      minimal:"Kurang Sesak",
+
+      condition:"Keadaan:",
+      request:"Mohon Temu Janji",
+      direction:"Dapatkan Arah"
+    }
+  };
+
+  function setLang(lang){
+
+    // NAVBAR
+    document.getElementById("navAbout").innerHTML = text[lang].navAbout;
+    document.getElementById("navLocation").innerHTML = text[lang].navLocation;
+    document.getElementById("navApp").innerHTML = text[lang].navApp;
+    document.getElementById("navQueue").innerHTML = text[lang].navQueue;
+    document.getElementById("navAsk").innerHTML = text[lang].navAsk;
+
+    // FILTER LABEL
+    document.querySelector("label[for='stateFilter']").innerHTML =
+      text[lang].filter;
+
+    // FILTER OPTIONS
+    let options = document.querySelectorAll("#stateFilter option");
+
+    options[0].innerHTML = text[lang].all;
+
+    // LEGEND
+let legendItems = document.querySelectorAll(".legend > span");
+
+legendItems[0].innerHTML =
+  `<span class="dot red"></span>${text[lang].crowded}`;
+
+legendItems[1].innerHTML =
+  `<span class="dot yellow"></span>${text[lang].moderate}`;
+
+legendItems[2].innerHTML =
+  `<span class="dot green"></span>${text[lang].minimal}`;
+
+    // CONDITION TEXT
+    let conditions = document.querySelectorAll(".hospital-info p");
+
+    for(let i = 0; i < conditions.length; i++) {
+
+      let dot = conditions[i].innerHTML.match(/<span.*<\/span>/);
+
+      conditions[i].innerHTML =
+        text[lang].condition + " " + dot[0];
     }
 
-    // Font size toggle
-    function setFont(size){
-      document.body.classList.remove("small","medium","large");
-      document.body.classList.add(size);
+    // BUTTONS
+    let buttons = document.querySelectorAll(".hospital-info button a");
+
+    for(let i = 0; i < buttons.length; i++) {
+      buttons[i].innerHTML = text[lang].request;
     }
 
-    // Language toggle
-    const text = {
-      en: { navAbout:"About Us", navLocation:"Location", navApp:"Appointment", navQueue:"Queue", navAsk:"Ask Us" },
-      bm: { navAbout:"Tentang Kami", navLocation:"Lokasi", navApp:"Temu Janji", navQueue:"Giliran", navAsk:"Tanya Kami" }
-    };
-    function setLang(lang){
-      document.getElementById("navAbout").innerHTML = text[lang].navAbout;
-      document.getElementById("navLocation").innerHTML = text[lang].navLocation;
-      document.getElementById("navApp").innerHTML = text[lang].navApp;
-      document.getElementById("navQueue").innerHTML = text[lang].navQueue;
-      document.getElementById("navAsk").innerHTML = text[lang].navAsk;
-    }
+    let mapButtons = document.querySelectorAll(".hospital-info button:nth-child(4)");
 
-    // Google Maps Directions
-    function openMap(destination){
-      const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
-      window.open(url, "_blank");
+    for(let i = 0; i < mapButtons.length; i++) {
+      mapButtons[i].innerHTML = text[lang].direction;
     }
-  </script>
+  }
+
+  // Google Maps Directions
+  function openMap(destination){
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
+    window.open(url, "_blank");
+  }
+
+</script>
+
 </body>
 </html>

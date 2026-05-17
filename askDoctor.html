@@ -174,42 +174,101 @@ button {
 
 <div class="content">
 
-<h2>Ask us anything</h2>
+<h2 id="title">Ask us anything</h2>
+<br>
 
 <input type="text" id="question">
-<button onclick="submitQuestion()">Ask a Doctor</button>
+<button id="askBtn" onclick="submitQuestion()">Ask a Doctor</button>
 <br><br>
 
-<h3>Categories</h3>
+<h3 id="categoryTitle">Categories</h3>
 
 <div class="category">
-    <button onclick="showFAQ('Gastric')">Gastric</button>
-    <button onclick="showFAQ('Diabetes')">Diabetes</button>
-    <button onclick="showFAQ('Heart')">Heart Attack</button>
-    <button onclick="showFAQ('Allergy')">Allergy</button>
-    <button onclick="showFAQ('Pregnancy')">Pregnancy</button>
+    <button id="gastricBtn" onclick="showFAQ('Gastric')">Gastric</button>
+    <button id="diabetesBtn" onclick="showFAQ('Diabetes')">Diabetes</button>
+    <button id="heartBtn" onclick="showFAQ('Heart')">Heart Attack</button>
+    <button id="allergyBtn" onclick="showFAQ('Allergy')">Allergy</button>
+    <button id="pregnancyBtn" onclick="showFAQ('Pregnancy')">Pregnancy</button>
 </div>
 
 <div id="faqBox" class="faq">
     <p id="placeholderText">Your questions will appear here...</p>
 </div>
 <br>
-<button onclick="clearAllQuestions()">Clear All</button>
+<button id="clearBtn" onclick="clearAllQuestions()">Clear All</button>
+
 
 </div>
 
 <script>
 
-/* FONT */
+/* ================= FONT ================= */
 function setFont(size) {
     document.body.className = size;
 }
 
+/* ================= LANGUAGE DATA ================= */
+const text = {
 
-/* FAQ DATA */
+    en: {
+        navAbout: "About Us",
+        navLocation: "Location",
+        navApp: "Appointment",
+        navQueue: "Queue",
+        navAsk: "Ask Us",
+
+        title: "Ask us anything",
+        askBtn: "Ask a Doctor",
+        category: "Categories",
+
+        gastric: "Gastric",
+        diabetes: "Diabetes",
+        heart: "Heart Attack",
+        allergy: "Allergy",
+        pregnancy: "Pregnancy",
+
+        placeholder: "Your questions will appear here...",
+        clear: "Clear All",
+
+        empty: "Enter your question!",
+        reply: "Reply coming soon...",
+        you: "You",
+        doctor: "Doctor"
+    },
+
+    bm: {
+        navAbout: "Tentang Kami",
+        navLocation: "Lokasi",
+        navApp: "Temu Janji",
+        navQueue: "Giliran",
+        navAsk: "Tanya Kami",
+
+        title: "Tanya Kami Apa Sahaja",
+        askBtn: "Tanya Doktor",
+        category: "Kategori",
+
+        gastric: "Gastrik",
+        diabetes: "Diabetes",
+        heart: "Serangan Jantung",
+        allergy: "Alahan",
+        pregnancy: "Kehamilan",
+
+        placeholder: "Soalan anda akan dipaparkan di sini...",
+        clear: "Padam Semua",
+
+        empty: "Masukkan soalan anda!",
+        reply: "Balasan akan datang tidak lama lagi...",
+        you: "Anda",
+        doctor: "Doktor"
+    }
+};
+
+let currentLang = "en";
+
+/* ================= FAQ DATA ================= */
 let faqData = {};
 
-/* AJAX LOAD JSON */
+/* ================= AJAX LOAD JSON ================= */
 fetch("faq.json")
 .then(function(response) {
     return response.json();
@@ -221,15 +280,17 @@ fetch("faq.json")
     console.log("Error loading JSON:", error);
 });
 
-/* LOCAL STORAGE INIT */
-let questionFeed = JSON.parse(localStorage.getItem("questions")) || [];
+/* ================= LOCAL STORAGE ================= */
+let questionFeed =
+JSON.parse(localStorage.getItem("questions")) || [];
 
-/* SUBMIT QUESTION */
+/* ================= SUBMIT QUESTION ================= */
 function submitQuestion() {
+
     let q = document.getElementById("question").value;
 
     if(q === "") {
-        alert("Enter your question!");
+        alert(text[currentLang].empty);
         return;
     }
 
@@ -238,54 +299,172 @@ function submitQuestion() {
         time: new Date().toLocaleString()
     });
 
-    localStorage.setItem("questions", JSON.stringify(questionFeed));
+    localStorage.setItem(
+        "questions",
+        JSON.stringify(questionFeed)
+    );
 
     renderQuestions();
 
     document.getElementById("question").value = "";
 }
 
-/* RENDER FEED */
+/* ================= RENDER QUESTIONS ================= */
 function renderQuestions() {
+
     const box = document.getElementById("faqBox");
+
     box.innerHTML = "";
 
     if(questionFeed.length === 0) {
-        box.innerHTML = "<p id='placeholderText'>Your questions will appear here...</p>";
+
+        box.innerHTML =
+        "<p id='placeholderText'>" +
+        text[currentLang].placeholder +
+        "</p>";
+
         return;
     }
 
-    // loop from last to first
-    for (let i = questionFeed.length - 1; i >= 0; i--) {
+    for(let i = questionFeed.length - 1; i >= 0; i--) {
+
         let item = questionFeed[i];
 
         box.innerHTML += `
-            <div class="card">
-                <p><b>You:</b> ${item.question}</p>
-                <small>${item.time}</small>
-                <p><b>Doctor:</b> Reply coming soon...</p>
-            </div>
+        <div class="card">
+
+            <p>
+            <b>${text[currentLang].you}:</b>
+            ${item.question}
+            </p>
+
+            <small>${item.time}</small>
+
+            <p>
+            <b>${text[currentLang].doctor}:</b>
+            ${text[currentLang].reply}
+            </p>
+
+        </div>
         `;
     }
 }
 
-/* SHOW FAQ */
+/* ================= SHOW FAQ ================= */
 function showFAQ(cat) {
+
     let data = faqData[cat];
-    let output = "<h4>" + cat + "</h4>";
+
+    let title = cat;
+
+    if(currentLang === "bm") {
+
+        if(cat === "Gastric") {
+            title = "Gastrik";
+        }
+
+        else if(cat === "Heart") {
+            title = "Serangan Jantung";
+        }
+
+        else if(cat === "Allergy") {
+            title = "Alahan";
+        }
+
+        else if(cat === "Pregnancy") {
+            title = "Kehamilan";
+        }
+    }
+
+    let output = "<h4>" + title + "</h4>";
 
     for(let i = 0; i < data.length; i++) {
-        output += "<p><b>Q:</b> " + data[i].q + "</p>";
-        output += "<p><b>A:</b> " + data[i].a + "</p><hr>";
+
+        output +=
+        "<p><b>Q:</b> " +
+        data[i].q +
+        "</p>";
+
+        output +=
+        "<p><b>A:</b> " +
+        data[i].a +
+        "</p><hr>";
     }
 
     document.getElementById("faqBox").innerHTML = output;
 }
 
-/* LOAD ON START */
-window.onload = function () {
+/* ================= CLEAR ================= */
+function clearAllQuestions() {
+
+    localStorage.removeItem("questions");
+
+    questionFeed = [];
+
     renderQuestions();
-};
+}
+
+/* ================= CHANGE LANGUAGE ================= */
+function setLang(lang) {
+
+    currentLang = lang;
+
+    /* NAVBAR */
+    document.getElementById("navAbout").innerHTML =
+    text[lang].navAbout;
+
+    document.getElementById("navLocation").innerHTML =
+    text[lang].navLocation;
+
+    document.getElementById("navApp").innerHTML =
+    text[lang].navApp;
+
+    document.getElementById("navQueue").innerHTML =
+    text[lang].navQueue;
+
+    document.getElementById("navAsk").innerHTML =
+    text[lang].navAsk;
+
+    /* TITLE */
+    document.getElementById("title").innerHTML =
+    text[lang].title;
+
+    /* BUTTON */
+    document.getElementById("askBtn").innerHTML =
+    text[lang].askBtn;
+
+    /* CATEGORY */
+    document.getElementById("categoryTitle").innerHTML =
+    text[lang].category;
+
+    /* CATEGORY BUTTON */
+    document.getElementById("gastricBtn").innerHTML =
+    text[lang].gastric;
+
+    document.getElementById("diabetesBtn").innerHTML =
+    text[lang].diabetes;
+
+    document.getElementById("heartBtn").innerHTML =
+    text[lang].heart;
+
+    document.getElementById("allergyBtn").innerHTML =
+    text[lang].allergy;
+
+    document.getElementById("pregnancyBtn").innerHTML =
+    text[lang].pregnancy;
+
+    /* CLEAR BUTTON */
+    document.getElementById("clearBtn").innerHTML =
+    text[lang].clear;
+
+    renderQuestions();
+}
+
+/* ================= LOAD ================= */
+window.onload = function() {
+
+    renderQuestions();
+}
 
 </script>
 <script>

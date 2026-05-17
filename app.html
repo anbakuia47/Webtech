@@ -1,266 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Appointment</title>
-        <style>
-            html {
-            overflow-x: hidden;
-            }
-            *{
-                margin:0;
-                padding:0;
-                box-sizing:border-box;
-            }
 
-            body{
-                margin:0;
-                font-family: Arial;
-               min-height:200vh;
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment</title>
+    <link rel="stylesheet" href="app.css">
+</head>
 
-            .small-text{
-               font-size: 12px;
-            }
-
-            .medium-text{
-               font-size: 16px;
-            }
-
-            .large-text{
-                font-size: 20px;
-            }
-            .resizable {
-              transition: font-size 0.3s ease;
-            }
-
-            #content{
-                transition: font-size 0.3s ease;
-            }
-
-           .navbar {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-
-    background: #2f7f8a;
-    padding: 15px 20px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    width: 100%;
-
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-
-    flex-wrap: nowrap;
-}
-
-            .logo {
-                width: 42px;
-                height: 42px;
-               margin-right: 20px;
-
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .logo img{
-                width: 50px;
-                height: 50px;
-                object-fit: cover;
-                border-radius: 50%;
-            }
-
-            .logo img:hover{
-                transform: scale(1.05);
-                transition: 0.2s;
-            }
-
-            .menu {
-    display: flex;
-    gap: 20px;
-
-    flex: 1;
-    justify-content: center;
-
-    flex-wrap: nowrap;
-}
-
-            .menu a {
-                color: white;
-                text-decoration: none;
-            }
-            .menu a,
-            .right span {
-                font-size: 14px;
-            }
-
-            .menu a:hover {
-                color: #ffd700;
-               border-bottom: 2px solid #ffd700;
-            }
-
-            .right {
-  display: flex;
-  align-items: center;
-  gap: 10px;          /* space between buttons */
-  flex-wrap: nowrap;  /* prevent wrapping */
-}
-
-.right span {
-  white-space: nowrap; /* keep text on one line */
-}
-            /*navi bar styling*/
-
-            /*--query on media type shi --*/
-            @media screen and (max-width: 768px) {
-
-    .navbar {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-
-  background: #2f7f8a;
-  padding: 15px 30px;   /* match AskDoctor bar */
-
-  display: flex;
-  justify-content: space-between; /* align like AskDoctor */
-  align-items: center;
-
-  width: 100%;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-
-    .menu {
-  display: flex;
-  gap: 40px;            /* match AskDoctor spacing */
-}
-.menu a {
-  color: white;
-  text-decoration: none;
-}
-
-.menu a:hover {
-  color: #ffd700;
-  border-bottom: 2px solid #ffd700;
-}
-
-/* RIGHT SECTION */
-.right span {
-  margin: 0 5px;
-  cursor: pointer;
-  color: white;
-}
-
-.right span:hover {
-  color: #ffd700;
-}
-
-    .bottom {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .calendar,
-    form {
-        width: 100%;
-    }
-
-    #filter {
-        width: 100%;
-        max-width: 250px;
-    }
-}
-
-            .container {width: 100%;
-                        max-width: 300px;
-                        margin:20px;
-                        background-color: cyan; 
-                        text-align:center;
-                        border:3px solid black;}
-            #container  {display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                        gap: 20px;
-                        justify-items: center;
-                        margin-bottom: 40px;}
-            .bottom     {display: flex;
-                        flex-direction: row;
-                        gap: 40px;
-                        align-items: flex-start;
-                        justify-content: center;
-                        flex-wrap: wrap;}
-            .doc_img    {width: 100%;
-                        max-width: 200px;
-                        height: auto;
-
-                        border: 1px solid darkgray;}
-            .imgcapt    {font-family:'Times New Roman';
-                        font-size:20px;}
-            .calendar   {width: 100%;
-                        max-width: 500px;
-                        padding:10px;
-                        border-radius:10px;
-                        text-align:center;
-                        background: darkkhaki;}
-            .header     {display:flex;
-                        justify-content:space-between;
-                        align-items:center;}
-            .days,.dates{display:grid;
-                        grid-template-columns:repeat(7,1fr);}
-            .days div   {font-weight:bold;}
-            .dates div  {padding:10px;
-                        margin:2px;
-                        background-color: azure;
-                        border-radius:5px;
-                        cursor:pointer;}
-            .dates div:hover{background-color: aquamarine;}
-            .selected   {background-color: orange !important;}
-            form        {background-color: lightgoldenrodyellow;
-                
-                        margin-top: 20px;
-                        padding: 20px;
-                        text-align:center;
-                        border: 2px solid black;
-                        border-radius: 10px;
-                        width: 100%;
-                        max-width: 450px;}
-            input[type="text"], input[type="email"], input[type="date"] 
-                        {           
-                        width: 80%;
-                        padding: 8px;
-                        margin: 10px 0;
-                        border: 1px solid #ccc;
-                        border-radius: 4px;}
-            input[type="submit"] 
-                        {color: white;
-                        padding: 10px 20px;
-                        border: none;
-                        border-radius: 4px;
-                        cursor: pointer;}
-            input[type="submit"]:hover
-                        {background-color: cyan;}
-            #docfilter  {margin-bottom:20px;
-                        padding:5px;
-                        border:1px solid #ccc;
-                        border-radius:4px;
-                        width:200px;}
-            .option:hover {background-color: lightskyblue;}
-            #filter {padding: 8px;
-                    margin-bottom: 20px;}
-        </style>
-    </head>
-    <body>
-    <div class="navbar">
+<body>
+<div class="navbar">
     <div class="logo">
-    <a href="homepage.html">
-        <img src="img/logo.png" alt="To homepage">
-    </a>
-</div>
-
+        <a href="homepage.html">
+            <img src="img/logo.png" alt="To homepage">
+        </a>
+    </div>
     <div class="menu resizable medium-text">
         <a href="homepage.html#about-us" id="navAbout">About Us</a>
         <a href="location.html" id="navLocation">Location</a>
@@ -268,7 +22,6 @@
         <a href="queue.html" id="navQueue">Queue</a>
         <a href="askDoctor.html" id="navAsk">Ask Us</a>
     </div>
-
     <div class="right resizable medium-text">
         <span onclick="setFont('small')">A-</span>
         <span onclick="setFont('medium')">A</span>
@@ -278,236 +31,667 @@
         <span onclick="setLang('bm')">BM</span>
     </div>
 </div>
+<div id="content" class="resizable medium-text">
+    <h1 id="title">Doctor Selection</h1>
+    <select id="filter" onchange="filterDoctors()">
+        <option value="all" id="allText">All</option>
+        <option value="Surgeon">Surgeon</option>
+        <option value="Cardiologist">Cardiologist</option>
+        <option value="Pediatrician">Pediatrician</option>
+        <option value="Dermatologist">Dermatologist</option>
+        <option value="Neurologist">Neurologist</option>
+        <option value="Dentist">Dentist</option>
+    </select>
+    <div id="doctorList"></div>
+<div class="bottom">
+
+    <div class="calendar">
+        <div class="header">
+            <button onclick="prevMonth()" id="prevBtn">Previous Month</button>
+            <h2 id="monthYear"></h2>
+            <button onclick="nextMonth()" id="nextBtn">Next Month</button>
+        </div>
+        <div class="days">
+            <div id="sun">Sun</div>
+            <div id="mon">Mon</div>
+            <div id="tue">Tue</div>
+            <div id="wed">Wed</div>
+            <div id="thu">Thu</div>
+            <div id="fri">Fri</div>
+            <div id="sat">Sat</div>
+        </div>
+        <div id="dates" class="dates"></div>
+    </div>
+
+    <form id="appointmentForm">
+        <h2 id="formTitle">Appointment Form</h2>
+        <label id="fullNameLabel">Full Name</label><br>
+        <input type="text" name="fname" required><br>
+        <label id="icLabel">IC Number</label><br>
+        <input type="text" name="icno" required><br>
+        <label id="genderLabel">Gender</label><br>
+        <div class="radio-group">
+            <label>
+                <input type="radio" name="gender" value="male" required>
+                <span id="maleText">Male</span>
+            </label>
+            <label>
+                <input type="radio" name="gender" value="female">
+                <span id="femaleText">Female</span>
+            </label>
+        </div>
+        <label id="dobLabel">Date of Birth</label><br>
+        <input type="date" name="dob" required><br>
+        <label id="telLabel">Telephone No</label><br>
+        <input type="text" name="telno" required><br>
+        <label id="emailLabel">Email</label><br>
+        <input type="email" name="email" required><br>
+        <label id="doctorLabel">Doctor's Name</label><br>
+        <input type="text" id="docname" name="docname" readonly><br>
+        <label id="dateLabel">Appointment Date</label><br>
+        <input type="date" id="appointmentDate" name="app_date" readonly><br>
+        <label id="timeLabel">Time of Appointment</label><br>
+        <input type="time" name="app_time" required><br>
+        <label id="appointmentLabel">Appointment</label><br>
+        <div class="radio-group">
+            <label>
+                <input type="radio" name="app" value="Online Session" required>
+                <span id="onlineText">Online Session</span>
+            </label>
+            <label>
+                <input type="radio" name="app" value="Physical Session">
+                <span id="physicalText">Physical Session</span>
+            </label>
+        </div>
+        <input type="submit" value="Submit" id="submitBtn">
+        <p id="successMsg"></p>
+    </form>
 
 </div>
+</div>
 
-<div id="content" class="resizable medium-text">
-        <h1>Doctor Selection</h1>
-        <select id="filter" onchange="filterDoctors()">
-        <option class="option" value="all">All</option>
-        <option class="option" value="Surgeon">Surgeon</option>
-        <option class="option" value="Cardiologist">Cardiologist</option>
-        <option class="option" value="Pediatrician">Pediatrician</option>
-        <option class="option" value="Dermatologist">Dermatologist</option>
-        <option class="option" value="Neurologist">Neurologist</option>
-</select>
-        <div id="container"></div>
-            <script>
-                <!-- Doctor data -->
-                let doctors = [
-                    {name: "Dr. Wazid",
-                     speciality: "Surgeon",
-                     image: "doc_image/doc1.jpeg"},
+<script>
+// Doctor's data
+let doctors = [
+    {
+        name: "Dr. Luke",
+        speciality: "Surgeon",
+        image: "doc_image/doc1.jpeg",
+        caption:"Available from 8:30am to 1:30pm",
+        availability: { start: "08:30", end: "13:30" }
+    },
 
-                    {name: "Dr. Smith",
-                     speciality: "Cardiologist",
-                     image: "doc_image/doc2.jpeg"},
+    {
+        name: "Dr. Smith",
+        speciality: "Cardiologist",
+        image: "doc_image/doc2.jpeg",
+        caption:"Available from 11:00am to 4:00pm",
+        availability: { start: "11:00", end: "16:00" }
+    },
 
-                    {name: "Dr. Lee",
-                    speciality: "Pediatrician",
-                    image:"doc_image/doc3.jpeg"},
+    {
+        name: "Dr. Lee",
+        speciality: "Pediatrician",
+        image:"doc_image/doc3.jpeg",
+        caption:"Available from 1:00pm to 6:00pm",
+        availability: { start: "13:00", end: "18:00" }
+    },
 
-                    {name:"Dr. Laura",
-                    speciality: "Dermatologist",
-                    image:"doc_image/doc4.jpeg"},
+    {
+        name:"Dr. Laura",
+        speciality: "Dermatologist",
+        image:"doc_image/doc4.jpeg",
+        caption:"Available from 3:00pm to 8:00pm",
+        availability: { start: "15:00", end: "20:00" }
+    },
 
-                    {name:"Dr. Nina",
-                    speciality: "Neurologist",
-                    image:"doc_image/doc5.jpeg"},
-                ];
-                // Loop for doctor's data
-                for (let i=0;i<doctors.length;i++) 
-                {
-                    document.getElementById("container").innerHTML += `
-                        <div class="container">
-                            <img class="doc_img" src="${doctors[i].image}" alt="${doctors[i].name}" width="200" height="200"><br>
-                            <h3 class="imgcapt">${doctors[i].name}</h3>
-                            <p>${doctors[i].speciality}</p>
-                        </div>
-                    `;
-                 }
-                 //Filter for doctor's speciality
-                function filterDoctors() 
-                {
-                    let selected = document.getElementById("filter").value;
+    {
+        name:"Dr. Nina",
+        speciality: "Neurologist",
+        image:"doc_image/doc5.jpeg",
+        caption:"Available from 6:00pm to 12:00am",
+        availability: { start: "18:00", end: "00:00" }
+    },
 
-                    if (selected === "all") 
-                    {
-                        displayDoctors(doctors);
-                    } 
+    {
+        name:"Dr. Omar",
+        speciality: "Surgeon",
+        image:"doc_image/doc6.jpg",
+        caption:"Available from 10:00pm to 3:00am",
+        availability: { start: "22:00", end: "03:00" }
+    },
 
-                    else 
-                    {
-                        let filtered = doctors.filter(doc => doc.speciality === selected);
-                        displayDoctors(filtered);
-                    }
-                }
-                function displayDoctors(list) 
-                {
-                    let container = document.getElementById("container");
-                    container.innerHTML = "";
+    {
+        name:"Dr. Anna",
+        speciality: "Cardiologist",
+        image:"doc_image/doc7.jpg",
+        caption:"Available from 12:00am to 5:00am",
+        availability: { start: "00:00", end: "05:00" }
+    },
 
-                    for (let i = 0; i < list.length; i++) 
-                    {
-                        container.innerHTML += `
-                        <div class="container">
-                            <img class="doc_img" src="${list[i].image}" width="200" height="200"><br>
-                            <h3 class="imgcapt">${list[i].name}</h3>
-                            <p>${list[i].speciality}</p>
-                        </div>`;
-                    }
-            }
-        
-            </script>
-            <div class="bottom">
-            <div class="calendar">
-                <div class="header">
-                <button onclick="prevMonth()">Previous Month</button>
-                <h2 id="monthYear"></h2>
-                <button onclick="nextMonth()">Next Month</button>
-                </div>
-            <div class="days">
-                <div>Sun</div>
-                <div>Mon</div>
-                <div>Tue</div>
-                <div>Wed</div>
-                <div>Thu</div>
-                <div>Fri</div>
-                <div>Sat</div>
-            </div>
-            <div id="dates" class="dates"></div>
-        </div>
-        <!-- Appointment Form -->
-        <form action="">
-            <h2>Appointment Form</h2>
-            <label for="Full Name">Full Name</label><br>
-            <input type="text" name="fname"><br>
-            <label for="IC Number">IC Number</label><br>
-            <input type="text" name="icno"><br>
-            <label for="Gender">Gender</label><br>
-            <input type="radio" name="gender" value="male"> Male
-            <input type="radio" name="gender" value="female"> Female<br>  
-            <label for="Date of Birth">Date of Birth</label><br>
-            <input type="date" name="dob"><br>
-            <label for="Telephone No">Telephone No</label><br>
-            <input type="text" name="telno"><br>
-            <label for="Email">Email</label><br>
-            <input type="email" name="email"><br>
-            <label for="Appointment">Appointment</label><br>
-            <input type="radio" name="app" value="Online Session"> Online Session
-            <input type="radio" name="app" value="Physical Session"> Physical Session<br>
-            <input type="submit" value="Submit">
-        </form>
-        </div>
-        <script>
-            //Calendar functionality
-            let currentDate= new Date();
-            function renderCalendar()
+    {
+        name:"Dr. Mel",
+        speciality:"Dentist",
+        image:"doc_image/doc8.jpg",
+        caption:"Available from 4:00am to 9:00am",
+        availability: { start: "04:00", end: "09:00" }
+    }
+];
+
+let currentLang = "en";
+
+displayDoctors(doctors);
+
+// Filter doctor
+function filterDoctors()
+{
+    let selected = document.getElementById("filter").value;
+
+    if(selected === "all")
+    {
+        displayDoctors(doctors);
+    }
+
+    else
+    {
+        let filtered =
+        doctors.filter(doc => doc.speciality === selected);
+
+        displayDoctors(filtered);
+    }
+}
+
+// Display doctors
+function displayDoctors(list)
+{
+    let container = document.getElementById("doctorList");
+
+    container.innerHTML = "";
+
+    for(let i = 0; i < list.length; i++)
+    {
+        let specialityText = list[i].speciality;
+        let captionText = list[i].caption;
+
+        // BM translation
+        if(currentLang === "bm")
+        {
+            if(list[i].speciality === "Surgeon")
             {
-                const dates=document.getElementById("dates");
-                const monthYear=document.getElementById("monthYear");
-                dates.innerHTML="";
-                let year=currentDate.getFullYear();
-                let month=currentDate.getMonth();
-                let firstDay=new Date(year,month,1).getDay();
-                let totalDays=new Date(year,month+1,0).getDate();
-                monthYear.innerText=`${currentDate.toLocaleString("default",
-                {month:"long",year:"numeric"})}`;
-
-                //empty spaces before start
-                for(let i=0;i<firstDay;i++)
-                {dates.innerHTML+=`<div></div>`;}
-
-                //actual dates
-                for (let i=1;i<=totalDays;i++)
-                {
-                    dates.innerHTML+=`<div onclick="selectDate(${i})">${i}</div>`;
-                }
+                specialityText = "Pakar Bedah";
             }
-                function prevMonth()
-                {
-                    currentDate.setMonth(currentDate.getMonth()-1);
-                    renderCalendar();
-                }
 
-                function nextMonth()
-                {
-                    currentDate.setMonth(currentDate.getMonth()+1);
-                    renderCalendar();
-                }
+            else if(list[i].speciality === "Cardiologist")
+            {
+                specialityText = "Pakar Jantung";
+            }
 
-                function selectDate(day)
-                {
-                    alert("Selected date: " + day + " " + currentDate.toLocaleString("default",{month:"long",year:"numeric"}));
-                }
-                
-                renderCalendar();
+            else if(list[i].speciality === "Pediatrician")
+            {
+                specialityText = "Pakar Kanak-Kanak";
+            }
 
-        </script>
-        <script>
-function setFont(size){
+            else if(list[i].speciality === "Dermatologist")
+            {
+                specialityText = "Pakar Kulit";
+            }
 
-    let elements = document.getElementsByClassName("resizable");
+            else if(list[i].speciality === "Neurologist")
+            {
+                specialityText = "Pakar Saraf";
+            }
 
-    for(let i = 0; i < elements.length; i++){
+            else if(list[i].speciality === "Dentist")
+            {
+                specialityText = "Doktor Gigi";
+            }
 
+            captionText = list[i].caption
+            .replace("Available from", "Tersedia dari")
+            .replace("to", "hingga");
+        }
+
+        container.innerHTML += `
+        <div class="container"
+        onclick="selectDoctor('${list[i].name}', this)">
+
+            <img class="doc_img"
+            src="${list[i].image}"
+            width="200"
+            height="200">
+
+            <h3 class="imgcapt">${list[i].name}</h3>
+
+            <p>${specialityText}</p>
+
+            <p>${captionText}</p>
+
+        </div>
+        `;
+    }
+}
+
+let selectedDoctor = null;
+
+// Select doctor
+function selectDoctor(name, element)
+{
+    let all = document.querySelectorAll(".container");
+
+    all.forEach(d =>
+    d.classList.remove("selectedDoctor"));
+
+    element.classList.add("selectedDoctor");
+
+    document.getElementById("docname").value = name;
+
+    selectedDoctor =
+    doctors.find(d => d.name === name);
+}
+
+// FORM SUBMIT
+document.getElementById("appointmentForm")
+.addEventListener("submit", function(e)
+{
+    e.preventDefault();
+
+    let time =
+    document.querySelector("input[name='app_time']").value;
+
+    if(!selectedDoctor)
+    {
+        alert(text[currentLang].selectDoctor);
+        return;
+    }
+
+    let start = selectedDoctor.availability.start;
+    let end = selectedDoctor.availability.end;
+
+    if(start < end)
+    {
+        if(time < start || time > end)
+        {
+            alert(`${text[currentLang].available} ${start} - ${end}`);
+            return;
+        }
+    }
+
+    else
+    {
+        if(!(time >= start || time <= end))
+        {
+            alert(`${text[currentLang].available} ${start} - ${end}`);
+            return;
+        }
+    }
+
+    document.getElementById("successMsg").innerText =
+    text[currentLang].submitted;
+});
+
+// CALENDAR
+let currentDate = new Date();
+
+function renderCalendar()
+{
+    const dates = document.getElementById("dates");
+    const monthYear = document.getElementById("monthYear");
+
+    dates.innerHTML = "";
+
+    let year = currentDate.getFullYear();
+    let month = currentDate.getMonth();
+
+    let firstDay =
+    new Date(year, month, 1).getDay();
+
+    let totalDays =
+    new Date(year, month + 1, 0).getDate();
+
+    monthYear.innerText =
+    `${currentDate.toLocaleString("default",
+    {month:"long", year:"numeric"})}`;
+
+    for(let i = 0; i < firstDay; i++)
+    {
+        dates.innerHTML += `<div class="empty"></div>`;
+    }
+
+    let today = new Date();
+    today.setHours(0,0,0,0);
+
+    for(let i = 1; i <= totalDays; i++)
+    {
+        let checkDate = new Date(year, month, i);
+
+        if(checkDate < today)
+        {
+            dates.innerHTML +=
+            `<div class="empty">${i}</div>`;
+        }
+
+        else
+        {
+            dates.innerHTML +=
+            `<div onclick="selectDate(${i}, this)">${i}</div>`;
+        }
+    }
+}
+
+function prevMonth()
+{
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar();
+}
+
+function nextMonth()
+{
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar();
+}
+
+function selectDate(day, element)
+{
+    let allDates =
+    document.querySelectorAll("#dates div");
+
+    allDates.forEach(d =>
+    d.classList.remove("selected"));
+
+    let month = currentDate.getMonth();
+    let year = currentDate.getFullYear();
+
+    element.classList.add("selected");
+
+    let formattedDate =
+    year + "-" +
+    String(month + 1).padStart(2, '0') + "-" +
+    String(day).padStart(2, '0');
+
+    document.getElementById("appointmentDate").value =
+    formattedDate;
+}
+
+renderCalendar();
+
+// FONT SIZE
+function setFont(size)
+{
+    let elements =
+    document.getElementsByClassName("resizable");
+
+    for(let i = 0; i < elements.length; i++)
+    {
         elements[i].classList.remove("small-text");
         elements[i].classList.remove("medium-text");
         elements[i].classList.remove("large-text");
 
-        if(size == "small"){
+        if(size == "small")
+        {
             elements[i].classList.add("small-text");
         }
 
-        else if(size == "medium"){
+        else if(size == "medium")
+        {
             elements[i].classList.add("medium-text");
         }
 
-        else{
+        else
+        {
             elements[i].classList.add("large-text");
         }
     }
 }
-</script>
-      </div>  
-
-      <script>
 
 // LANGUAGE DATA
-const text = {
-
-    en: {
+const text =
+{
+    en:
+    {
         navAbout: "About Us",
         navLocation: "Location",
         navApp: "Appointment",
         navQueue: "Queue",
-        navAsk: "Ask Us"
+        navAsk: "Ask Us",
+
+        title: "Doctor Selection",
+
+        all: "All",
+
+        surgeon: "Surgeon",
+        cardiologist: "Cardiologist",
+        pediatrician: "Pediatrician",
+        dermatologist: "Dermatologist",
+        neurologist: "Neurologist",
+        dentist: "Dentist",
+
+        prev: "Previous Month",
+        next: "Next Month",
+
+        sun: "Sun",
+        mon: "Mon",
+        tue: "Tue",
+        wed: "Wed",
+        thu: "Thu",
+        fri: "Fri",
+        sat: "Sat",
+
+        form: "Appointment Form",
+
+        fullName: "Full Name",
+        ic: "IC Number",
+        gender: "Gender",
+        male: "Male",
+        female: "Female",
+
+        dob: "Date of Birth",
+        tel: "Telephone No",
+        email: "Email",
+
+        doctor: "Doctor's Name",
+
+        appDate: "Appointment Date",
+        appTime: "Time of Appointment",
+
+        appointment: "Appointment",
+
+        online: "Online Session",
+        physical: "Physical Session",
+
+        submit: "Submit",
+
+        selectDoctor: "Please select a doctor first!",
+        available: "Doctor only available between",
+        submitted: "Your data has been submitted"
     },
 
-    bm: {
+    bm:
+    {
         navAbout: "Tentang Kami",
         navLocation: "Lokasi",
         navApp: "Temu Janji",
         navQueue: "Giliran",
-        navAsk: "Tanya Kami"
-    }
+        navAsk: "Tanya Kami",
 
+        title: "Pemilihan Doktor",
+
+        all: "Semua",
+
+        surgeon: "Pakar Bedah",
+        cardiologist: "Pakar Jantung",
+        pediatrician: "Pakar Kanak-Kanak",
+        dermatologist: "Pakar Kulit",
+        neurologist: "Pakar Saraf",
+        dentist: "Doktor Gigi",
+
+        prev: "Bulan Sebelum",
+        next: "Bulan Seterusnya",
+
+        sun: "Ahad",
+        mon: "Isn",
+        tue: "Sel",
+        wed: "Rabu",
+        thu: "Kha",
+        fri: "Jum",
+        sat: "Sab",
+
+        form: "Borang Temu Janji",
+
+        fullName: "Nama Penuh",
+        ic: "Nombor IC",
+        gender: "Jantina",
+        male: "Lelaki",
+        female: "Perempuan",
+
+        dob: "Tarikh Lahir",
+        tel: "No Telefon",
+        email: "E-mel",
+
+        doctor: "Nama Doktor",
+
+        appDate: "Tarikh Temu Janji",
+        appTime: "Masa Temu Janji",
+
+        appointment: "Temu Janji",
+
+        online: "Sesi Dalam Talian",
+        physical: "Sesi Bersemuka",
+
+        submit: "Hantar",
+
+        selectDoctor: "Sila pilih doktor dahulu!",
+        available: "Doktor hanya tersedia antara",
+        submitted: "Data anda telah dihantar"
+    }
 };
 
 // CHANGE LANGUAGE
-function setLang(lang){
+function setLang(lang)
+{
+    currentLang = lang;
 
-    document.getElementById("navAbout").innerHTML = text[lang].navAbout;
+    // navbar
+    document.getElementById("navAbout").innerHTML =
+    text[lang].navAbout;
 
-    document.getElementById("navLocation").innerHTML = text[lang].navLocation;
+    document.getElementById("navLocation").innerHTML =
+    text[lang].navLocation;
 
-    document.getElementById("navApp").innerHTML = text[lang].navApp;
+    document.getElementById("navApp").innerHTML =
+    text[lang].navApp;
 
-    document.getElementById("navQueue").innerHTML = text[lang].navQueue;
+    document.getElementById("navQueue").innerHTML =
+    text[lang].navQueue;
 
-    document.getElementById("navAsk").innerHTML = text[lang].navAsk;
+    document.getElementById("navAsk").innerHTML =
+    text[lang].navAsk;
+
+    // title
+    document.getElementById("title").innerHTML =
+    text[lang].title;
+
+    // filter
+    document.getElementById("allText").innerHTML =
+    text[lang].all;
+
+    document.querySelector("option[value='Surgeon']").innerHTML =
+    text[lang].surgeon;
+
+    document.querySelector("option[value='Cardiologist']").innerHTML =
+    text[lang].cardiologist;
+
+    document.querySelector("option[value='Pediatrician']").innerHTML =
+    text[lang].pediatrician;
+
+    document.querySelector("option[value='Dermatologist']").innerHTML =
+    text[lang].dermatologist;
+
+    document.querySelector("option[value='Neurologist']").innerHTML =
+    text[lang].neurologist;
+
+    document.querySelector("option[value='Dentist']").innerHTML =
+    text[lang].dentist;
+
+    // calendar
+    document.getElementById("prevBtn").innerHTML =
+    text[lang].prev;
+
+    document.getElementById("nextBtn").innerHTML =
+    text[lang].next;
+
+    document.getElementById("sun").innerHTML =
+    text[lang].sun;
+
+    document.getElementById("mon").innerHTML =
+    text[lang].mon;
+
+    document.getElementById("tue").innerHTML =
+    text[lang].tue;
+
+    document.getElementById("wed").innerHTML =
+    text[lang].wed;
+
+    document.getElementById("thu").innerHTML =
+    text[lang].thu;
+
+    document.getElementById("fri").innerHTML =
+    text[lang].fri;
+
+    document.getElementById("sat").innerHTML =
+    text[lang].sat;
+
+    // form
+    document.getElementById("formTitle").innerHTML =
+    text[lang].form;
+
+    document.getElementById("fullNameLabel").innerHTML =
+    text[lang].fullName;
+
+    document.getElementById("icLabel").innerHTML =
+    text[lang].ic;
+
+    document.getElementById("genderLabel").innerHTML =
+    text[lang].gender;
+
+    document.getElementById("maleText").innerHTML =
+    text[lang].male;
+
+    document.getElementById("femaleText").innerHTML =
+    text[lang].female;
+
+    document.getElementById("dobLabel").innerHTML =
+    text[lang].dob;
+
+    document.getElementById("telLabel").innerHTML =
+    text[lang].tel;
+
+    document.getElementById("emailLabel").innerHTML =
+    text[lang].email;
+
+    document.getElementById("doctorLabel").innerHTML =
+    text[lang].doctor;
+
+    document.getElementById("dateLabel").innerHTML =
+    text[lang].appDate;
+
+    document.getElementById("timeLabel").innerHTML =
+    text[lang].appTime;
+
+    document.getElementById("appointmentLabel").innerHTML =
+    text[lang].appointment;
+
+    document.getElementById("onlineText").innerHTML =
+    text[lang].online;
+
+    document.getElementById("physicalText").innerHTML =
+    text[lang].physical;
+
+    document.getElementById("submitBtn").value =
+    text[lang].submit;
+
+    // refresh doctor cards
+    filterDoctors();
 }
-
 </script>
-    </body>
+</body>
 </html>
