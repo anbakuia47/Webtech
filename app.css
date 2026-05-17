@@ -2,7 +2,8 @@
                         padding:0;
                         box-sizing:border-box;}
 
-body                    {font-family:Arial;}
+body                    {font-family:Arial;
+                        background: #eee;}
 
 .small-text             {font-size:12px;}
 
@@ -93,7 +94,7 @@ body                    {font-family:Arial;}
                         transition:0.2s;}
 
 /* ===== CALENDAR ===== */
-.calendar               {width:500px;
+.calendar               {width:600px;
                         padding:10px;
                         text-align:center;
                         color:white;
