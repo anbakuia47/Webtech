@@ -1,284 +1,503 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Appointment</title>
-        <link rel="stylesheet" href="app.css">
-    </head>
-    <body>
-        <!-- Navigation Bar -->
-        <div class="navbar">
-            <div class="logo"></div>
-                <a href="homepage.html">About Us</a>
-                <a href="location.html">Location</a>
-                <a href="app.html">Appointment</a>
-                <a href="queue.html">Queue</a>
-                <a href="askDoctor.html">Ask Us</a>
-                <div class="lang">A | EN | BM</div>
-        </div>
-        <!--Doctor's Filter-->
-        <h1>Appointment</h1>
-        <h3>Choose a Doctor:</h3>
-        <select id="filter" onchange="filterDoctors()">
-        <option value="all">All</option>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment</title>
+    <link rel="stylesheet" href="app.css">
+</head>
+
+<body>
+<div class="navbar">
+    <div class="logo">
+        <a href="homepage.html">
+            <img src="img/logo.png" alt="To homepage">
+        </a>
+    </div>
+    <div class="menu resizable medium-text">
+        <a href="homepage.html#about-us" id="navAbout">About Us</a>
+        <a href="location.html" id="navLocation">Location</a>
+        <a href="app.html" id="navApp">Appointment</a>
+        <a href="queue.html" id="navQueue">Queue</a>
+        <a href="askDoctor.html" id="navAsk">Ask Us</a>
+    </div>
+    <div class="right resizable medium-text">
+        <span onclick="setFont('small')">A-</span>
+        <span onclick="setFont('medium')">A</span>
+        <span onclick="setFont('large')">A+</span>
+        |
+        <span onclick="setLang('en')">EN</span>
+        <span onclick="setLang('bm')">BM</span>
+    </div>
+</div>
+<div id="content" class="resizable medium-text">
+    <h1 id="title">Doctor Selection</h1>
+    <select id="filter" onchange="filterDoctors()">
+        <option value="all" id="allText">All</option>
         <option value="Surgeon">Surgeon</option>
         <option value="Cardiologist">Cardiologist</option>
         <option value="Pediatrician">Pediatrician</option>
         <option value="Dermatologist">Dermatologist</option>
         <option value="Neurologist">Neurologist</option>
         <option value="Dentist">Dentist</option>
-        </select>
-        <div id="doctorList"></div>
-            <script>
-                //Doctor's data
-                let doctors = [
-                    {name: "Dr. Luke",
-                     speciality: "Surgeon",
-                     image: "doc_image/doc1.jpeg",
-                     caption:"Available from 8:30am to 1:30pm",
-                    availability: { start: "08:30", end: "13:30" }},
+    </select>
+    <div id="doctorList"></div>
+<div class="bottom">
 
-                    {name: "Dr. Smith",
-                     speciality: "Cardiologist",
-                     image: "doc_image/doc2.jpeg",
-                     caption:"Available from 11:00am to 4:00pm",
-                    availability: { start: "11:00", end: "16:00" }},
-
-                    {name: "Dr. Lee",
-                     speciality: "Pediatrician",
-                     image:"doc_image/doc3.jpeg",
-                     caption:"Available from 1:00pm to 6:00pm",
-                    availability: { start: "13:00", end: "18:00" }},
-
-                    {name:"Dr. Laura",
-                     speciality: "Dermatologist",
-                     image:"doc_image/doc4.jpeg",
-                     caption:"Available from 3:00pm to 8:00pm",
-                    availability: { start: "15:00", end: "20:00" }},
-
-                    {name:"Dr. Nina",
-                    speciality: "Neurologist",
-                    image:"doc_image/doc5.jpeg",
-                    caption:"Available from 6:00pm to 12:00am",
-                    availability: { start: "18:00", end: "00:00" }},
-
-                    {name:"Dr. Omar",
-                     speciality: "Surgeon",
-                     image:"doc_image/doc6.jpeg",
-                     caption:"Available from 10:00pm to 3:00am",
-                     availability: { start: "22:00", end: "03:00" }},
-
-                    {name:"Dr. Anna",
-                     speciality: "Cardiologist",
-                     image:"doc_image/doc7.jpeg",
-                     caption:"Available from 12:00am to 5:00am",
-                     availability: { start: "00:00", end: "05:00" }},
-
-                    {name:"Dr. Mel",
-                    speciality:"Dentist",
-                    image:"doc_image/doc8.jpeg",
-                    caption:"Available from 4:00am to 9:00am",
-                    availability: { start: "04:00", end: "09:00" }}
-                    
-                ];
-                displayDoctors(doctors);
-                //Filter for doctor's speciality
-                function filterDoctors() 
-                {
-                    let selected = document.getElementById("filter").value;
-
-                    if (selected === "all") 
-                    {
-                        displayDoctors(doctors);
-                    } 
-
-                    else 
-                    {
-                        let filtered = doctors.filter(doc => doc.speciality === selected);
-                        displayDoctors(filtered);
-                    }
-                }
-                function displayDoctors(list) 
-                {
-                    let container = document.getElementById("doctorList");
-                    container.innerHTML = "";
-
-                    for (let i = 0; i < list.length; i++) 
-                    {
-                        container.innerHTML += `
-                        <div class="container" onclick="selectDoctor('${list[i].name}',this)">
-                            <img class="doc_img" src="${list[i].image}" width="200" height="200"><br>
-                            <h3 class="imgcapt">${list[i].name}</h3>
-                            <p>${list[i].speciality}</p>
-                            <p>${list[i].caption}</p>
-                        </div>`;
-                    }
-                }
-                let selectedDoctor = null;
-                function selectDoctor(name,element)
-                {
-                     // remove highlight from all doctors
-                    let all = document.querySelectorAll(".container");
-                    all.forEach(d => d.classList.remove("selectedDoctor"));
-
-                    // highlight the chosen doctor
-                    element.classList.add("selectedDoctor");
-
-                    //insert the doctor's name into the form
-                    document.getElementById("docname").value = name;
-                    selectedDoctor = doctors.find(d => d.name === name);
-                }
-            </script>
-            <div class="bottom">
-            <div class="calendar">
-                <div class="header">
-                <button onclick="prevMonth()">Previous Month</button>
-                <h2 id="monthYear"></h2>
-                <button onclick="nextMonth()">Next Month</button>
-                </div>
-            <div class="days">
-                <div>Sun</div>
-                <div>Mon</div>
-                <div>Tue</div>
-                <div>Wed</div>
-                <div>Thu</div>
-                <div>Fri</div>
-                <div>Sat</div>
-            </div>
-            <div id="dates" class="dates"></div>
+    <div class="calendar">
+        <div class="header">
+            <button onclick="prevMonth()" id="prevBtn">Previous Month</button>
+            <h2 id="monthYear"></h2>
+            <button onclick="nextMonth()" id="nextBtn">Next Month</button>
         </div>
-        <!-- Appointment Form -->
-        <form id="appointmentForm">
-            <h2>Appointment Form</h2>
-            <label>Full Name</label><br>
-            <input type="text" name="fname" required><br>
-            <label>IC Number</label><br>
-            <input type="text" name="icno" required><br>
-            <label>Gender</label><br>
-            <div class="radio-group">
-                <label><input type="radio" name="gender" value="male" required> Male</label>
-                <label><input type="radio" name="gender" value="female"> Female</label>
-            </div>  
-            <label>Date of Birth</label><br>
-            <input type="date" name="dob" required><br>
-            <label>Telephone No</label><br>
-            <input type="text" name="telno" required><br>
-            <label>Email</label><br>
-            <input type="email" name="email" required><br>
-            <label>Doctor's Name</label><br>
-            <input type="text" id="docname" name="docname" readonly><br>
-            <label>Appointment Date</label><br>
-            <input type="date" id="appointmentDate" name="app_date" readonly><br>
-            <label>Time of Appointment</label><br>
-            <input type="time" name="app_time" required><br>
-            <label>Appointment</label><br>
-            <div class="radio-group">
-                <label><input type="radio" name="app" value="Online Session" required> Online Session</label>
-                <label><input type="radio" name="app" value="Physical Session"> Physical Session</label>
-            </div>
-            <input type="submit" value="Submit">
-            <p id="successMsg"></p>
-        </form>
+        <div class="days">
+            <div id="sun">Sun</div>
+            <div id="mon">Mon</div>
+            <div id="tue">Tue</div>
+            <div id="wed">Wed</div>
+            <div id="thu">Thu</div>
+            <div id="fri">Fri</div>
+            <div id="sat">Sat</div>
         </div>
-        <script>
-            document.getElementById("appointmentForm").addEventListener("submit", function(e) 
-            {
-                e.preventDefault(); 
-                let time = document.querySelector("input[name='app_time']").value;
-                if (!selectedDoctor)
-                {
-                    alert("Please select a doctor first!");
-                    return;
-                }
-                let start = selectedDoctor.availability.start;
-                let end = selectedDoctor.availability.end;
+        <div id="dates" class="dates"></div>
+    </div>
 
-                if (start < end) 
-                {
-                    if (time < start || time > end)
-                    {
-                        alert(`Doctor only available between ${start} - ${end}`);
-                        return;
-                    }
-                }
-                else 
-                {
-                    if (!(time >= start || time <= end))
-                    {
-                        alert(`Doctor only available between ${start} - ${end}`);
-                        return;
-                    }
-                }
+    <form id="appointmentForm">
+        <h2 id="formTitle">Appointment Form</h2>
+        <label id="fullNameLabel">Full Name</label><br>
+        <input type="text" name="fname" required><br>
+        <label id="icLabel">IC Number</label><br>
+        <input type="text" name="icno" required><br>
+        <label id="genderLabel">Gender</label><br>
+        <div class="radio-group">
+            <label>
+                <input type="radio" name="gender" value="male" required>
+                <span id="maleText">Male</span>
+            </label>
+            <label>
+                <input type="radio" name="gender" value="female">
+                <span id="femaleText">Female</span>
+            </label>
+        </div>
+        <label id="dobLabel">Date of Birth</label><br>
+        <input type="date" name="dob" required><br>
+        <label id="telLabel">Telephone No</label><br>
+        <input type="text" name="telno" required><br>
+        <label id="emailLabel">Email</label><br>
+        <input type="email" name="email" required><br>
+        <label id="doctorLabel">Doctor's Name</label><br>
+        <input type="text" id="docname" name="docname" readonly><br>
+        <label id="dateLabel">Appointment Date</label><br>
+        <input type="date" id="appointmentDate" name="app_date" readonly><br>
+        <label id="timeLabel">Time of Appointment</label><br>
+        <input type="time" name="app_time" required><br>
+        <label id="appointmentLabel">Appointment</label><br>
+        <div class="radio-group">
+            <label>
+                <input type="radio" name="app" value="Online Session" required>
+                <span id="onlineText">Online Session</span>
+            </label>
+            <label>
+                <input type="radio" name="app" value="Physical Session">
+                <span id="physicalText">Physical Session</span>
+            </label>
+        </div>
+        <input type="submit" value="Submit" id="submitBtn">
+        <p id="successMsg"></p>
+    </form>
 
-                // Submitted form message
-                document.getElementById("successMsg").innerText = "Your data has been submitted";
-            });
+</div>
+</div>
 
-            //Calendar functionality
-            let currentDate= new Date();
-            function renderCalendar()
-            {
-                
-                const dates=document.getElementById("dates");
-                const monthYear=document.getElementById("monthYear");
-                dates.innerHTML="";
-                let year=currentDate.getFullYear();
-                let month=currentDate.getMonth();
-                let firstDay=new Date(year,month,1).getDay();
-                let totalDays=new Date(year,month+1,0).getDate();
-                monthYear.innerText=`${currentDate.toLocaleString("default",
-                {month:"long",year:"numeric"})}`;
+<script>
+// Doctor's data
+let doctors = [
+    {
+        name: "Dr. Luke",
+        speciality: "Surgeon",
+        image: "doc_image/doc1.jpeg",
+        caption:"Available from 8:30am to 1:30pm",
+        availability: { start: "08:30", end: "13:30" }
+    },
 
-                //empty spaces before start
-                for(let i=0;i<firstDay;i++)
-                {
-                    dates.innerHTML+=`<div class="empty"></div>`;
-                }
+    {
+        name: "Dr. Smith",
+        speciality: "Cardiologist",
+        image: "doc_image/doc2.jpeg",
+        caption:"Available from 11:00am to 4:00pm",
+        availability: { start: "11:00", end: "16:00" }
+    },
 
-                //actual dates
-                let today = new Date();
-                today.setHours(0,0,0,0);
-                for (let i=1;i<=totalDays;i++)
-                {
- 
-                    let checkDate = new Date(year, month, i);
-                    if (checkDate < today)  
-                    {
-                        dates.innerHTML += `<div class="empty">${i}</div>`;
-                    }                    
-                    else 
-                    {
-                        dates.innerHTML += `<div onclick="selectDate(${i}, this)">${i}</div>`;
-                    }
-                }
-            }
-                function prevMonth()
-                {
-                    currentDate.setMonth(currentDate.getMonth()-1);
-                    renderCalendar();
-                }
+    {
+        name: "Dr. Lee",
+        speciality: "Pediatrician",
+        image:"doc_image/doc3.jpeg",
+        caption:"Available from 1:00pm to 6:00pm",
+        availability: { start: "13:00", end: "18:00" }
+    },
 
-                function nextMonth()
-                {
-                    currentDate.setMonth(currentDate.getMonth()+1);
-                    renderCalendar();
-                }
+    {
+        name:"Dr. Laura",
+        speciality: "Dermatologist",
+        image:"doc_image/doc4.jpeg",
+        caption:"Available from 3:00pm to 8:00pm",
+        availability: { start: "15:00", end: "20:00" }
+    },
 
-                function selectDate(day, element)
-                {
-                    let allDates = document.querySelectorAll("#dates div");
-                    allDates.forEach(d => d.classList.remove("selected"));
-                    let month = currentDate.getMonth();
-                    let year = currentDate.getFullYear();
-                    element.classList.add("selected");
-                    let formattedDate = year + "-" + 
-                    String(month + 1).padStart(2, '0') + "-" + 
-                    String(day).padStart(2, '0');
-                    document.getElementById("appointmentDate").value = formattedDate;
-                }
+    {
+        name:"Dr. Nina",
+        speciality: "Neurologist",
+        image:"doc_image/doc5.jpeg",
+        caption:"Available from 6:00pm to 12:00am",
+        availability: { start: "18:00", end: "00:00" }
+    },
 
-                renderCalendar();
-        </script>
-    </body>
+    {
+        name:"Dr. Omar",
+        speciality: "Surgeon",
+        image:"doc_image/doc6.jpeg",
+        caption:"Available from 10:00pm to 3:00am",
+        availability: { start: "22:00", end: "03:00" }
+    },
+
+    {
+        name:"Dr. Anna",
+        speciality: "Cardiologist",
+        image:"doc_image/doc7.jpeg",
+        caption:"Available from 12:00am to 5:00am",
+        availability: { start: "00:00", end: "05:00" }
+    },
+
+    {
+        name:"Dr. Mel",
+        speciality:"Dentist",
+        image:"doc_image/doc8.jpeg",
+        caption:"Available from 4:00am to 9:00am",
+        availability: { start: "04:00", end: "09:00" }
+    }
+
+];
+
+displayDoctors(doctors);
+
+// Filter doctor
+function filterDoctors()
+{
+    let selected = document.getElementById("filter").value;
+    if(selected === "all")
+    {
+        displayDoctors(doctors);
+    }
+
+    else
+    {
+        let filtered = doctors.filter(doc => doc.speciality === selected);
+        displayDoctors(filtered);
+    }
+}
+
+// Display doctors
+function displayDoctors(list)
+{
+    let container = document.getElementById("doctorList");
+    container.innerHTML = "";
+    for(let i = 0; i < list.length; i++)
+    {
+        container.innerHTML += `
+        <div class="container" onclick="selectDoctor('${list[i].name}',this)">
+
+            <img class="doc_img" src="${list[i].image}" width="200" height="200">
+
+            <h3 class="imgcapt">${list[i].name}</h3>
+
+            <p>${list[i].speciality}</p>
+
+            <p>${list[i].caption}</p>
+
+        </div>`;
+    }
+}
+let selectedDoctor = null;
+
+// Select doctor
+function selectDoctor(name, element)
+{
+    let all = document.querySelectorAll(".container");
+    all.forEach(d => d.classList.remove("selectedDoctor"));
+    element.classList.add("selectedDoctor");
+    document.getElementById("docname").value = name;
+    selectedDoctor = doctors.find(d => d.name === name);
+}
+
+// FORM SUBMIT
+document.getElementById("appointmentForm").addEventListener("submit", function(e)
+{
+    e.preventDefault();
+    let time = document.querySelector("input[name='app_time']").value;
+    if(!selectedDoctor)
+    {
+        alert(text[currentLang].selectDoctor);
+        return;
+    }
+
+    let start = selectedDoctor.availability.start;
+    let end = selectedDoctor.availability.end;
+
+    if(start < end)
+    {
+        if(time < start || time > end)
+        {
+            alert(`${text[currentLang].available} ${start} - ${end}`);
+            return;
+        }
+    }
+
+    else
+    {
+        if(!(time >= start || time <= end))
+        {
+            alert(`${text[currentLang].available} ${start} - ${end}`);
+            return;
+        }
+    }
+    document.getElementById("successMsg").innerText =
+    text[currentLang].submitted;
+});
+
+// CALENDAR
+let currentDate = new Date();
+
+function renderCalendar()
+{
+    const dates = document.getElementById("dates");
+    const monthYear = document.getElementById("monthYear");
+    dates.innerHTML = "";
+    let year = currentDate.getFullYear();
+    let month = currentDate.getMonth();
+    let firstDay = new Date(year, month, 1).getDay();
+    let totalDays = new Date(year, month + 1, 0).getDate();
+    monthYear.innerText =
+    `${currentDate.toLocaleString("default",
+    {month:"long", year:"numeric"})}`;
+
+    for(let i = 0; i < firstDay; i++)
+    {
+        dates.innerHTML += `<div class="empty"></div>`;
+    }
+
+    let today = new Date();
+    today.setHours(0,0,0,0);
+
+    for(let i = 1; i <= totalDays; i++)
+    {
+        let checkDate = new Date(year, month, i);
+        if(checkDate < today)
+        {
+            dates.innerHTML += `<div class="empty">${i}</div>`;
+        }
+
+        else
+        {
+            dates.innerHTML +=
+            `<div onclick="selectDate(${i}, this)">${i}</div>`;
+        }
+    }
+}
+function prevMonth() 
+{ 
+    currentDate.setMonth(currentDate.getMonth() - 1); 
+    renderCalendar(); 
+}
+function nextMonth() 
+{
+    currentDate.setMonth(currentDate.getMonth() + 1); 
+    renderCalendar();
+}
+
+function selectDate(day, element)
+{
+    let allDates = document.querySelectorAll("#dates div");
+    allDates.forEach(d => d.classList.remove("selected"));
+    let month = currentDate.getMonth();
+    let year = currentDate.getFullYear();
+    element.classList.add("selected");
+    let formattedDate =
+    year + "-" +
+    String(month + 1).padStart(2, '0') + "-" +
+    String(day).padStart(2, '0');
+    document.getElementById("appointmentDate").value = formattedDate;
+}
+
+renderCalendar();
+
+// FONT SIZE
+function setFont(size)
+{
+    let elements = document.getElementsByClassName("resizable");
+    for(let i = 0; i < elements.length; i++)
+    {
+        elements[i].classList.remove("small-text");
+        elements[i].classList.remove("medium-text");
+        elements[i].classList.remove("large-text");
+
+        if(size == "small")
+        {
+            elements[i].classList.add("small-text");
+        }
+
+        else if(size == "medium")
+        {
+            elements[i].classList.add("medium-text");
+        }
+
+        else
+        {
+            elements[i].classList.add("large-text");
+        }
+    }
+}
+
+// LANGUAGE DATA
+const text =
+{
+    en:
+    {
+        navAbout: "About Us",
+        navLocation: "Location",
+        navApp: "Appointment",
+        navQueue: "Queue",
+        navAsk: "Ask Us",
+        title: "Doctor Selection",
+        all: "All",
+        prev: "Previous Month",
+        next: "Next Month",
+        sun: "Sun",
+        mon: "Mon",
+        tue: "Tue",
+        wed: "Wed",
+        thu: "Thu",
+        fri: "Fri",
+        sat: "Sat",
+        form: "Appointment Form",
+        fullName: "Full Name",
+        ic: "IC Number",
+        gender: "Gender",
+        male: "Male",
+        female: "Female",
+        dob: "Date of Birth",
+        tel: "Telephone No",
+        email: "Email",
+        doctor: "Doctor's Name",
+        appDate: "Appointment Date",
+        appTime: "Time of Appointment",
+        appointment: "Appointment",
+        online: "Online Session",
+        physical: "Physical Session",
+        submit: "Submit",
+        selectDoctor: "Please select a doctor first!",
+        available: "Doctor only available between",
+        submitted: "Your data has been submitted"
+    },
+
+    bm:
+    {
+        navAbout: "Tentang Kami",
+        navLocation: "Lokasi",
+        navApp: "Temu Janji",
+        navQueue: "Giliran",
+        navAsk: "Tanya Kami",
+        title: "Pemilihan Doktor",
+        all: "Semua",
+        prev: "Bulan Sebelum",
+        next: "Bulan Seterusnya",
+        sun: "Ahad",
+        mon: "Isn",
+        tue: "Sel",
+        wed: "Rabu",
+        thu: "Kha",
+        fri: "Jum",
+        sat: "Sab",
+        form: "Borang Temu Janji",
+        fullName: "Nama Penuh",
+        ic: "Nombor IC",
+        gender: "Jantina",
+        male: "Lelaki",
+        female: "Perempuan",
+        dob: "Tarikh Lahir",
+        tel: "No Telefon",
+        email: "E-mel",
+        doctor: "Nama Doktor",
+        appDate: "Tarikh Temu Janji",
+        appTime: "Masa Temu Janji",
+        appointment: "Temu Janji",
+        online: "Sesi Dalam Talian",
+        physical: "Sesi Bersemuka",
+        submit: "Hantar",
+        selectDoctor: "Sila pilih doktor dahulu!",
+        available: "Doktor hanya tersedia antara",
+        submitted: "Data anda telah dihantar"
+    }
+};
+
+let currentLang = "en";
+
+// CHANGE LANGUAGE
+function setLang(lang)
+{
+    currentLang = lang;
+
+    // navbar
+    document.getElementById("navAbout").innerHTML = text[lang].navAbout;
+    document.getElementById("navLocation").innerHTML = text[lang].navLocation;
+    document.getElementById("navApp").innerHTML = text[lang].navApp;
+    document.getElementById("navQueue").innerHTML = text[lang].navQueue;
+    document.getElementById("navAsk").innerHTML = text[lang].navAsk;
+
+    // title
+    document.getElementById("title").innerHTML = text[lang].title;
+
+    // filter
+    document.getElementById("allText").innerHTML = text[lang].all;
+
+    // calendar
+    document.getElementById("prevBtn").innerHTML = text[lang].prev;
+    document.getElementById("nextBtn").innerHTML = text[lang].next;
+
+    document.getElementById("sun").innerHTML = text[lang].sun;
+    document.getElementById("mon").innerHTML = text[lang].mon;
+    document.getElementById("tue").innerHTML = text[lang].tue;
+    document.getElementById("wed").innerHTML = text[lang].wed;
+    document.getElementById("thu").innerHTML = text[lang].thu;
+    document.getElementById("fri").innerHTML = text[lang].fri;
+    document.getElementById("sat").innerHTML = text[lang].sat;
+
+    // form
+    document.getElementById("formTitle").innerHTML = text[lang].form;
+
+    document.getElementById("fullNameLabel").innerHTML = text[lang].fullName;
+    document.getElementById("icLabel").innerHTML = text[lang].ic;
+    document.getElementById("genderLabel").innerHTML = text[lang].gender;
+    document.getElementById("maleText").innerHTML = text[lang].male;
+    document.getElementById("femaleText").innerHTML = text[lang].female;
+
+    document.getElementById("dobLabel").innerHTML = text[lang].dob;
+    document.getElementById("telLabel").innerHTML = text[lang].tel;
+    document.getElementById("emailLabel").innerHTML = text[lang].email;
+    document.getElementById("doctorLabel").innerHTML = text[lang].doctor;
+
+    document.getElementById("dateLabel").innerHTML = text[lang].appDate;
+    document.getElementById("timeLabel").innerHTML = text[lang].appTime;
+
+    document.getElementById("appointmentLabel").innerHTML =
+    text[lang].appointment;
+
+    document.getElementById("onlineText").innerHTML = text[lang].online;
+    document.getElementById("physicalText").innerHTML = text[lang].physical;
+
+    document.getElementById("submitBtn").value = text[lang].submit;
+}
+
+</script>
+</body>
 </html>
