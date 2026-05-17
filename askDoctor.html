@@ -5,53 +5,97 @@
 <title>Ask Doctor</title>
 
 <style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 body {
     font-family: Arial;
-    margin: 0;
+    margin: 0px;
     background: #eee;
+    transition: 0.3s;
 }
 
+/* FONT */
+body.small { font-size: 12px; }
+body.medium { font-size: 16px; }
+body.large { font-size: 20px; }
+
+/* NAVBAR */
 .navbar {
-    background: #2f7f8a;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+               position: sticky;
+               top: 0;
+               z-index: 1000;
+
+               background: #2f7f8a;
+               padding: 15px 30px;
+
+               display: flex;
+              justify-content: space-between;
+                 align-items: center;
+
+                 width: 100%;
+
+                 box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            }
+
+            .logo {
+                width: 42px;
+                height: 42px;
+               margin-right: 20px;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .logo img{
+                width: 50px;
+                height: 50px;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+
+            .logo img:hover{
+                transform: scale(1.05);
+                transition: 0.2s;
+            }
+
+.content{
+    background-image: url(img/askdocbg.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat:no-repeat;
+    height: 120vh;
+    padding: 30px;
 }
 
-.navbar a {
+/* MENU */
+.menu {
+    display: flex;
+    gap: 40px;
+}
+
+.menu a {
     color: white;
     text-decoration: none;
-    padding: 10px;
-    margin: 0;
 }
 
-.logo {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 20px;
+.menu a:hover {
+    color: #ffd700;
+    border-bottom: 2px solid #ffd700;
 }
 
-.logo:hover{
-  background-color:#245e66;
-}
-
-.lang {
-    margin-left: auto;
+/* RIGHT */
+.right span {
+    margin: 0 5px;
+    cursor: pointer;
     color: white;
 }
 
-.list:hover {
-  background-color:#245e66;
-}
-/*navi bar styling*/
-
-/* CONTENT */
-.content {
-    padding: 30px;
+.right span:hover {
+    color: #ffd700;
 }
 
 input {
@@ -65,63 +109,369 @@ button {
     color: white;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .category button {
     background: black;
     margin: 5px;
 }
-</style>
 
+.category button:hover {
+    background: #555;
+}
+
+.faq {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+    max-width: 500px;
+}
+
+#placeholderText {
+    color: gray;
+    font-style: italic;
+}
+
+.card {
+    background: white;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 8px;
+}
+</style>
 </head>
 
-<body>
+<body class="medium">
 
 <!-- NAVBAR -->
 <div class="navbar">
-            <div class="logo"><a href="homepage.html"><img src="img/logo.png" alt="To homepage" style="width:42px;height:42px;"></a></div>
-            <a href="homepage.html#about-us" class="list">About Us</a>
-            <a href="location.html" class="list">Location</a>
-            <a href="app.html" class="list">Appointment</a>
-            <a href="queue.html" class="list">Queue</a>
-            <a href="askDoctor.html" class="list">Ask Us</a>
-            <div class="lang">A | EN | BM</div>
-        </div>
+    <div class="logo">
+    <a href="homepage.html">
+        <img src="img/logo.png" alt="To homepage">
+    </a>
+</div>
+
+    <div class="menu">
+        <a href="homepage.html#about-us" id="navAbout">About Us</a>
+        <a href="location.html" id="navLocation">Location</a>
+        <a href="app.html" id="navApp">Appointment</a>
+        <a href="queue.html" id="navQueue">Queue</a>
+        <a href="askDoctor.html" id="navAsk">Ask Us</a>
+    </div>
+
+    <div class="right">
+        <span onclick="setFont('small')">A-</span>
+        <span onclick="setFont('medium')">A</span>
+        <span onclick="setFont('large')">A+</span>
+        |
+        <span onclick="setLang('en')">EN</span>
+        <span onclick="setLang('bm')">BM</span>
+    </div>
+</div>
+</div>
 
 <div class="content">
 
-<h2>Ask us anything</h2>
-
-<input type="text" id="question" placeholder="Type your question...">
-<button onclick="submitQuestion()">Ask a Doctor</button>
-
-<h3>Categories:</h3>
-
-<div class="category">
-    <button>Gastric</button>
-    <button>Diabetes</button>
-    <button>Heart Attack</button>
-    <button>Allergy</button>
-    <button>Pregnancy</button>
-    <button>Period</button>
-    <button>Infertility</button>
-</div>
-
+<h2 id="title">Ask us anything</h2>
 <br>
 
-<textarea id="output" rows="5" cols="50" placeholder="Doctor reply here..."></textarea>
+<input type="text" id="question">
+<button id="askBtn" onclick="submitQuestion()">Ask a Doctor</button>
+<br><br>
+
+<h3 id="categoryTitle">Categories</h3>
+
+<div class="category">
+    <button id="gastricBtn" onclick="showFAQ('Gastric')">Gastric</button>
+    <button id="diabetesBtn" onclick="showFAQ('Diabetes')">Diabetes</button>
+    <button id="heartBtn" onclick="showFAQ('Heart')">Heart Attack</button>
+    <button id="allergyBtn" onclick="showFAQ('Allergy')">Allergy</button>
+    <button id="pregnancyBtn" onclick="showFAQ('Pregnancy')">Pregnancy</button>
+</div>
+
+<div id="faqBox" class="faq">
+    <p id="placeholderText">Your questions will appear here...</p>
+</div>
+<br>
+<button id="clearBtn" onclick="clearAllQuestions()">Clear All</button>
+
 
 </div>
 
 <script>
+
+/* ================= FONT ================= */
+function setFont(size) {
+    document.body.className = size;
+}
+
+/* ================= LANGUAGE DATA ================= */
+const text = {
+
+    en: {
+        navAbout: "About Us",
+        navLocation: "Location",
+        navApp: "Appointment",
+        navQueue: "Queue",
+        navAsk: "Ask Us",
+
+        title: "Ask us anything",
+        askBtn: "Ask a Doctor",
+        category: "Categories",
+
+        gastric: "Gastric",
+        diabetes: "Diabetes",
+        heart: "Heart Attack",
+        allergy: "Allergy",
+        pregnancy: "Pregnancy",
+
+        placeholder: "Your questions will appear here...",
+        clear: "Clear All",
+
+        empty: "Enter your question!",
+        reply: "Reply coming soon...",
+        you: "You",
+        doctor: "Doctor"
+    },
+
+    bm: {
+        navAbout: "Tentang Kami",
+        navLocation: "Lokasi",
+        navApp: "Temu Janji",
+        navQueue: "Giliran",
+        navAsk: "Tanya Kami",
+
+        title: "Tanya Kami Apa Sahaja",
+        askBtn: "Tanya Doktor",
+        category: "Kategori",
+
+        gastric: "Gastrik",
+        diabetes: "Diabetes",
+        heart: "Serangan Jantung",
+        allergy: "Alahan",
+        pregnancy: "Kehamilan",
+
+        placeholder: "Soalan anda akan dipaparkan di sini...",
+        clear: "Padam Semua",
+
+        empty: "Masukkan soalan anda!",
+        reply: "Balasan akan datang tidak lama lagi...",
+        you: "Anda",
+        doctor: "Doktor"
+    }
+};
+
+let currentLang = "en";
+
+/* ================= FAQ DATA ================= */
+let faqData = {};
+
+/* ================= AJAX LOAD JSON ================= */
+fetch("faq.json")
+.then(function(response) {
+    return response.json();
+})
+.then(function(data) {
+    faqData = data;
+})
+.catch(function(error) {
+    console.log("Error loading JSON:", error);
+});
+
+/* ================= LOCAL STORAGE ================= */
+let questionFeed =
+JSON.parse(localStorage.getItem("questions")) || [];
+
+/* ================= SUBMIT QUESTION ================= */
 function submitQuestion() {
+
     let q = document.getElementById("question").value;
 
     if(q === "") {
-        alert("Please enter your question!");
-    } else {
-        document.getElementById("output").value = "Doctor will reply soon...";
+        alert(text[currentLang].empty);
+        return;
     }
+
+    questionFeed.push({
+        question: q,
+        time: new Date().toLocaleString()
+    });
+
+    localStorage.setItem(
+        "questions",
+        JSON.stringify(questionFeed)
+    );
+
+    renderQuestions();
+
+    document.getElementById("question").value = "";
+}
+
+/* ================= RENDER QUESTIONS ================= */
+function renderQuestions() {
+
+    const box = document.getElementById("faqBox");
+
+    box.innerHTML = "";
+
+    if(questionFeed.length === 0) {
+
+        box.innerHTML =
+        "<p id='placeholderText'>" +
+        text[currentLang].placeholder +
+        "</p>";
+
+        return;
+    }
+
+    for(let i = questionFeed.length - 1; i >= 0; i--) {
+
+        let item = questionFeed[i];
+
+        box.innerHTML += `
+        <div class="card">
+
+            <p>
+            <b>${text[currentLang].you}:</b>
+            ${item.question}
+            </p>
+
+            <small>${item.time}</small>
+
+            <p>
+            <b>${text[currentLang].doctor}:</b>
+            ${text[currentLang].reply}
+            </p>
+
+        </div>
+        `;
+    }
+}
+
+/* ================= SHOW FAQ ================= */
+function showFAQ(cat) {
+
+    let data = faqData[cat];
+
+    let title = cat;
+
+    if(currentLang === "bm") {
+
+        if(cat === "Gastric") {
+            title = "Gastrik";
+        }
+
+        else if(cat === "Heart") {
+            title = "Serangan Jantung";
+        }
+
+        else if(cat === "Allergy") {
+            title = "Alahan";
+        }
+
+        else if(cat === "Pregnancy") {
+            title = "Kehamilan";
+        }
+    }
+
+    let output = "<h4>" + title + "</h4>";
+
+    for(let i = 0; i < data.length; i++) {
+
+        output +=
+        "<p><b>Q:</b> " +
+        data[i].q +
+        "</p>";
+
+        output +=
+        "<p><b>A:</b> " +
+        data[i].a +
+        "</p><hr>";
+    }
+
+    document.getElementById("faqBox").innerHTML = output;
+}
+
+/* ================= CLEAR ================= */
+function clearAllQuestions() {
+
+    localStorage.removeItem("questions");
+
+    questionFeed = [];
+
+    renderQuestions();
+}
+
+/* ================= CHANGE LANGUAGE ================= */
+function setLang(lang) {
+
+    currentLang = lang;
+
+    /* NAVBAR */
+    document.getElementById("navAbout").innerHTML =
+    text[lang].navAbout;
+
+    document.getElementById("navLocation").innerHTML =
+    text[lang].navLocation;
+
+    document.getElementById("navApp").innerHTML =
+    text[lang].navApp;
+
+    document.getElementById("navQueue").innerHTML =
+    text[lang].navQueue;
+
+    document.getElementById("navAsk").innerHTML =
+    text[lang].navAsk;
+
+    /* TITLE */
+    document.getElementById("title").innerHTML =
+    text[lang].title;
+
+    /* BUTTON */
+    document.getElementById("askBtn").innerHTML =
+    text[lang].askBtn;
+
+    /* CATEGORY */
+    document.getElementById("categoryTitle").innerHTML =
+    text[lang].category;
+
+    /* CATEGORY BUTTON */
+    document.getElementById("gastricBtn").innerHTML =
+    text[lang].gastric;
+
+    document.getElementById("diabetesBtn").innerHTML =
+    text[lang].diabetes;
+
+    document.getElementById("heartBtn").innerHTML =
+    text[lang].heart;
+
+    document.getElementById("allergyBtn").innerHTML =
+    text[lang].allergy;
+
+    document.getElementById("pregnancyBtn").innerHTML =
+    text[lang].pregnancy;
+
+    /* CLEAR BUTTON */
+    document.getElementById("clearBtn").innerHTML =
+    text[lang].clear;
+
+    renderQuestions();
+}
+
+/* ================= LOAD ================= */
+window.onload = function() {
+
+    renderQuestions();
+}
+
+</script>
+<script>
+    function clearAllQuestions() {
+    localStorage.removeItem("questions");
+    questionFeed = [];
+    renderQuestions();
 }
 </script>
 

@@ -156,7 +156,7 @@ let doctors = [
     {
         name:"Dr. Omar",
         speciality: "Surgeon",
-        image:"doc_image/doc6.jpeg",
+        image:"doc_image/doc6.jpg",
         caption:"Available from 10:00pm to 3:00am",
         availability: { start: "22:00", end: "03:00" }
     },
@@ -164,7 +164,7 @@ let doctors = [
     {
         name:"Dr. Anna",
         speciality: "Cardiologist",
-        image:"doc_image/doc7.jpeg",
+        image:"doc_image/doc7.jpg",
         caption:"Available from 12:00am to 5:00am",
         availability: { start: "00:00", end: "05:00" }
     },
@@ -172,12 +172,13 @@ let doctors = [
     {
         name:"Dr. Mel",
         speciality:"Dentist",
-        image:"doc_image/doc8.jpeg",
+        image:"doc_image/doc8.jpg",
         caption:"Available from 4:00am to 9:00am",
         availability: { start: "04:00", end: "09:00" }
     }
-
 ];
+
+let currentLang = "en";
 
 displayDoctors(doctors);
 
@@ -185,6 +186,7 @@ displayDoctors(doctors);
 function filterDoctors()
 {
     let selected = document.getElementById("filter").value;
+
     if(selected === "all")
     {
         displayDoctors(doctors);
@@ -192,7 +194,9 @@ function filterDoctors()
 
     else
     {
-        let filtered = doctors.filter(doc => doc.speciality === selected);
+        let filtered =
+        doctors.filter(doc => doc.speciality === selected);
+
         displayDoctors(filtered);
     }
 }
@@ -201,40 +205,99 @@ function filterDoctors()
 function displayDoctors(list)
 {
     let container = document.getElementById("doctorList");
+
     container.innerHTML = "";
+
     for(let i = 0; i < list.length; i++)
     {
-        container.innerHTML += `
-        <div class="container" onclick="selectDoctor('${list[i].name}',this)">
+        let specialityText = list[i].speciality;
+        let captionText = list[i].caption;
 
-            <img class="doc_img" src="${list[i].image}" width="200" height="200">
+        // BM translation
+        if(currentLang === "bm")
+        {
+            if(list[i].speciality === "Surgeon")
+            {
+                specialityText = "Pakar Bedah";
+            }
+
+            else if(list[i].speciality === "Cardiologist")
+            {
+                specialityText = "Pakar Jantung";
+            }
+
+            else if(list[i].speciality === "Pediatrician")
+            {
+                specialityText = "Pakar Kanak-Kanak";
+            }
+
+            else if(list[i].speciality === "Dermatologist")
+            {
+                specialityText = "Pakar Kulit";
+            }
+
+            else if(list[i].speciality === "Neurologist")
+            {
+                specialityText = "Pakar Saraf";
+            }
+
+            else if(list[i].speciality === "Dentist")
+            {
+                specialityText = "Doktor Gigi";
+            }
+
+            captionText = list[i].caption
+            .replace("Available from", "Tersedia dari")
+            .replace("to", "hingga");
+        }
+
+        container.innerHTML += `
+        <div class="container"
+        onclick="selectDoctor('${list[i].name}', this)">
+
+            <img class="doc_img"
+            src="${list[i].image}"
+            width="200"
+            height="200">
 
             <h3 class="imgcapt">${list[i].name}</h3>
 
-            <p>${list[i].speciality}</p>
+            <p>${specialityText}</p>
 
-            <p>${list[i].caption}</p>
+            <p>${captionText}</p>
 
-        </div>`;
+        </div>
+        `;
     }
 }
+
 let selectedDoctor = null;
 
 // Select doctor
 function selectDoctor(name, element)
 {
     let all = document.querySelectorAll(".container");
-    all.forEach(d => d.classList.remove("selectedDoctor"));
+
+    all.forEach(d =>
+    d.classList.remove("selectedDoctor"));
+
     element.classList.add("selectedDoctor");
+
     document.getElementById("docname").value = name;
-    selectedDoctor = doctors.find(d => d.name === name);
+
+    selectedDoctor =
+    doctors.find(d => d.name === name);
 }
 
 // FORM SUBMIT
-document.getElementById("appointmentForm").addEventListener("submit", function(e)
+document.getElementById("appointmentForm")
+.addEventListener("submit", function(e)
 {
     e.preventDefault();
-    let time = document.querySelector("input[name='app_time']").value;
+
+    let time =
+    document.querySelector("input[name='app_time']").value;
+
     if(!selectedDoctor)
     {
         alert(text[currentLang].selectDoctor);
@@ -261,6 +324,7 @@ document.getElementById("appointmentForm").addEventListener("submit", function(e
             return;
         }
     }
+
     document.getElementById("successMsg").innerText =
     text[currentLang].submitted;
 });
@@ -272,11 +336,18 @@ function renderCalendar()
 {
     const dates = document.getElementById("dates");
     const monthYear = document.getElementById("monthYear");
+
     dates.innerHTML = "";
+
     let year = currentDate.getFullYear();
     let month = currentDate.getMonth();
-    let firstDay = new Date(year, month, 1).getDay();
-    let totalDays = new Date(year, month + 1, 0).getDate();
+
+    let firstDay =
+    new Date(year, month, 1).getDay();
+
+    let totalDays =
+    new Date(year, month + 1, 0).getDate();
+
     monthYear.innerText =
     `${currentDate.toLocaleString("default",
     {month:"long", year:"numeric"})}`;
@@ -292,9 +363,11 @@ function renderCalendar()
     for(let i = 1; i <= totalDays; i++)
     {
         let checkDate = new Date(year, month, i);
+
         if(checkDate < today)
         {
-            dates.innerHTML += `<div class="empty">${i}</div>`;
+            dates.innerHTML +=
+            `<div class="empty">${i}</div>`;
         }
 
         else
@@ -304,29 +377,39 @@ function renderCalendar()
         }
     }
 }
-function prevMonth() 
-{ 
-    currentDate.setMonth(currentDate.getMonth() - 1); 
-    renderCalendar(); 
-}
-function nextMonth() 
+
+function prevMonth()
 {
-    currentDate.setMonth(currentDate.getMonth() + 1); 
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar();
+}
+
+function nextMonth()
+{
+    currentDate.setMonth(currentDate.getMonth() + 1);
     renderCalendar();
 }
 
 function selectDate(day, element)
 {
-    let allDates = document.querySelectorAll("#dates div");
-    allDates.forEach(d => d.classList.remove("selected"));
+    let allDates =
+    document.querySelectorAll("#dates div");
+
+    allDates.forEach(d =>
+    d.classList.remove("selected"));
+
     let month = currentDate.getMonth();
     let year = currentDate.getFullYear();
+
     element.classList.add("selected");
+
     let formattedDate =
     year + "-" +
     String(month + 1).padStart(2, '0') + "-" +
     String(day).padStart(2, '0');
-    document.getElementById("appointmentDate").value = formattedDate;
+
+    document.getElementById("appointmentDate").value =
+    formattedDate;
 }
 
 renderCalendar();
@@ -334,7 +417,9 @@ renderCalendar();
 // FONT SIZE
 function setFont(size)
 {
-    let elements = document.getElementsByClassName("resizable");
+    let elements =
+    document.getElementsByClassName("resizable");
+
     for(let i = 0; i < elements.length; i++)
     {
         elements[i].classList.remove("small-text");
@@ -368,10 +453,21 @@ const text =
         navApp: "Appointment",
         navQueue: "Queue",
         navAsk: "Ask Us",
+
         title: "Doctor Selection",
+
         all: "All",
+
+        surgeon: "Surgeon",
+        cardiologist: "Cardiologist",
+        pediatrician: "Pediatrician",
+        dermatologist: "Dermatologist",
+        neurologist: "Neurologist",
+        dentist: "Dentist",
+
         prev: "Previous Month",
         next: "Next Month",
+
         sun: "Sun",
         mon: "Mon",
         tue: "Tue",
@@ -379,22 +475,31 @@ const text =
         thu: "Thu",
         fri: "Fri",
         sat: "Sat",
+
         form: "Appointment Form",
+
         fullName: "Full Name",
         ic: "IC Number",
         gender: "Gender",
         male: "Male",
         female: "Female",
+
         dob: "Date of Birth",
         tel: "Telephone No",
         email: "Email",
+
         doctor: "Doctor's Name",
+
         appDate: "Appointment Date",
         appTime: "Time of Appointment",
+
         appointment: "Appointment",
+
         online: "Online Session",
         physical: "Physical Session",
+
         submit: "Submit",
+
         selectDoctor: "Please select a doctor first!",
         available: "Doctor only available between",
         submitted: "Your data has been submitted"
@@ -407,10 +512,21 @@ const text =
         navApp: "Temu Janji",
         navQueue: "Giliran",
         navAsk: "Tanya Kami",
+
         title: "Pemilihan Doktor",
+
         all: "Semua",
+
+        surgeon: "Pakar Bedah",
+        cardiologist: "Pakar Jantung",
+        pediatrician: "Pakar Kanak-Kanak",
+        dermatologist: "Pakar Kulit",
+        neurologist: "Pakar Saraf",
+        dentist: "Doktor Gigi",
+
         prev: "Bulan Sebelum",
         next: "Bulan Seterusnya",
+
         sun: "Ahad",
         mon: "Isn",
         tue: "Sel",
@@ -418,29 +534,36 @@ const text =
         thu: "Kha",
         fri: "Jum",
         sat: "Sab",
+
         form: "Borang Temu Janji",
+
         fullName: "Nama Penuh",
         ic: "Nombor IC",
         gender: "Jantina",
         male: "Lelaki",
         female: "Perempuan",
+
         dob: "Tarikh Lahir",
         tel: "No Telefon",
         email: "E-mel",
+
         doctor: "Nama Doktor",
+
         appDate: "Tarikh Temu Janji",
         appTime: "Masa Temu Janji",
+
         appointment: "Temu Janji",
+
         online: "Sesi Dalam Talian",
         physical: "Sesi Bersemuka",
+
         submit: "Hantar",
+
         selectDoctor: "Sila pilih doktor dahulu!",
         available: "Doktor hanya tersedia antara",
         submitted: "Data anda telah dihantar"
     }
 };
-
-let currentLang = "en";
 
 // CHANGE LANGUAGE
 function setLang(lang)
@@ -448,56 +571,127 @@ function setLang(lang)
     currentLang = lang;
 
     // navbar
-    document.getElementById("navAbout").innerHTML = text[lang].navAbout;
-    document.getElementById("navLocation").innerHTML = text[lang].navLocation;
-    document.getElementById("navApp").innerHTML = text[lang].navApp;
-    document.getElementById("navQueue").innerHTML = text[lang].navQueue;
-    document.getElementById("navAsk").innerHTML = text[lang].navAsk;
+    document.getElementById("navAbout").innerHTML =
+    text[lang].navAbout;
+
+    document.getElementById("navLocation").innerHTML =
+    text[lang].navLocation;
+
+    document.getElementById("navApp").innerHTML =
+    text[lang].navApp;
+
+    document.getElementById("navQueue").innerHTML =
+    text[lang].navQueue;
+
+    document.getElementById("navAsk").innerHTML =
+    text[lang].navAsk;
 
     // title
-    document.getElementById("title").innerHTML = text[lang].title;
+    document.getElementById("title").innerHTML =
+    text[lang].title;
 
     // filter
-    document.getElementById("allText").innerHTML = text[lang].all;
+    document.getElementById("allText").innerHTML =
+    text[lang].all;
+
+    document.querySelector("option[value='Surgeon']").innerHTML =
+    text[lang].surgeon;
+
+    document.querySelector("option[value='Cardiologist']").innerHTML =
+    text[lang].cardiologist;
+
+    document.querySelector("option[value='Pediatrician']").innerHTML =
+    text[lang].pediatrician;
+
+    document.querySelector("option[value='Dermatologist']").innerHTML =
+    text[lang].dermatologist;
+
+    document.querySelector("option[value='Neurologist']").innerHTML =
+    text[lang].neurologist;
+
+    document.querySelector("option[value='Dentist']").innerHTML =
+    text[lang].dentist;
 
     // calendar
-    document.getElementById("prevBtn").innerHTML = text[lang].prev;
-    document.getElementById("nextBtn").innerHTML = text[lang].next;
+    document.getElementById("prevBtn").innerHTML =
+    text[lang].prev;
 
-    document.getElementById("sun").innerHTML = text[lang].sun;
-    document.getElementById("mon").innerHTML = text[lang].mon;
-    document.getElementById("tue").innerHTML = text[lang].tue;
-    document.getElementById("wed").innerHTML = text[lang].wed;
-    document.getElementById("thu").innerHTML = text[lang].thu;
-    document.getElementById("fri").innerHTML = text[lang].fri;
-    document.getElementById("sat").innerHTML = text[lang].sat;
+    document.getElementById("nextBtn").innerHTML =
+    text[lang].next;
+
+    document.getElementById("sun").innerHTML =
+    text[lang].sun;
+
+    document.getElementById("mon").innerHTML =
+    text[lang].mon;
+
+    document.getElementById("tue").innerHTML =
+    text[lang].tue;
+
+    document.getElementById("wed").innerHTML =
+    text[lang].wed;
+
+    document.getElementById("thu").innerHTML =
+    text[lang].thu;
+
+    document.getElementById("fri").innerHTML =
+    text[lang].fri;
+
+    document.getElementById("sat").innerHTML =
+    text[lang].sat;
 
     // form
-    document.getElementById("formTitle").innerHTML = text[lang].form;
+    document.getElementById("formTitle").innerHTML =
+    text[lang].form;
 
-    document.getElementById("fullNameLabel").innerHTML = text[lang].fullName;
-    document.getElementById("icLabel").innerHTML = text[lang].ic;
-    document.getElementById("genderLabel").innerHTML = text[lang].gender;
-    document.getElementById("maleText").innerHTML = text[lang].male;
-    document.getElementById("femaleText").innerHTML = text[lang].female;
+    document.getElementById("fullNameLabel").innerHTML =
+    text[lang].fullName;
 
-    document.getElementById("dobLabel").innerHTML = text[lang].dob;
-    document.getElementById("telLabel").innerHTML = text[lang].tel;
-    document.getElementById("emailLabel").innerHTML = text[lang].email;
-    document.getElementById("doctorLabel").innerHTML = text[lang].doctor;
+    document.getElementById("icLabel").innerHTML =
+    text[lang].ic;
 
-    document.getElementById("dateLabel").innerHTML = text[lang].appDate;
-    document.getElementById("timeLabel").innerHTML = text[lang].appTime;
+    document.getElementById("genderLabel").innerHTML =
+    text[lang].gender;
+
+    document.getElementById("maleText").innerHTML =
+    text[lang].male;
+
+    document.getElementById("femaleText").innerHTML =
+    text[lang].female;
+
+    document.getElementById("dobLabel").innerHTML =
+    text[lang].dob;
+
+    document.getElementById("telLabel").innerHTML =
+    text[lang].tel;
+
+    document.getElementById("emailLabel").innerHTML =
+    text[lang].email;
+
+    document.getElementById("doctorLabel").innerHTML =
+    text[lang].doctor;
+
+    document.getElementById("dateLabel").innerHTML =
+    text[lang].appDate;
+
+    document.getElementById("timeLabel").innerHTML =
+    text[lang].appTime;
 
     document.getElementById("appointmentLabel").innerHTML =
     text[lang].appointment;
 
-    document.getElementById("onlineText").innerHTML = text[lang].online;
-    document.getElementById("physicalText").innerHTML = text[lang].physical;
+    document.getElementById("onlineText").innerHTML =
+    text[lang].online;
 
-    document.getElementById("submitBtn").value = text[lang].submit;
+    document.getElementById("physicalText").innerHTML =
+    text[lang].physical;
+
+    document.getElementById("submitBtn").value =
+    text[lang].submit;
+
+    // refresh doctor cards
+    filterDoctors();
 }
-
 </script>
 </body>
 </html>
