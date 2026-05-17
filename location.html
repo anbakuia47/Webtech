@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<<<<<<< Updated upstream
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -12,6 +13,40 @@
     body.small { font-size: 12px; }
     body.medium { font-size: 16px; }
     body.large { font-size: 20px; }
+=======
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial scale =1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="location.css">
+    </head>
+    <body class="medium">
+<div class="navbar">
+    <div class="logo">
+    <a href="homepage.html">
+        <img src="img/logo.png" alt="To homepage">
+    </a>
+</div>
+
+    <div class="menu">
+        <a href="homepage.html#about-us" id="navAbout">About Us</a>
+        <a href="location.html" id="navLocation">Location</a>
+        <a href="app.html" id="navApp">Appointment</a>
+        <a href="queue.html" id="navQueue">Queue</a>
+        <a href="askDoctor.html" id="navAsk">Ask Us</a>
+    </div>
+
+    <div class="right">
+        <span onclick="setFont('small')">A-</span>
+        <span onclick="setFont('medium')">A</span>
+        <span onclick="setFont('large')">A+</span>
+        |
+        <span onclick="setLang('en')">EN</span>
+        <span onclick="setLang('bm')">BM</span>
+    </div>
+</div>
+>>>>>>> Stashed changes
 
     /* Navbar */
     .navbar {
@@ -96,6 +131,7 @@
   <div class="location-page">
     <div class="top-section">
       <div class="filter">
+<<<<<<< Updated upstream
         <label for="stateFilter">Filter state by:</label>
         <select id="stateFilter" onchange="filterHospital()">
           <option value="all">All</option>
@@ -103,6 +139,15 @@
           <option value="selangor">Selangor</option>
           <option value="kl">Kuala Lumpur</option>
           <option value="johor">Johor</option>
+=======
+        <h2>Filter state by:</h2>
+        <select id="stateFilter" onchange="filterHospital()">
+        <option value="all">All</option>
+        <option value="pahang">Pahang</option>
+        <option value="selangor">Selangor</option>
+        <option value="kl">Kuala Lumpur</option>
+        <option value="johor">Johor</option>
+>>>>>>> Stashed changes
         </select>
       </div>
       <div class="legend">
@@ -114,6 +159,10 @@
 
     <!-- Hospital Cards -->
     <div class="hospital-container">
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
       <div class="hospital-card" id="pahang">
         <img src="hospi_img/hospital(1).png" alt="Hospital image">
         <div class="hospital-info">
@@ -134,6 +183,7 @@
           </div>
       </div>
 
+<<<<<<< Updated upstream
       <!-- Repeat for other hospitals -->
        <div class="hospital-card" id="pahang">
         <img src="hospi_img/hospital(2).png" alt="Hospital image">
@@ -146,6 +196,64 @@
       </div>
 
       <div class="hospital-card" id="selangor">
+=======
+      <div class="hospital-card" id="selangor">
+        <img src="hospi_img/hospital(3).png" alt="Hospital image">
+        <div class="hospital-info">
+          <h2>Hospital Mesra</h2>
+          <p>description <br>Condition:<span class="dot yellow"></span></p>
+          <button><a href="app.html">request appointment</a></button>
+        </div>
+      </div>
+
+      <div class="hospital-card" id="selangor">
+        <img src="hospi_img/hospital(4).png" alt="Hospital image">
+        <div class="hospital-info">
+          <h2>Hospital Penuh Rasa</h2>
+          <p>description <br>Condition:<span class="dot green"></span></p>
+          <button><a href="app.html">request appointment</a></button>
+          <button><a href="app.html">go to location</a></button>
+        </div>
+      </div>
+
+      <div class="hospital-card" id="johor">
+        <img src="hospi_img/hospital(5).png" alt="Hospital image">
+        <div class="hospital-info">
+          <h2>Hospital Besar Johor</h2>
+          <p>description <br>Condition:<span class="dot green"></span></p>
+          <button><a href="app.html">request appointment</a></button>
+        </div>
+      </div>
+
+      <div class="hospital-card" id="kl">
+        <img src="hospi_img/hospital(5).png" alt="Hospital image">
+        <div class="hospital-info">
+          <h2>Hospital Kecil Perlis</h2>
+          <p>description <br>Condition:<span class="dot green"></span></p>
+          <button><a href="app.html">request appointment</a></button>
+        </div>
+      </div>
+
+      <div class="hospital-card" id="selangor">
+        <img src="hospi_img/hospital(5).png" alt="Hospital image">
+        <div class="hospital-info">
+          <h2>Hospital Gembira</h2>
+          <p>description <br>Condition:<span class="dot green"></span></p>
+          <button><a href="app.html">request appointment</a></button>
+        </div>
+      </div>
+
+      <div class="hospital-card" id="johor">
+        <img src="hospi_img/hospital(6).png" alt="Hospital image">
+        <div class="hospital-info">
+          <h2>Hospital Maran</h2>
+          <p>description <br>Condition:<span class="dot green"></span></p>
+          <button><a href="app.html">request appointment</a></button>
+        </div>
+      </div>
+
+      <div class="hospital-card" id="kl">
+>>>>>>> Stashed changes
         <img src="hospi_img/hospital(7).png" alt="Hospital image">
           <div class="hospital-info">
             <h2>Assunta Hospital</h2>
@@ -208,6 +316,7 @@
 
     </div>
   </div>
+<<<<<<< Updated upstream
 
   <script>
 
@@ -274,12 +383,56 @@
   function setLang(lang){
 
     // NAVBAR
+=======
+  <script>
+function filterHospital() {
+  let selectedState = document.getElementById("stateFilter").value;
+  let hospitals = document.getElementsByClassName("hospital-card");
+
+  for (let i = 0; i < hospitals.length; i++) {
+    if (selectedState === "all" || hospitals[i].id === selectedState) {
+      hospitals[i].style.display = "flex";
+    } else {
+      hospitals[i].style.display = "none";
+    }
+  }
+}
+
+
+// FONT SIZE FUNCTION
+function setFont(size){
+    document.body.classList.remove("small", "medium", "large");
+    document.body.classList.add(size);
+}
+
+// LANGUAGE DATA
+const text = {
+    en: {
+        navAbout: "About Us",
+        navLocation: "Location",
+        navApp: "Appointment",
+        navQueue: "Queue",
+        navAsk: "Ask Us"
+    },
+    bm: {
+        navAbout: "Tentang Kami",
+        navLocation: "Lokasi",
+        navApp: "Temu Janji",
+        navQueue: "Giliran",
+        navAsk: "Tanya Kami"
+    }
+};
+
+// CHANGE LANGUAGE
+function setLang(lang){
+>>>>>>> Stashed changes
     document.getElementById("navAbout").innerHTML = text[lang].navAbout;
     document.getElementById("navLocation").innerHTML = text[lang].navLocation;
     document.getElementById("navApp").innerHTML = text[lang].navApp;
     document.getElementById("navQueue").innerHTML = text[lang].navQueue;
     document.getElementById("navAsk").innerHTML = text[lang].navAsk;
 
+<<<<<<< Updated upstream
     // FILTER LABEL
     document.querySelector("label[for='stateFilter']").innerHTML =
       text[lang].filter;
@@ -336,3 +489,10 @@ legendItems[2].innerHTML =
 
 </body>
 </html>
+=======
+}
+
+</script>
+    </body>
+</html>
+>>>>>>> Stashed changes
